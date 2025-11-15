@@ -26,10 +26,10 @@ export default function MetricCard({
   progress,
 }: MetricCardProps) {
   return (
-    <Card className="relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+    <Card className="relative overflow-hidden">
       <div className="absolute top-0 left-0 h-1.5 w-full bg-gradient-to-r from-primary to-accent" />
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardTitle className="text-sm font-medium text-secondary">
           {title}
         </CardTitle>
         <Icon className={cn('h-5 w-5', color)} />

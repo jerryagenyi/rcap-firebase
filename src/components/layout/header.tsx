@@ -22,7 +22,7 @@ export default function Header() {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user1');
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-8">
+    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-card/80 backdrop-blur-lg px-4 md:px-8">
       <div className="md:hidden">
         <SidebarTrigger />
       </div>
@@ -31,16 +31,16 @@ export default function Header() {
 
       <div className="flex w-full items-center gap-4 md:ml-auto md:w-auto">
         <div className="relative ml-auto flex-1 md:grow-0">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search activities..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+            className="w-full rounded-full bg-background pl-9 md:w-[200px] lg:w-[320px] h-10"
           />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative rounded-full">
+            <Button variant="ghost" size="icon" className="relative rounded-full h-10 w-10">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
@@ -72,8 +72,8 @@ export default function Header() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-              <Avatar className="h-9 w-9">
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Avatar className="h-10 w-10">
                 <AvatarImage src={userAvatar?.imageUrl} alt="User avatar" />
                 <AvatarFallback>FA</AvatarFallback>
               </Avatar>
