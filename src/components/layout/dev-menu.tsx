@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Code, TestTube2, X } from 'lucide-react';
+import { TestTube2, X } from 'lucide-react';
 import { navItems } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import {
