@@ -72,7 +72,8 @@ export const columns: ColumnDef<Activity>[] = [
     header: "Last Modified",
     cell: ({ row }) => {
       const date = new Date(row.getValue("lastModified"));
-      return <div>{date.toLocaleDateString()}</div>;
+      // Using a specific format to avoid hydration errors
+      return <div>{date.toLocaleDateString('en-CA')}</div>;
     },
   },
   {
