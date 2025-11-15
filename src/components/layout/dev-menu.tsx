@@ -19,7 +19,7 @@ const DeveloperMenu = () => {
 
   return (
     <TooltipProvider>
-      <div className="fixed bottom-4 left-4 z-50">
+      <div className="fixed bottom-4 right-4 z-50">
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -72,7 +72,7 @@ const DeveloperMenu = () => {
               </AnimatePresence>
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">
+          <TooltipContent side="left">
             <p>Toggle Developer Menu</p>
           </TooltipContent>
         </Tooltip>
