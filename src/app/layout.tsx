@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import DeveloperMenu from '@/components/layout/dev-menu';
+import ClientDeveloperMenu from '@/components/layout/dev-menu-client';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={cn('font-body antialiased', inter.variable)}>
         {children}
         <Toaster />
-        {process.env.NODE_ENV === 'development' && <DeveloperMenu />}
+        <ClientDeveloperMenu />
       </body>
     </html>
   );
