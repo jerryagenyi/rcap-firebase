@@ -38,7 +38,6 @@ export const navItems: NavItem[] = [
     title: "Activities",
     href: "/dashboard/activities",
     icon: ClipboardList,
-    badge: 5,
   },
   {
     title: "Reports",
@@ -59,12 +58,39 @@ export const navItems: NavItem[] = [
   {
     title: "Profile",
     href: "/dashboard/profile",
-    icon: UserCheck,
+    icon: UserIcon,
   },
   {
     title: "Settings",
     href: "/dashboard/settings",
-    icon: Settings
+    icon: Settings,
+    children: [
+        {
+            title: "Account",
+            href: "/dashboard/settings/account",
+            icon: UserCheck
+        },
+        {
+            title: "Notifications",
+            href: "/dashboard/settings/notifications-preferences",
+            icon: Bell
+        },
+        {
+            title: "Appearance",
+            href: "/dashboard/settings/appearance",
+            icon: Palette
+        },
+        {
+            title: "Data & Sync",
+            href: "/dashboard/settings/data",
+            icon: Database
+        },
+        {
+            title: "Help & Support",
+            href: "/dashboard/settings/help",
+            icon: HelpCircle
+        }
+    ]
   },
 ];
 

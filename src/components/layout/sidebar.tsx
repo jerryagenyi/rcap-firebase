@@ -8,23 +8,70 @@ import {
   SidebarMenuItem,
   SidebarMenu,
   SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { Logo } from '@/components/icons';
 import { navItems } from '@/lib/data';
 import { usePathname } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut } from 'lucide-react';
+import { LogOut, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import type { NavItem } from '@/lib/types';
 import React from 'react';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 
 const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string }) => {
+  const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+
+  if (item.children) {
+    return (
+        <Collapsible>
+            <CollapsibleTrigger asChild>
+                <SidebarMenuButton
+                    isActive={isActive}
+                    tooltip={{ children: item.title }}
+                    className="justify-between"
+                >
+                    <div className="flex items-center gap-3">
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                    </div>
+                    <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:-rotate-180" />
+                </SidebarMenuButton>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+                <SidebarMenuSub>
+                    {item.children.map((child) => {
+                        const isSubActive = pathname === child.href;
+                        return (
+                            <SidebarMenuSubItem key={child.href}>
+                                 <SidebarMenuSubButton asChild isActive={isSubActive}>
+                                    <a href={child.href}>
+                                        <child.icon className="h-4 w-4" />
+                                        <span>{child.title}</span>
+                                    </a>
+                                </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                        );
+                    })}
+                </SidebarMenuSub>
+            </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
   return (
     <SidebarMenuButton
       asChild
-      isActive={pathname.startsWith(item.href)}
+      isActive={isActive}
       tooltip={{ children: item.title }}
       className="justify-start"
     >
