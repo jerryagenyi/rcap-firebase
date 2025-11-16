@@ -1,5 +1,6 @@
+
 'use client';
-import { Bell, Search, Wifi } from 'lucide-react';
+import { Bell, Search, Wifi, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -36,7 +37,7 @@ export default function Header() {
 
       <h1 className="hidden text-xl font-semibold md:block">{pageTitle}</h1>
 
-      <div className="flex w-full items-center gap-4 md:ml-auto md:w-auto">
+      <div className="flex w-full items-center gap-2 md:ml-auto md:w-auto">
         <div className="flex items-center gap-2 text-sm text-green-500">
           <Wifi size={16} />
           <span className="hidden md:inline">Online</span>
@@ -49,6 +50,11 @@ export default function Header() {
             className="w-full rounded-full bg-background pl-9 md:w-[200px] lg:w-[320px] h-10"
           />
         </div>
+
+        <Button variant="ghost" size="icon" className="relative rounded-full h-10 w-10">
+          <MessageSquare className="h-5 w-5" />
+        </Button>
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative rounded-full h-10 w-10">
