@@ -4,7 +4,7 @@
 import { mockTeamMembers } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, UserPlus, Mail, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon } from 'lucide-react';
+import { Search, UserPlus, Mail, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 
 const statusStyles: Record<UserType['status'], string> = {
   Active: 'bg-green-500 text-white',
@@ -70,9 +71,11 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
               <Button variant="outline" size="icon" className="h-10 w-10">
                 <Mail className="h-5 w-5" />
               </Button>
-              <Button variant="outline" size="icon" className="h-10 w-10">
-                <MessageSquare className="h-5 w-5" />
-              </Button>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="icon" className="h-10 w-10">
+                  <MessageSquare className="h-5 w-5" />
+                </Button>
+              </DialogTrigger>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="icon" className="h-10 w-10">
@@ -94,36 +97,32 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
           </CardContent>
         </Card>
 
-        {/* View Profile Dialog */}
-        <DialogContent className="sm:max-w-md">
-            <DialogHeader className="items-center text-center">
-                 <Avatar className="h-24 w-24 mb-4">
-                    <AvatarImage src={avatar?.imageUrl} alt={member.name} />
-                    <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                </Avatar>
-                <DialogTitle className="text-2xl">{member.name}</DialogTitle>
-                <DialogDescription>{member.role}</DialogDescription>
-                 <Badge variant="secondary" className="w-fit">{member.team}</Badge>
+        {/* View/Send Message Dialog */}
+        <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+                <DialogTitle>Send Message to {member.name}</DialogTitle>
+                <DialogDescription>Compose your message below. The recipient will be notified.</DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
-                <div className="flex items-center gap-4">
-                    <MailIcon className="h-5 w-5 text-muted-foreground" />
-                    <a href={`mailto:${member.email}`} className="text-sm text-primary hover:underline">{member.email}</a>
+                <div className="space-y-2">
+                    <Label htmlFor="message-subject">Subject</Label>
+                    <Input id="message-subject" placeholder="Regarding the recent activity report..." />
                 </div>
-                 <div className="flex items-center gap-4">
-                    <User className="h-5 w-5 text-muted-foreground" />
-                    <p className="text-sm">{member.status}</p>
+                <div className="space-y-2">
+                    <Label htmlFor="message-body">Message</Label>
+                    <Textarea id="message-body" placeholder={`Hi ${member.name.split(' ')[0]}, I wanted to discuss...`} className="min-h-[120px]" />
                 </div>
             </div>
-            <DialogFooter className="sm:justify-between flex-row-reverse sm:flex-row-reverse">
-                <Button type="button" variant="gradient">
-                    <Edit className="mr-2 h-4 w-4" /> Edit Profile
-                </Button>
-                <DialogClose asChild>
-                    <Button type="button" variant="outline">Close</Button>
+            <DialogFooter>
+                 <DialogClose asChild>
+                    <Button type="button" variant="outline">Cancel</Button>
                 </DialogClose>
+                <Button type="submit" variant="gradient">
+                    <Send className="mr-2 h-4 w-4" /> Send Message
+                </Button>
             </DialogFooter>
         </DialogContent>
+
 
         {/* Remove User Alert Dialog */}
         <AlertDialogContent>
