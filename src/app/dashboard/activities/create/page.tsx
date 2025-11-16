@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -5,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ActivityCreationWizard } from "./components/activity-creation-wizard";
 
 export default function CreateActivityPage() {
   return (
@@ -17,19 +19,7 @@ export default function CreateActivityPage() {
           Follow the steps to create and submit a new activity.
         </p>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Activity Creation Wizard</CardTitle>
-          <CardDescription>
-            Content for the multi-step wizard will go here.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-            <div className="flex items-center justify-center h-64 border-2 border-dashed rounded-lg">
-                <p className="text-muted-foreground">Multi-step form coming soon...</p>
-            </div>
-        </CardContent>
-      </Card>
+      <ActivityCreationWizard />
     </div>
   );
 }
