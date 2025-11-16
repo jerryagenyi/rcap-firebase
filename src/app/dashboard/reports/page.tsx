@@ -1,4 +1,6 @@
 
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import ReportFilters from "./components/report-filters";
@@ -7,8 +9,70 @@ import ActivityTypeDistribution from "./components/activity-type-distribution";
 import StatusBreakdown from "./components/status-breakdown";
 import GeographicDistribution from "./components/geographic-distribution";
 import QuickReportTemplates from "./components/quick-report-templates";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { reportActivityTrendsMonth, reportActivityTypes, reportStatusBreakdown, reportGeographicDistribution } from "@/lib/data";
+
+declare module 'jspdf' {
+    interface jsPDF {
+      autoTable: (options: any) => jsPDF;
+    }
+}
 
 export default function ReportsPage() {
+
+    const handleExport = () => {
+        const doc = new jsPDF();
+
+        // Title
+        doc.setFontSize(22);
+        doc.text("RCAP Analytics Report", 14, 20);
+        doc.setFontSize(12);
+        doc.setTextColor(150);
+        doc.text(`Report generated on: ${new Date().toLocaleDateString()}`, 14, 28);
+        doc.setTextColor(0);
+
+        // Status Breakdown
+        doc.setFontSize(18);
+        doc.text("Status Breakdown", 14, 45);
+        let statusText = reportStatusBreakdown.map(s => `${s.name}: ${s.count} (${s.description})`).join('  |  ');
+        doc.setFontSize(10);
+        doc.text(statusText, 14, 52);
+
+        // Activity Trends
+        doc.autoTable({
+            startY: 62,
+            head: [['Period', 'Activities']],
+            body: reportActivityTrendsMonth.map(item => [item.period, item.activities]),
+            didDrawPage: (data: any) => {
+              doc.setFontSize(18);
+              doc.text("Monthly Activity Trends", 14, data.cursor.y - 10);
+            }
+        });
+
+        // Activity Type Distribution
+        doc.autoTable({
+            head: [['Type', 'Count']],
+            body: reportActivityTypes.map(item => [item.name, item.count]),
+            didDrawPage: (data: any) => {
+              doc.setFontSize(18);
+              doc.text("Activity Type Distribution", 14, data.cursor.y - 10);
+            }
+        });
+
+        // Geographic Distribution
+        doc.autoTable({
+            head: [['Location', 'Activity Count']],
+            body: reportGeographicDistribution.map(item => [item.name, item.count]),
+            didDrawPage: (data: any) => {
+              doc.setFontSize(18);
+              doc.text("Geographic Distribution", 14, data.cursor.y - 10);
+            }
+        });
+
+        doc.save("RCAP-Report.pdf");
+    }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
@@ -20,7 +84,7 @@ export default function ReportsPage() {
             Data-driven insights for your activities.
           </p>
         </div>
-        <Button variant="gradient">
+        <Button variant="gradient" onClick={handleExport}>
             <Download className="mr-2" />
             Export
         </Button>
