@@ -223,6 +223,7 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
 
 export default function TeamPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const userRoles = [...new Set(mockTeamMembers.map(m => m.role))];
   
   const filteredMembers = useMemo(() => {
     if (!searchQuery) {
@@ -245,10 +246,47 @@ export default function TeamPage() {
           </h1>
           <p className="text-muted-foreground">Manage and view team members across the organization.</p>
         </div>
-        <Button variant="gradient">
-          <UserPlus />
-          Invite Member
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="gradient">
+              <UserPlus />
+              Invite Member
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Invite New Team Member</DialogTitle>
+              <DialogDescription>
+                Enter the email address and assign a role to send an invitation.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-4 space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input id="email" type="email" placeholder="name@example.com" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="role-invite">Role</Label>
+                <Select>
+                  <SelectTrigger id="role-invite">
+                    <SelectValue placeholder="Select a role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {userRoles.map(role => (
+                      <SelectItem key={role} value={role}>{role}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="button" variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" variant="gradient">Send Invitation</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="relative">
