@@ -1,16 +1,24 @@
 
+
 'use client'
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { reportActivityTrends } from "@/lib/data";
+import { reportActivityTrendsWeek, reportActivityTrendsMonth, reportActivityTrendsYear } from "@/lib/data";
 
-const TrendItem = ({ week, activities, date, progress }: { week: string, activities: string, date: string, progress: number }) => (
+type TrendData = {
+    period: string;
+    activities: string;
+    date: string;
+    progress: number;
+}
+
+const TrendItem = ({ period, activities, date, progress }: TrendData) => (
     <div className="grid grid-cols-[1fr_auto] items-center gap-4">
         <div className="space-y-1">
             <div className="flex justify-between items-center">
-                <p className="font-semibold">{week}</p>
+                <p className="font-semibold">{period}</p>
                 <div className="hidden sm:flex items-center gap-4">
                     <p className="font-bold text-primary">{activities}</p>
                     <p className="text-sm text-muted-foreground">{date}</p>
@@ -22,6 +30,14 @@ const TrendItem = ({ week, activities, date, progress }: { week: string, activit
                 <p className="text-xs text-muted-foreground">{date}</p>
             </div>
         </div>
+    </div>
+);
+
+const TrendList = ({ data }: { data: TrendData[] }) => (
+    <div className="space-y-6">
+        {data.map((trend) => (
+            <TrendItem key={trend.period} {...trend} />
+        ))}
     </div>
 );
 
@@ -40,11 +56,17 @@ export default function ActivityTrends() {
                 </Tabs>
             </CardHeader>
             <CardContent>
-                <div className="space-y-6">
-                    {reportActivityTrends.map((trend) => (
-                        <TrendItem key={trend.week} {...trend} />
-                    ))}
-                </div>
+                <Tabs defaultValue="week">
+                    <TabsContent value="week">
+                        <TrendList data={reportActivityTrendsWeek} />
+                    </TabsContent>
+                    <TabsContent value="month">
+                        <TrendList data={reportActivityTrendsMonth} />
+                    </TabsContent>
+                    <TabsContent value="year">
+                        <TrendList data={reportActivityTrendsYear} />
+                    </TabsContent>
+                </Tabs>
             </CardContent>
         </Card>
     )

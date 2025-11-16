@@ -625,13 +625,26 @@ export const mockTeamMembers: User[] = [
     },
 ];
 
-export const reportActivityTrends = [
-    { week: 'Week 1', activities: '85 activities', date: 'Jan 1-7', progress: 85 },
-    { week: 'Week 2', activities: '92 activities', date: 'Jan 8-14', progress: 92 },
-    { week: 'Week 3', activities: '78 activities', date: 'Jan 15-21', progress: 78 },
-    { week: 'Week 4', activities: '95 activities', date: 'Jan 22-28', progress: 95 },
-    { week: 'Week 5', activities: '88 activities', date: 'Jan 29-31', progress: 88 },
+export const reportActivityTrendsWeek = [
+    { period: 'Week 1', activities: '85 activities', date: 'Jan 1-7', progress: 85 },
+    { period: 'Week 2', activities: '92 activities', date: 'Jan 8-14', progress: 92 },
+    { period: 'Week 3', activities: '78 activities', date: 'Jan 15-21', progress: 78 },
+    { period: 'Week 4', activities: '95 activities', date: 'Jan 22-28', progress: 95 },
 ];
+
+export const reportActivityTrendsMonth = [
+    { period: 'January', activities: '340 activities', date: 'Month view', progress: 85 },
+    { period: 'February', activities: '368 activities', date: 'Month view', progress: 92 },
+    { period: 'March', activities: '312 activities', date: 'Month view', progress: 78 },
+    { period: 'April', activities: '380 activities', date: 'Month view', progress: 95 },
+];
+
+export const reportActivityTrendsYear = [
+    { period: '2023', activities: '4080 activities', date: 'Year view', progress: 85 },
+    { period: '2024', activities: '4416 activities', date: 'Year view', progress: 92 },
+    { period: '2025', activities: '3744 activities', date: 'Year view', progress: 78 },
+];
+
 
 export const reportActivityTypes = [
     { name: 'Vaccination Campaign', count: 342, colorClass: 'bg-chart-1' },
