@@ -1,12 +1,5 @@
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ActivityCreationWizard } from "./components/activity-creation-wizard";
+import { ActivityForm } from "@/app/dashboard/activities/components/activity-form";
 
 export default function CreateActivityPage() {
   return (
@@ -16,10 +9,10 @@ export default function CreateActivityPage() {
           Create New Activity
         </h1>
         <p className="text-muted-foreground">
-          Follow the steps to create and submit a new activity.
+          Fill out the form below to create and submit a new activity.
         </p>
       </div>
-      <ActivityCreationWizard />
+      <ActivityForm mode="create" />
     </div>
   );
 }

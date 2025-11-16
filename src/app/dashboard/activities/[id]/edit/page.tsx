@@ -1,15 +1,11 @@
 
 'use client';
 
+import Link from 'next/link';
 import { useParams, notFound } from 'next/navigation';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ActivityCreationWizard } from "@/app/dashboard/activities/create/components/activity-creation-wizard";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ActivityForm } from '@/app/dashboard/activities/components/activity-form';
 import { mockActivities } from '@/lib/data';
 
 export default function EditActivityPage() {
@@ -23,15 +19,22 @@ export default function EditActivityPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Edit Activity
-        </h1>
-        <p className="text-muted-foreground">
-          Update the details for activity: {activity.title}
-        </p>
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" asChild>
+          <Link href={`/dashboard/activities/${id}`}>
+            <ArrowLeft />
+          </Link>
+        </Button>
+        <div>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Edit Activity
+            </h1>
+            <p className="text-muted-foreground">
+            Update the details for: {activity.title}
+            </p>
+        </div>
       </div>
-      <ActivityCreationWizard />
+      <ActivityForm mode="edit" activity={activity} />
     </div>
   );
 }
