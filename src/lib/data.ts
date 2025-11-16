@@ -1,16 +1,15 @@
-import type { NavItem } from "@/lib/types";
+import type { NavItem, Activity, Notification } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
   BarChart3,
   Users,
   Settings,
-  ShieldCheck,
+  ShieldAlert,
   Syringe,
   UserCheck,
   Bell,
   MessageSquare,
-  Mail,
   FileCheck2,
   AlertTriangle,
   Info,
@@ -60,27 +59,27 @@ export const navItems: NavItem[] = [
     children: [
         {
             title: "Account",
-            href: "/dashboard/settings#account",
+            href: "/dashboard/settings",
             icon: User
         },
         {
             title: "Notifications",
-            href: "/dashboard/settings#notifications",
+            href: "/dashboard/settings",
             icon: Bell
         },
         {
             title: "Appearance",
-            href: "/dashboard/settings#appearance",
+            href: "/dashboard/settings",
             icon: Palette
         },
         {
             title: "Data & Sync",
-            href: "/dashboard/settings#data",
+            href: "/dashboard/settings",
             icon: Database
         },
         {
             title: "Help",
-            href: "/dashboard/settings#help",
+            href: "/dashboard/settings",
             icon: HelpCircle
         }
     ]
