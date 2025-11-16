@@ -1,4 +1,3 @@
-
 'use client';
 import {
   Sidebar,
@@ -97,7 +96,7 @@ export default function AppSidebar() {
 
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="border-r">
-      <SidebarHeader className="h-16 items-center justify-center p-4">
+      <SidebarHeader className="h-16 items-center justify-start p-4">
         <div className="flex items-center gap-2 group-data-[collapsible=icon]:hidden">
           <Logo className="h-8 w-8 text-primary" />
           <h1 className="text-xl font-bold text-foreground">HealthLink</h1>

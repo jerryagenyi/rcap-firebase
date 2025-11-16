@@ -9,10 +9,9 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl border bg-card text-card-foreground shadow-[0_2px_8px_rgba(123,44,191,0.1)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_4px_16px_rgba(123,44,191,0.15)]",
+      "rounded-lg border bg-card text-card-foreground shadow-sm",
       className
     )}
-    style={{padding: '24px'}}
     {...props}
   />
 ))
@@ -24,9 +23,8 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5", className)}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
     {...props}
-    style={{padding: '0 0 1.5rem 0'}}
   />
 ))
 CardHeader.displayName = "CardHeader"
@@ -35,9 +33,12 @@ const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h2
+  <h3
     ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
+    className={cn(
+      "text-2xl font-semibold leading-none tracking-tight",
+      className
+    )}
     {...props}
   />
 ))
@@ -49,7 +50,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-secondary", className)}
+    className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ))
@@ -59,7 +60,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("", className)} {...props} style={{padding: '0'}}/>
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
@@ -69,9 +70,8 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center", className)}
+    className={cn("flex items-center p-6 pt-0", className)}
     {...props}
-    style={{padding: '1.5rem 0 0 0'}}
   />
 ))
 CardFooter.displayName = "CardFooter"
