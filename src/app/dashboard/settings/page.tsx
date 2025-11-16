@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState } from 'react';
@@ -12,7 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { User, Bell, Palette, Database, HelpCircle, ShieldCheck, KeyRound, Trash2, HardDrive, RefreshCcw } from 'lucide-react';
+import { User, Bell, Palette, Database, HelpCircle, ShieldCheck, KeyRound, Trash2, HardDrive, RefreshCcw, Mail, Send, CircleCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,6 +23,8 @@ import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
 import { navItems } from '@/lib/data';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
 
 const AccountSettings = () => {
     const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
@@ -278,7 +279,7 @@ const AppearanceSettings = () => (
 const DataSettings = () => (
   <Card>
     <CardHeader>
-      <CardTitle>Data & Sync</CardTitle>
+      <CardTitle>Data &amp; Sync</CardTitle>
       <CardDescription>
         Manage your data synchronization, cache, and usage.
       </CardDescription>
@@ -350,18 +351,109 @@ const DataSettings = () => (
 );
 
 const HelpSettings = () => (
-  <Card>
-    <CardHeader>
-      <CardTitle>Help & Support</CardTitle>
-      <CardDescription>
-        Find answers to your questions and get support.
-      </CardDescription>
-    </CardHeader>
-    <CardContent>
-      <p>Help & Support content will go here.</p>
-    </CardContent>
-  </Card>
+    <div className="space-y-8">
+        {/* FAQ Section */}
+        <Card>
+            <CardHeader>
+                <CardTitle>Frequently Asked Questions</CardTitle>
+                <CardDescription>Find quick answers to common questions.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>How do I reset my password?</AccordionTrigger>
+                        <AccordionContent>
+                            You can reset your password by going to the login page and clicking the "Forgot Password?" link. You will receive an email with instructions on how to reset it.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>How do I create a new activity?</AccordionTrigger>
+                        <AccordionContent>
+                            You can create a new activity by clicking the "Create" or "Create Activity" button on the Dashboard or the Activities page. This will start a multi-step form to guide you through the process.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>What do the different activity statuses mean?</AccordionTrigger>
+                        <AccordionContent>
+                            - **Draft**: The activity is being created and has not been submitted for review. &lt;br /&gt;
+                            - **Submitted**: The activity has been submitted and is awaiting approval. &lt;br /&gt;
+                            - **Approved**: The activity has been approved and is active. &lt;br /&gt;
+                            - **Rejected**: The activity was not approved. &lt;br /&gt;
+                            - **Completed**: The activity has finished.
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </CardContent>
+        </Card>
+
+        {/* Contact Support Section */}
+        <Card>
+            <CardHeader>
+                <CardTitle>Contact Support</CardTitle>
+                <CardDescription>Still need help? Send us a message.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-2">
+                    <Label htmlFor="support-subject">Subject</Label>
+                    <Input id="support-subject" placeholder="Enter the subject of your inquiry" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="support-message">Message</Label>
+                    <Textarea id="support-message" placeholder="Describe your issue in detail." className="min-h-[120px]" />
+                </div>
+            </CardContent>
+            <CardFooter className="border-t pt-6">
+                <Button variant="gradient" className="ml-auto">
+                    <Send className="mr-2" />
+                    Send Message
+                </Button>
+            </CardFooter>
+        </Card>
+
+        {/* System Status Section */}
+        <Card>
+            <CardHeader>
+                <CardTitle>System Status</CardTitle>
+                <CardDescription>Check the current status of our services.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                 <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Mail className="h-5 w-5 text-muted-foreground" />
+                        <p>Email Services</p>
+                    </div>
+                    <Badge variant="outline" className="text-green-600 border-green-600/50 bg-green-500/10">
+                         <CircleCheck className="mr-2 h-4 w-4" />
+                        Operational
+                    </Badge>
+                </div>
+                 <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Database className="h-5 w-5 text-muted-foreground" />
+                        <p>Database</p>
+                    </div>
+                    <Badge variant="outline" className="text-green-600 border-green-600/50 bg-green-500/10">
+                        <CircleCheck className="mr-2 h-4 w-4" />
+                        Operational
+                    </Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Bell className="h-5 w-5 text-muted-foreground" />
+                        <p>Push Notifications</p>
+                    </div>
+                     <Badge variant="outline" className="text-green-600 border-green-600/50 bg-green-500/10">
+                        <CircleCheck className="mr-2 h-4 w-4" />
+                        Operational
+                    </Badge>
+                </div>
+                <Separator className="my-2"/>
+                 <p className="text-sm text-muted-foreground">RCAP v1.0.0</p>
+            </CardContent>
+        </Card>
+    </div>
 );
+
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('account');
@@ -418,3 +510,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    
