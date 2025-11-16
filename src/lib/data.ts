@@ -64,34 +64,7 @@ export const navItems: NavItem[] = [
   {
     title: "Settings",
     href: "/dashboard/settings",
-    icon: Settings,
-    children: [
-        {
-            title: "Account",
-            href: "/dashboard/settings#account",
-            icon: UserIcon
-        },
-        {
-            title: "Notifications",
-            href: "/dashboard/settings#notifications",
-            icon: Bell
-        },
-        {
-            title: "Appearance",
-            href: "/dashboard/settings#appearance",
-            icon: Palette
-        },
-        {
-            title: "Data & Sync",
-            href: "/dashboard/settings#data",
-            icon: Database
-        },
-        {
-            title: "Help",
-            href: "/dashboard/settings#help",
-            icon: HelpCircle
-        }
-    ]
+    icon: Settings
   },
 ];
 
