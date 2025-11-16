@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -375,10 +374,10 @@ const HelpSettings = () => (
                     <AccordionItem value="item-3">
                         <AccordionTrigger>What do the different activity statuses mean?</AccordionTrigger>
                         <AccordionContent>
-                            - **Draft**: The activity is being created and has not been submitted for review. &lt;br /&gt;
-                            - **Submitted**: The activity has been submitted and is awaiting approval. &lt;br /&gt;
-                            - **Approved**: The activity has been approved and is active. &lt;br /&gt;
-                            - **Rejected**: The activity was not approved. &lt;br /&gt;
+                            - **Draft**: The activity is being created and has not been submitted for review. <br />
+                            - **Submitted**: The activity has been submitted and is awaiting approval. <br />
+                            - **Approved**: The activity has been approved and is active. <br />
+                            - **Rejected**: The activity was not approved. <br />
                             - **Completed**: The activity has finished.
                         </AccordionContent>
                     </AccordionItem>

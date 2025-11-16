@@ -42,7 +42,7 @@ export default function MetricCard({
         </div>
         <p className={cn("text-xs", trendColor ? trendColor : "text-muted-foreground")}>{trend}</p>
         {progress !== undefined && (
-          <Progress value={progress} className="mt-2 h-1" indicatorClassName="bg-gradient-to-r from-primary to-accent" />
+          <Progress value={progress} className="mt-2 h-1" indicatorClassName="bg-primary" />
         )}
       </CardContent>
     </Card>
