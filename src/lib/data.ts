@@ -1,4 +1,5 @@
 
+
 import type { NavItem, Activity, Notification, User } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -20,6 +21,9 @@ import {
   User as UserIcon,
   PlusCircle,
   List,
+  Calendar,
+  FileText,
+  TrendingUp
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -529,4 +533,135 @@ export const mockTeamMembers: User[] = [
         team: 'Lagos State MOH',
         status: 'Active',
     },
+        {
+        id: 'USR-017',
+        name: 'Aisha Musa',
+        email: 'aisha.musa@rcap.gov',
+        avatarId: 'user1',
+        role: 'Field Officer',
+        team: 'Kaduna State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-018',
+        name: 'Olamide Adekunle',
+        email: 'olamide.adekunle@rcap.gov',
+        avatarId: 'user2',
+        role: 'Data Analyst',
+        team: 'Oyo State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-019',
+        name: 'Ikenna Obi',
+        email: 'ikenna.obi@rcap.gov',
+        avatarId: 'user3',
+        role: 'Field Officer',
+        team: 'Anambra State MOH',
+        status: 'Invited',
+    },
+    {
+        id: 'USR-020',
+        name: 'Hadiza Goje',
+        email: 'hadiza.goje@rcap.gov',
+        avatarId: 'user4',
+        role: 'Communications Officer',
+        team: 'Kano State PHCDA',
+        status: 'Active',
+    },
+    {
+        id: 'USR-021',
+        name: 'Rotimi Williams',
+        email: 'rotimi.williams@rcap.gov',
+        avatarId: 'user5',
+        role: 'Logistics Manager',
+        team: 'Lagos State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-022',
+        name: 'Chinelo Nwankwo',
+        email: 'chinelo.nwankwo@rcap.gov',
+        avatarId: 'user6',
+        role: 'Epidemiologist',
+        team: 'Federal MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-023',
+        name: 'Bello Garba',
+        email: 'bello.garba@rcap.gov',
+        avatarId: 'user7',
+        role: 'State Coordinator',
+        team: 'Kaduna State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-024',
+        name: 'Funmilayo Adeboye',
+        email: 'funmilayo.adeboye@rcap.gov',
+        avatarId: 'user8',
+        role: 'Accountant',
+        team: 'Federal MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-025',
+        name: 'Efe Ajayi',
+        email: 'efe.ajayi@rcap.gov',
+        avatarId: 'user9',
+        role: 'Field Officer',
+        team: 'Edo State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-026',
+        name: 'Abubakar Sadiq',
+        email: 'abubakar.sadiq@rcap.gov',
+        avatarId: 'user10',
+        role: 'IT Support',
+        team: 'Federal MOH',
+        status: 'Invited',
+    },
 ];
+
+export const reportActivityTrends = [
+    { week: 'Week 1', activities: '85 activities', date: 'Jan 1-7', progress: 85 },
+    { week: 'Week 2', activities: '92 activities', date: 'Jan 8-14', progress: 92 },
+    { week: 'Week 3', activities: '78 activities', date: 'Jan 15-21', progress: 78 },
+    { week: 'Week 4', activities: '95 activities', date: 'Jan 22-28', progress: 95 },
+    { week: 'Week 5', activities: '88 activities', date: 'Jan 29-31', progress: 88 },
+];
+
+export const reportActivityTypes = [
+    { name: 'Vaccination Campaign', count: 342, colorClass: 'bg-chart-1' },
+    { name: 'Health Education', count: 256, colorClass: 'bg-chart-2' },
+    { name: 'Emergency Response', count: 189, colorClass: 'bg-chart-3' },
+    { name: 'Training Workshop', count: 145, colorClass: 'bg-chart-4' },
+    { name: 'Disease Surveillance', count: 71, colorClass: 'bg-chart-5' },
+];
+
+export const reportStatusBreakdown = [
+    { name: 'Approved', count: 572, description: '↑ 12% vs last month', borderColor: 'hsl(var(--primary))' },
+    { name: 'Submitted', count: 134, description: 'Pending review', borderColor: 'hsl(var(--accent))' },
+    { name: 'Draft', count: 89, description: 'In progress', borderColor: 'hsl(var(--muted))' },
+    { name: 'Rejected', count: 24, description: 'Needs revision', borderColor: 'hsl(var(--destructive))' },
+];
+
+export const reportGeographicDistribution = [
+    { name: 'Lagos', count: 342, colorClass: 'bg-chart-1' },
+    { name: 'Kano', count: 218, colorClass: 'bg-chart-1' },
+    { name: 'Rivers', count: 156, colorClass: 'bg-chart-2' },
+    { name: 'Kaduna', count: 134, colorClass: 'bg-chart-2' },
+    { name: 'FCT Abuja', count: 98, colorClass: 'bg-chart-3' },
+    { name: 'Oyo', count: 87, colorClass: 'bg-chart-3' },
+    { name: 'Edo', count: 76, colorClass: 'bg-chart-4' },
+    { name: 'Others', count: 136, colorClass: 'bg-chart-5' },
+];
+
+export const reportTemplates = [
+    { name: 'Weekly Summary', description: 'A snapshot of the week\'s performance.', icon: Calendar },
+    { name: 'Monthly Report', description: 'A comprehensive monthly review.', icon: FileText },
+    { name: 'Performance Analysis', description: 'Deep-dive into activity trends.', icon: TrendingUp },
+];
+
