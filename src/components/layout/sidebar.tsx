@@ -1,3 +1,4 @@
+
 'use client';
 import {
   Sidebar,
@@ -7,72 +8,23 @@ import {
   SidebarMenuItem,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Logo } from '@/components/icons';
 import { navItems } from '@/lib/data';
 import { usePathname } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, ChevronDown } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import type { NavItem } from '@/lib/types';
-import { cn } from '@/lib/utils';
 import React from 'react';
 
 const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string }) => {
-  const hasChildren = item.children && item.children.length > 0;
-  const isParentActive = hasChildren && pathname.startsWith(item.href);
-
-  if (hasChildren) {
-    return (
-      <Collapsible defaultOpen={isParentActive}>
-        <CollapsibleTrigger asChild>
-           <SidebarMenuButton
-              isActive={isParentActive}
-              tooltip={{ children: item.title }}
-              className="justify-between"
-            >
-              <div className="flex items-center gap-2">
-                <item.icon className="h-5 w-5" />
-                <span>{item.title}</span>
-              </div>
-              <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-            </SidebarMenuButton>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-            <SidebarMenuSub>
-                {item.children.map(child => {
-                  const isHashLink = child.href.includes('#');
-                  const isSubActive = isHashLink 
-                    ? pathname.startsWith(item.href) && pathname.endsWith(child.href.split('#')[1])
-                    : pathname === child.href;
-
-                  return (
-                    <SidebarMenuSubItem key={child.href}>
-                         <SidebarMenuSubButton asChild isActive={isSubActive}>
-                            <a href={child.href}>
-                                <child.icon className="h-4 w-4" />
-                                <span>{child.title}</span>
-                            </a>
-                        </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  )
-                })}
-            </SidebarMenuSub>
-        </CollapsibleContent>
-      </Collapsible>
-    );
-  }
-
   return (
     <SidebarMenuButton
       asChild
-      isActive={pathname === item.href}
+      isActive={pathname.startsWith(item.href)}
       tooltip={{ children: item.title }}
       className="justify-start"
     >

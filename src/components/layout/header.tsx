@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
-import { navItems, mockNotifications } from '@/lib/data';
+import { navItems, mockActivities, mockNotifications } from '@/lib/data';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +22,10 @@ import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { useState, useMemo } from 'react';
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
@@ -29,6 +33,26 @@ export default function Header() {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user1');
   const unreadCount = mockNotifications.filter(n => !n.isRead).length;
   const recentNotifications = mockNotifications.slice(0, 3);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchPopoverOpen, setIsSearchPopoverOpen] = useState(false);
+  const router = useRouter();
+
+
+  const filteredActivities = useMemo(() => {
+    if (!searchQuery) return [];
+    const lowercasedQuery = searchQuery.toLowerCase();
+    return mockActivities.filter(activity =>
+      activity.title.toLowerCase().includes(lowercasedQuery) ||
+      activity.organization.toLowerCase().includes(lowercasedQuery)
+    ).slice(0, 5); // Limit to 5 results
+  }, [searchQuery]);
+  
+  const handleSearchSelection = (activityId: string) => {
+    setIsSearchPopoverOpen(false);
+    setSearchQuery('');
+    router.push(`/dashboard/activities/${activityId}`);
+  };
+
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-card/80 px-4 backdrop-blur-lg md:px-8">
@@ -43,15 +67,44 @@ export default function Header() {
           <Wifi size={16} />
           <span className="hidden md:inline">Online</span>
         </div>
-        <div className="relative ml-auto flex-1 md:grow-0">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search activities..."
-            className="w-full rounded-full bg-background pl-9 md:w-[200px] lg:w-[320px] h-10"
-          />
-        </div>
         
+        <Popover open={isSearchPopoverOpen} onOpenChange={setIsSearchPopoverOpen}>
+          <PopoverTrigger asChild>
+            <div className="relative ml-auto flex-1 md:grow-0">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search activities..."
+                className="w-full rounded-full bg-background pl-9 md:w-[200px] lg:w-[320px] h-10"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  if (e.target.value.length > 0) {
+                    setIsSearchPopoverOpen(true);
+                  } else {
+                    setIsSearchPopoverOpen(false);
+                  }
+                }}
+              />
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-[320px] p-0" align="start">
+             <Command>
+              <CommandInput placeholder="Type to search..." className="h-9" />
+              <CommandList>
+                <CommandEmpty>{searchQuery.length > 2 ? 'No results found.' : 'Keep typing...'}</CommandEmpty>
+                <CommandGroup heading="Activities">
+                  {filteredActivities.map(activity => (
+                    <CommandItem key={activity.id} onSelect={() => handleSearchSelection(activity.id)}>
+                      {activity.title}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
         <ThemeToggle />
 
         <Button variant="ghost" size="icon" className="relative rounded-full h-10 w-10">
