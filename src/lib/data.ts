@@ -1,5 +1,5 @@
 
-import type { NavItem, Activity, Notification } from "@/lib/types";
+import type { NavItem, Activity, Notification, User } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -17,7 +17,7 @@ import {
   Palette,
   Database,
   HelpCircle,
-  User,
+  User as UserIcon,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -61,7 +61,7 @@ export const navItems: NavItem[] = [
         {
             title: "Account",
             href: "/dashboard/settings#account",
-            icon: User
+            icon: UserIcon
         },
         {
             title: "Notifications",
@@ -368,4 +368,61 @@ export const mockNotifications: Notification[] = [
     icon: MessageSquare,
     iconColor: "text-gray-500"
   },
+];
+
+export const mockTeamMembers: User[] = [
+    {
+        id: 'USR-001',
+        name: 'Dr. Amina Yusuf',
+        email: 'amina.yusuf@rcap.gov',
+        avatarId: 'user1',
+        role: 'National Coordinator',
+        team: 'Federal MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-002',
+        name: 'Bolanle Adebayo',
+        email: 'bolanle.adebayo@rcap.gov',
+        avatarId: 'user2',
+        role: 'State Coordinator',
+        team: 'Lagos State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-003',
+        name: 'Chinedu Okoro',
+        email: 'chinedu.okoro@rcap.gov',
+        avatarId: 'user3',
+        role: 'Field Officer',
+        team: 'Rivers State MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-004',
+        name: 'Fatima Bello',
+        email: 'fatima.bello@rcap.gov',
+        avatarId: 'user4',
+        role: 'Data Analyst',
+        team: 'Federal MOH',
+        status: 'Active',
+    },
+    {
+        id: 'USR-005',
+        name: 'Musa Ibrahim',
+        email: 'musa.ibrahim@rcap.gov',
+        avatarId: 'user5',
+        role: 'State Coordinator',
+        team: 'Kano State PHCDA',
+        status: 'Active',
+    },
+    {
+        id: 'USR-006',
+        name: 'Ngozi Eze',
+        email: 'ngozi.eze@rcap.gov',
+        avatarId: 'user6',
+        role: 'Field Officer',
+        team: 'Oyo State MOH',
+        status: 'Invited',
+    },
 ];

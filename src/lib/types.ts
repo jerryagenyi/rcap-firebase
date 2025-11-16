@@ -24,10 +24,13 @@ export type Activity = {
 };
 
 export type User = {
+  id: string;
   name: string;
   email: string;
-  avatar: string;
+  avatarId: string;
   role: string;
+  team: string;
+  status: 'Active' | 'Invited';
 };
 
 export type NotificationType = "Approval" | "Assignment" | "Alert" | "System" | "Comment";
