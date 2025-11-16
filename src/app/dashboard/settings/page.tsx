@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState } from 'react';
@@ -20,6 +21,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
+import { Slider } from '@/components/ui/slider';
 
 const AccountSettings = () => {
     const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
@@ -205,12 +207,69 @@ const AppearanceSettings = () => (
     <CardHeader>
       <CardTitle>Appearance</CardTitle>
       <CardDescription>
-        Customize the look and feel of the application.
+        Customize the look and feel of the application to your preference.
       </CardDescription>
     </CardHeader>
-    <CardContent>
-      <p>Appearance settings content will go here.</p>
+    <CardContent className="space-y-8">
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Theme</h3>
+        <div className="flex items-start justify-between rounded-lg border p-4">
+          <div className="space-y-0.5">
+            <Label htmlFor="dark-mode" className="text-base">Dark Mode</Label>
+            <p className="text-sm text-muted-foreground">
+              Enable dark mode for a different visual experience.
+            </p>
+          </div>
+          <Switch id="dark-mode" />
+        </div>
+      </div>
+
+      <Separator />
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Font Size</h3>
+        <div className="rounded-lg border p-4 space-y-4">
+          <div className="flex justify-between items-center">
+            <Label htmlFor="font-size" className="text-base">Application Font Size</Label>
+            <span className="text-sm text-muted-foreground">16px</span>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Adjust the overall font size of the application for better readability.
+          </p>
+          <Slider defaultValue={[16]} max={20} min={12} step={1} id="font-size" />
+        </div>
+      </div>
+
+      <Separator />
+      
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Accessibility</h3>
+        <div className="space-y-4">
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="high-contrast" className="text-base">High Contrast Mode</Label>
+              <p className="text-sm text-muted-foreground">
+                Increase contrast throughout the application.
+              </p>
+            </div>
+            <Switch id="high-contrast" />
+          </div>
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="reduced-motion" className="text-base">Reduced Motion</Label>
+              <p className="text-sm text-muted-foreground">
+                Reduce animations and motion effects.
+              </p>
+            </div>
+            <Switch id="reduced-motion" />
+          </div>
+        </div>
+      </div>
     </CardContent>
+    <CardFooter className="border-t pt-6">
+      <Button variant="gradient" className="ml-auto">Save Appearance Settings</Button>
+    </CardFooter>
   </Card>
 );
 
@@ -302,3 +361,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    
