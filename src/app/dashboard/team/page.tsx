@@ -100,7 +100,6 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
   
   return (
     <>
-      <AlertDialog>
         <Card className="p-6">
           <CardContent className="flex flex-col items-center text-center p-0">
             <div className="relative w-24 h-24">
@@ -115,10 +114,10 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
             <p className="text-xs text-primary mt-1">{member.team}</p>
 
             <div className="flex gap-2 mt-6">
+              <Button variant="outline" size="icon" className="h-10 w-10">
+                <Mail className="h-5 w-5" />
+              </Button>
               <Dialog>
-                <Button variant="outline" size="icon" className="h-10 w-10">
-                  <Mail className="h-5 w-5" />
-                </Button>
                 <DialogTrigger asChild>
                   <Button variant="outline" size="icon" className="h-10 w-10">
                     <MessageSquare className="h-5 w-5" />
@@ -149,6 +148,8 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
                     </DialogFooter>
                 </DialogContent>
               </Dialog>
+              <Dialog>
+                <AlertDialog>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="icon" className="h-10 w-10">
@@ -166,56 +167,54 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
                         </AlertDialogTrigger>
                     </DropdownMenuContent>
                   </DropdownMenu>
+
+                   <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                            <DialogTitle>Edit Permissions</DialogTitle>
+                            <DialogDescription>Change the role for {member.name}.</DialogDescription>
+                        </DialogHeader>
+                        <div className="py-4 space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="role">Role</Label>
+                                <Select defaultValue={member.role}>
+                                    <SelectTrigger id="role">
+                                        <SelectValue placeholder="Select a role" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {userRoles.map(role => (
+                                            <SelectItem key={role} value={role}>{role}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button type="button" variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button type="submit" variant="gradient">Save Changes</Button>
+                        </DialogFooter>
+                    </DialogContent>
+
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently remove {member.name} from the team and revoke their access to the RCAP platform.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                          Yes, remove user
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+              </Dialog>
             </div>
           </CardContent>
         </Card>
-
-        {/* Edit Permissions Dialog */}
-        <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-                <DialogTitle>Edit Permissions</DialogTitle>
-                <DialogDescription>Change the role for {member.name}.</DialogDescription>
-            </DialogHeader>
-            <div className="py-4 space-y-4">
-                <div className="space-y-2">
-                    <Label htmlFor="role">Role</Label>
-                    <Select defaultValue={member.role}>
-                        <SelectTrigger id="role">
-                            <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {userRoles.map(role => (
-                                <SelectItem key={role} value={role}>{role}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
-            <DialogFooter>
-                <DialogClose asChild>
-                    <Button type="button" variant="outline">Cancel</Button>
-                </DialogClose>
-                <Button type="submit" variant="gradient">Save Changes</Button>
-            </DialogFooter>
-        </DialogContent>
-
-        {/* Remove User Alert Dialog */}
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove {member.name} from the team and revoke their access to the RCAP platform.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-              Yes, remove user
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-
-      </AlertDialog>
       <TeamMemberProfileDialog member={member} open={isProfileOpen} onOpenChange={setIsProfileOpen} />
     </>
   );
@@ -307,3 +306,5 @@ export default function TeamPage() {
     </div>
   );
 }
+
+    
