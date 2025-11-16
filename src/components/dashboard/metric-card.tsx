@@ -13,8 +13,9 @@ type MetricCardProps = {
   value: string;
   trend: string;
   icon: LucideIcon;
-  color?: string;
+  accentColor?: string;
   progress?: number;
+  trendColor?: string;
 };
 
 export default function MetricCard({
@@ -22,25 +23,26 @@ export default function MetricCard({
   value,
   trend,
   icon: Icon,
-  color = 'text-primary',
+  accentColor = 'bg-primary',
   progress,
+  trendColor
 }: MetricCardProps) {
   return (
-    <Card className="relative overflow-hidden">
-      <div className="absolute top-0 left-0 h-1.5 w-full bg-gradient-to-r from-primary to-accent" />
+    <Card>
+       <div className={cn('absolute top-0 left-0 h-1 w-full', accentColor)} />
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-secondary">
+        <CardTitle className="text-sm text-secondary">
           {title}
         </CardTitle>
-        <Icon className={cn('h-5 w-5', color)} />
+        <Icon className={cn('h-6 w-6 text-foreground/70')} />
       </CardHeader>
       <CardContent>
-        <div className="animate-count-up text-3xl font-bold text-foreground">
+        <div className="text-3xl font-bold text-foreground">
           {value}
         </div>
-        <p className="text-xs text-muted-foreground">{trend}</p>
+        <p className={cn("text-xs", trendColor ? trendColor : "text-muted-foreground")}>{trend}</p>
         {progress !== undefined && (
-          <Progress value={progress} className="mt-2 h-2" />
+          <Progress value={progress} className="mt-2 h-1" indicatorClassName="bg-gradient-to-r from-primary to-accent" />
         )}
       </CardContent>
     </Card>

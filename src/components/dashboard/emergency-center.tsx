@@ -1,51 +1,25 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, ShieldAlert, CheckCircle2 } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const alerts = [
-    {
-        title: "High Alert: Lassa Fever Outbreak",
-        location: "Edo State",
-        severity: "Critical",
-        icon: AlertTriangle,
-        color: "text-red-500",
-    },
-    {
-        title: "Cholera Cases Reported",
-        location: "Borno State",
-        severity: "High",
-        icon: ShieldAlert,
-        color: "text-orange-500",
-    },
-    {
-        title: "Vaccine Supply Chain Update",
-        location: "National",
-        severity: "Info",
-        icon: CheckCircle2,
-        color: "text-blue-500",
-    },
-]
 
 export default function EmergencyCenter() {
   return (
-    <Card>
+    <Card className="bg-red-600 text-white">
       <CardHeader>
-        <CardTitle>Emergency Alert Center</CardTitle>
-        <CardDescription>Priority notifications and active emergencies.</CardDescription>
+        <div className="flex items-center gap-4">
+            <AlertTriangle className="h-12 w-12" />
+            <div>
+                <CardTitle>Active Emergency Alert</CardTitle>
+                <CardDescription className="text-red-200">Immediate response required.</CardDescription>
+            </div>
+        </div>
       </CardHeader>
-      <CardContent>
-        <ul className="space-y-4">
-            {alerts.map((alert, index) => (
-                <li key={index} className="flex items-start gap-4 p-3 rounded-lg hover:bg-secondary">
-                    <alert.icon className={`mt-1 h-5 w-5 flex-shrink-0 ${alert.color}`} />
-                    <div className="flex-1">
-                        <p className="font-semibold">{alert.title}</p>
-                        <p className="text-sm text-muted-foreground">{alert.location}</p>
-                    </div>
-                    <Button variant="ghost" size="sm">View</Button>
-                </li>
-            ))}
-        </ul>
+      <CardContent className="space-y-4">
+        <p>Cholera outbreak reported in Kano State. Immediate response required.</p>
+        <div className="flex gap-4">
+            <Button variant="outline" className="bg-white text-red-600 border-white hover:bg-white/90 hover:text-red-600">Create Response Activity</Button>
+            <Button variant="outline" className="text-white border-white/50 hover:bg-white/10 hover:text-white">View Details</Button>
+        </div>
       </CardContent>
     </Card>
   );

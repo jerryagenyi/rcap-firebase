@@ -1,5 +1,5 @@
 'use client';
-import { Bell, Search } from 'lucide-react';
+import { Bell, Search, Wifi } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,7 +22,7 @@ export default function Header() {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user1');
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-card/80 backdrop-blur-lg px-4 md:px-8">
+    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-card/80 px-4 backdrop-blur-lg md:px-8">
       <div className="md:hidden">
         <SidebarTrigger />
       </div>
@@ -30,6 +30,10 @@ export default function Header() {
       <h1 className="hidden text-xl font-semibold md:block">{pageTitle}</h1>
 
       <div className="flex w-full items-center gap-4 md:ml-auto md:w-auto">
+        <div className="flex items-center gap-2 text-sm text-green-500">
+          <Wifi size={16} />
+          <span className="hidden md:inline">Online</span>
+        </div>
         <div className="relative ml-auto flex-1 md:grow-0">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input

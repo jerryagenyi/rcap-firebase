@@ -27,14 +27,18 @@ export default function DashboardPage() {
             activities.
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button>
-            <FileText />
-            View Reports
-          </Button>
+        <div className="flex gap-4">
           <Button variant="gradient">
             <PlusCircle />
             Create Activity
+          </Button>
+          <Button variant="outline">
+            <FileText />
+            View Reports
+          </Button>
+           <Button variant="outline">
+            <Users />
+            Manage Teams
           </Button>
         </div>
       </div>

@@ -6,7 +6,6 @@ import {
   Users,
   Settings,
   ShieldAlert,
-  HeartPulse,
   Syringe,
   UserCheck
 } from "lucide-react";
@@ -21,12 +20,13 @@ export const navItems: NavItem[] = [
     title: "Activities",
     href: "/dashboard/activities",
     icon: ClipboardList,
-    badge: 3, // Example for pending approvals
+    badge: 5,
   },
   {
     title: "Reports",
     href: "/dashboard/reports",
     icon: BarChart3,
+    badge: 2,
   },
   {
     title: "Team",
@@ -34,9 +34,10 @@ export const navItems: NavItem[] = [
     icon: Users,
   },
   {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
+    title: "Profile",
+    href: "/dashboard/profile",
+    icon: UserCheck,
+    badge: 1
   },
 ];
 
@@ -46,21 +47,22 @@ export const federalDashboardMetrics = [
     value: "1,247",
     trend: "+12% this month",
     icon: ClipboardList,
-    color: "text-primary",
+    accentColor: "bg-primary",
+    trendColor: "text-green-500",
   },
   {
     title: "Active Outbreaks",
     value: "3",
-    trend: "2 under control",
+    trend: "2 under control, 1 active",
     icon: ShieldAlert,
-    color: "text-orange-500",
+    accentColor: "bg-orange-500",
   },
   {
     title: "Vaccination Coverage",
     value: "67.3%",
     trend: "Target: 70%",
     icon: Syringe,
-    color: "text-green-500",
+    accentColor: "bg-green-500",
     progress: 67.3,
   },
   {
@@ -68,7 +70,8 @@ export const federalDashboardMetrics = [
     value: "15,892",
     trend: "↑ 1,234 this quarter",
     icon: UserCheck,
-    color: "text-accent",
+    accentColor: "bg-accent",
+    trendColor: "text-accent"
   },
 ];
 

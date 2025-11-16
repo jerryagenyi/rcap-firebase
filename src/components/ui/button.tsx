@@ -18,10 +18,10 @@ const buttonVariants = cva(
           "bg-accent text-accent-foreground hover:bg-accent/90",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        gradient: "bg-gradient-to-r from-[#7B2CBF] to-[#4A90E2] text-primary-foreground hover:opacity-90 transition-opacity",
+        gradient: "bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity",
       },
       size: {
-        default: "h-12 px-6 py-3",
+        default: "h-12 px-6",
         sm: "h-9 rounded-md px-3",
         lg: "h-14 rounded-xl px-8 text-lg",
         icon: "h-12 w-12",
