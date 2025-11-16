@@ -259,5 +259,3 @@ export const mockNotifications: Notification[] = [
     iconColor: "text-gray-500"
   },
 ];
-
-    

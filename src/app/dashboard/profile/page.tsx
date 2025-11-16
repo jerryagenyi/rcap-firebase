@@ -36,6 +36,7 @@ import {
   DialogTrigger,
   DialogClose
 } from '@/components/ui/dialog';
+import Link from 'next/link';
 
 const userProfileMetrics = [
   {
@@ -265,8 +266,8 @@ export default function ProfilePage() {
               </div>
             </CardContent>
             <CardFooter className="border-t pt-6">
-              <Button variant="outline" className="w-full">
-                Manage Detailed Preferences
+              <Button variant="outline" className="w-full" asChild>
+                <Link href="/dashboard/settings/notifications-preferences">Manage Detailed Preferences</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -275,5 +276,3 @@ export default function ProfilePage() {
     </div>
   );
 }
-
-    
