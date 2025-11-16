@@ -1,3 +1,4 @@
+
 'use client';
 import {
   Sidebar,
@@ -9,7 +10,6 @@ import {
   SidebarMenuButton,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Logo } from '@/components/icons';
@@ -26,15 +26,14 @@ import React from 'react';
 
 const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string }) => {
   const hasChildren = item.children && item.children.length > 0;
-  const isActive = pathname === item.href;
-  const isChildActive = hasChildren && item.children.some(child => pathname.startsWith(child.href.split('#')[0]) && pathname.includes(child.href.split('#')[1]));
-  
+  const isParentActive = hasChildren && pathname.startsWith(item.href);
+
   if (hasChildren) {
     return (
-      <Collapsible defaultOpen={pathname.startsWith(item.href)}>
+      <Collapsible defaultOpen={isParentActive}>
         <CollapsibleTrigger asChild>
            <SidebarMenuButton
-              isActive={isActive || isChildActive}
+              isActive={isParentActive}
               tooltip={{ children: item.title }}
               className="justify-between"
             >
@@ -48,12 +47,14 @@ const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string })
         <CollapsibleContent>
             <SidebarMenuSub>
                 {item.children.map(child => {
-                  const isSubActive = pathname === child.href;
-                  const isHashActive = pathname.startsWith(item.href) && pathname.endsWith(child.href.split('#')[1])
+                  const isHashLink = child.href.includes('#');
+                  const isSubActive = isHashLink 
+                    ? pathname.startsWith(item.href) && pathname.endsWith(child.href.split('#')[1])
+                    : pathname === child.href;
 
                   return (
                     <SidebarMenuSubItem key={child.href}>
-                         <SidebarMenuSubButton asChild isActive={isSubActive || isHashActive}>
+                         <SidebarMenuSubButton asChild isActive={isSubActive}>
                             <a href={child.href}>
                                 <child.icon className="h-4 w-4" />
                                 <span>{child.title}</span>
@@ -71,7 +72,7 @@ const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string })
   return (
     <SidebarMenuButton
       asChild
-      isActive={isActive}
+      isActive={pathname === item.href}
       tooltip={{ children: item.title }}
       className="justify-start"
     >

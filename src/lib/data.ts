@@ -18,6 +18,8 @@ import {
   Database,
   HelpCircle,
   User as UserIcon,
+  PlusCircle,
+  List,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -31,6 +33,18 @@ export const navItems: NavItem[] = [
     href: "/dashboard/activities",
     icon: ClipboardList,
     badge: 5,
+    children: [
+        {
+            title: "All Activities",
+            href: "/dashboard/activities",
+            icon: List
+        },
+        {
+            title: "Create New",
+            href: "/dashboard/activities/create",
+            icon: PlusCircle
+        },
+    ]
   },
   {
     title: "Reports",
