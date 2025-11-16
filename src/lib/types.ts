@@ -28,3 +28,16 @@ export type User = {
   avatar: string;
   role: string;
 };
+
+export type NotificationType = "Approval" | "Assignment" | "Alert" | "System" | "Comment";
+
+export type Notification = {
+  id: string;
+  type: NotificationType;
+  title: string;
+  description: string;
+  timestamp: string;
+  isRead: boolean;
+  icon: LucideIcon;
+  iconColor: string;
+};

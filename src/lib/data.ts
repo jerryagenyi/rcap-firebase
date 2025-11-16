@@ -1,4 +1,4 @@
-import type { NavItem, Activity } from "@/lib/types";
+import type { NavItem, Activity, Notification } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -7,7 +7,13 @@ import {
   Settings,
   ShieldAlert,
   Syringe,
-  UserCheck
+  UserCheck,
+  Bell,
+  MessageSquare,
+  Mail,
+  FileCheck2,
+  AlertTriangle,
+  Info
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -26,7 +32,6 @@ export const navItems: NavItem[] = [
     title: "Reports",
     href: "/dashboard/reports",
     icon: BarChart3,
-    badge: 2,
   },
   {
     title: "Team",
@@ -34,10 +39,15 @@ export const navItems: NavItem[] = [
     icon: Users,
   },
   {
+    title: 'Notifications',
+    href: '/dashboard/notifications',
+    icon: Bell,
+    badge: 3
+  },
+  {
     title: "Profile",
     href: "/dashboard/profile",
     icon: UserCheck,
-    badge: 1
   },
 ];
 
@@ -159,4 +169,57 @@ export const mockActivities: Activity[] = [
         description: "Proposal for disease surveillance training, rejected due to budget issues.",
         type: "Training Workshop",
     },
+];
+
+export const mockNotifications: Notification[] = [
+  {
+    id: "NOTIF-001",
+    type: "Approval",
+    title: "Activity Approved",
+    description: "Your activity 'Cholera Prevention Training Workshop' has been approved.",
+    timestamp: "2025-12-11T10:00:00Z",
+    isRead: false,
+    icon: FileCheck2,
+    iconColor: "text-green-500"
+  },
+  {
+    id: "NOTIF-002",
+    type: "Assignment",
+    title: "New Task Assigned",
+    description: "You have been assigned to 'Emergency Response - Lassa Fever Outbreak'.",
+    timestamp: "2025-12-10T14:30:00Z",
+    isRead: false,
+    icon: FileCheck2,
+    iconColor: "text-blue-500"
+  },
+  {
+    id: "NOTIF-003",
+    type: "Alert",
+    title: "Urgent: Outbreak Alert",
+    description: "A new Cholera outbreak has been reported in Kano State.",
+    timestamp: "2025-12-10T09:00:00Z",
+    isRead: false,
+    icon: AlertTriangle,
+    iconColor: "text-red-500"
+  },
+  {
+    id: "NOTIF-004",
+    type: "System",
+    title: "System Update",
+    description: "RCAP has been updated to version 1.1.0.",
+    timestamp: "2025-12-09T18:00:00Z",
+    isRead: true,
+    icon: Info,
+    iconColor: "text-primary"
+  },
+  {
+    id: "NOTIF-005",
+    type: "Comment",
+    title: "New Comment",
+    description: "Dr. Aisha added a comment on 'COVID-19 Vaccination Campaign'.",
+    timestamp: "2025-12-08T11:45:00Z",
+    isRead: true,
+    icon: MessageSquare,
+    iconColor: "text-gray-500"
+  },
 ];
