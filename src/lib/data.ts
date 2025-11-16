@@ -1,11 +1,11 @@
-import type { NavItem, Activity, Notification } from "@/lib/types";
+import type { NavItem } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
   BarChart3,
   Users,
   Settings,
-  ShieldAlert,
+  ShieldCheck,
   Syringe,
   UserCheck,
   Bell,
@@ -13,7 +13,11 @@ import {
   Mail,
   FileCheck2,
   AlertTriangle,
-  Info
+  Info,
+  Palette,
+  Database,
+  HelpCircle,
+  User,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -53,6 +57,33 @@ export const navItems: NavItem[] = [
     title: "Settings",
     href: "/dashboard/settings",
     icon: Settings,
+    children: [
+        {
+            title: "Account",
+            href: "/dashboard/settings#account",
+            icon: User
+        },
+        {
+            title: "Notifications",
+            href: "/dashboard/settings#notifications",
+            icon: Bell
+        },
+        {
+            title: "Appearance",
+            href: "/dashboard/settings#appearance",
+            icon: Palette
+        },
+        {
+            title: "Data & Sync",
+            href: "/dashboard/settings#data",
+            icon: Database
+        },
+        {
+            title: "Help",
+            href: "/dashboard/settings#help",
+            icon: HelpCircle
+        }
+    ]
   },
 ];
 

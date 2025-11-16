@@ -7,15 +7,87 @@ import {
   SidebarMenuItem,
   SidebarMenu,
   SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Logo } from '@/components/icons';
 import { navItems } from '@/lib/data';
 import { usePathname } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut } from 'lucide-react';
+import { LogOut, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import type { NavItem } from '@/lib/types';
+import { cn } from '@/lib/utils';
+import React from 'react';
+
+const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string }) => {
+  const hasChildren = item.children && item.children.length > 0;
+  const isActive = pathname === item.href;
+  const isChildActive = hasChildren && item.children.some(child => pathname.startsWith(child.href.split('#')[0]) && pathname.includes(child.href.split('#')[1]));
+  
+  if (hasChildren) {
+    return (
+      <Collapsible defaultOpen={pathname.startsWith(item.href)}>
+        <CollapsibleTrigger asChild>
+           <SidebarMenuButton
+              isActive={isActive || isChildActive}
+              tooltip={{ children: item.title }}
+              className="justify-between"
+            >
+              <div className="flex items-center gap-2">
+                <item.icon className="h-5 w-5" />
+                <span>{item.title}</span>
+              </div>
+              <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+            </SidebarMenuButton>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+            <SidebarMenuSub>
+                {item.children.map(child => {
+                  const isSubActive = pathname === child.href;
+                  const isHashActive = pathname.startsWith(item.href) && pathname.endsWith(child.href.split('#')[1])
+
+                  return (
+                    <SidebarMenuSubItem key={child.href}>
+                         <SidebarMenuSubButton asChild isActive={isSubActive || isHashActive}>
+                            <a href={child.href}>
+                                <child.icon className="h-4 w-4" />
+                                <span>{child.title}</span>
+                            </a>
+                        </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  )
+                })}
+            </SidebarMenuSub>
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
+  return (
+    <SidebarMenuButton
+      asChild
+      isActive={isActive}
+      tooltip={{ children: item.title }}
+      className="justify-start"
+    >
+      <a href={item.href}>
+        <item.icon className="h-5 w-5" />
+        <span>{item.title}</span>
+        {item.badge && (
+          <Badge variant="destructive" className="ml-auto">
+            {item.badge}
+          </Badge>
+        )}
+      </a>
+    </SidebarMenuButton>
+  );
+};
+
 
 export default function AppSidebar() {
   const pathname = usePathname();
@@ -37,22 +109,7 @@ export default function AppSidebar() {
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.href}
-                tooltip={{ children: item.title }}
-                className="justify-start"
-              >
-                <a href={item.href}>
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.title}</span>
-                  {item.badge && (
-                    <Badge variant="destructive" className="ml-auto">
-                      {item.badge}
-                    </Badge>
-                  )}
-                </a>
-              </SidebarMenuButton>
+              <SidebarNavItem item={item} pathname={pathname} />
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

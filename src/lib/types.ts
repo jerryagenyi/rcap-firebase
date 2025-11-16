@@ -6,6 +6,7 @@ export type NavItem = {
   icon: LucideIcon;
   label?: string;
   badge?: number;
+  children?: NavItem[];
 };
 
 export type ActivityStatus = "Draft" | "Submitted" | "Approved" | "Rejected" | "Completed";
