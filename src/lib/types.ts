@@ -45,3 +45,10 @@ export type Notification = {
   icon: LucideIcon;
   iconColor: string;
 };
+
+export type ReportTemplate = {
+    id: string;
+    name: string;
+    description: string;
+    icon: LucideIcon;
+}

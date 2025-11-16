@@ -660,8 +660,7 @@ export const reportGeographicDistribution = [
 ];
 
 export const reportTemplates = [
-    { name: 'Weekly Summary', description: 'A snapshot of the week\'s performance.', icon: Calendar },
-    { name: 'Monthly Report', description: 'A comprehensive monthly review.', icon: FileText },
-    { name: 'Performance Analysis', description: 'Deep-dive into activity trends.', icon: TrendingUp },
+    { id: 'weekly-summary', name: 'Weekly Summary', description: 'A snapshot of the week\'s performance.', icon: Calendar },
+    { id: 'monthly-report', name: 'Monthly Report', description: 'A comprehensive monthly review.', icon: FileText },
+    { id: 'performance-analysis', name: 'Performance Analysis', description: 'Deep-dive into activity trends.', icon: TrendingUp },
 ];
-
