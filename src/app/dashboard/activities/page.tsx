@@ -8,13 +8,6 @@ import { mockActivities } from "@/lib/data";
 import ActivitiesList from "./components/activities-data-table";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -23,32 +16,33 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import ActivityFilters from "./components/filters";
+import PaginationControls from "@/components/shared/pagination-controls";
 
 
 export default function ActivitiesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const activityCount = mockActivities.length;
-  const totalPages = Math.ceil(activityCount / itemsPerPage);
+  const filteredActivities = useMemo(() => {
+    if (!searchQuery) {
+        return mockActivities;
+    }
+    const lowercasedQuery = searchQuery.toLowerCase();
+    return mockActivities.filter(activity =>
+        activity.title.toLowerCase().includes(lowercasedQuery) ||
+        activity.organization.toLowerCase().includes(lowercasedQuery) ||
+        activity.location.toLowerCase().includes(lowercasedQuery)
+    );
+  }, [searchQuery]);
+
+  const totalPages = Math.ceil(filteredActivities.length / itemsPerPage);
 
   const paginatedActivities = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return mockActivities.slice(startIndex, endIndex);
-  }, [currentPage, itemsPerPage]);
-
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
-
-  const handleItemsPerPageChange = (value: string) => {
-    setItemsPerPage(Number(value));
-    setCurrentPage(1); // Reset to first page when items per page changes
-  };
-
-  const startItem = (currentPage - 1) * itemsPerPage + 1;
-  const endItem = Math.min(currentPage * itemsPerPage, activityCount);
+    return filteredActivities.slice(startIndex, endIndex);
+  }, [currentPage, itemsPerPage, filteredActivities]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -58,7 +52,7 @@ export default function ActivitiesPage() {
             Activity Management
           </h1>
           <p className="text-muted-foreground">
-            {activityCount} activities
+            {filteredActivities.length} activities
           </p>
         </div>
         <Button asChild variant="gradient">
@@ -75,6 +69,11 @@ export default function ActivitiesPage() {
           <Input
             placeholder="Search activities, organizations, locations..."
             className="h-12 pl-12 w-full"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
           />
         </div>
         <Sheet>
@@ -98,41 +97,18 @@ export default function ActivitiesPage() {
 
       <ActivitiesList data={paginatedActivities} />
 
-       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            Showing {startItem}-{endItem} of {activityCount} activities
-          </p>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Show:</span>
-            <Select value={String(itemsPerPage)} onValueChange={handleItemsPerPageChange}>
-              <SelectTrigger className="h-9 w-[70px]">
-                <SelectValue placeholder={itemsPerPage} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10</SelectItem>
-                <SelectItem value="20">20</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="h-10" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</Button>
-          {[...Array(totalPages)].map((_, i) => (
-             <Button 
-                key={i} 
-                variant="outline" 
-                className="h-10 w-10 p-0" 
-                data-active={currentPage === i + 1}
-                onClick={() => handlePageChange(i + 1)}
-              >
-                {i + 1}
-              </Button>
-          ))}
-          <Button variant="outline" className="h-10" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>Next</Button>
-        </div>
-      </div>
+       <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={(value) => {
+            setItemsPerPage(Number(value));
+            setCurrentPage(1);
+        }}
+        totalItems={filteredActivities.length}
+        itemName="activities"
+       />
     </div>
   );
 }

@@ -42,6 +42,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import PaginationControls from '@/components/shared/pagination-controls';
 
 const statusStyles: Record<UserType['status'], string> = {
   Active: 'bg-green-500 text-white',
@@ -220,6 +221,8 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
 export default function TeamPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const userRoles = [...new Set(mockTeamMembers.map(m => m.role))];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   
   const filteredMembers = useMemo(() => {
     if (!searchQuery) {
@@ -232,6 +235,15 @@ export default function TeamPage() {
       member.role.toLowerCase().includes(lowercasedQuery)
     );
   }, [searchQuery]);
+
+  const totalPages = Math.ceil(filteredMembers.length / itemsPerPage);
+
+  const paginatedMembers = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredMembers.slice(startIndex, endIndex);
+  }, [currentPage, itemsPerPage, filteredMembers]);
+
 
   return (
     <div className="flex flex-col gap-8">
@@ -291,15 +303,33 @@ export default function TeamPage() {
           placeholder="Search by name, email, or role..." 
           className="h-12 pl-12 w-full" 
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => {
+            setSearchQuery(e.target.value)
+            setCurrentPage(1);
+          }}
         />
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filteredMembers.map((member) => (
+        {paginatedMembers.map((member) => (
           <TeamMemberCard key={member.id} member={member} />
         ))}
       </div>
+      
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={(value) => {
+            setItemsPerPage(Number(value));
+            setCurrentPage(1);
+        }}
+        totalItems={filteredMembers.length}
+        itemName="members"
+        itemsPerPageOptions={[8, 12, 16]}
+       />
+
     </div>
   );
 }
