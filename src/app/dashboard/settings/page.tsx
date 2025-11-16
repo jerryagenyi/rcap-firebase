@@ -23,6 +23,19 @@ import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { useState } from 'react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+
 
 const AccountSettings = () => {
     const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
@@ -102,21 +115,56 @@ const PasswordManagement = () => (
     </Card>
 );
 
-const DangerZone = () => (
-    <Card className="border-destructive/50">
-         <CardHeader>
-            <CardTitle className="text-destructive">Danger Zone</CardTitle>
-            <CardDescription className="text-destructive/80">These actions are permanent and cannot be undone.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex items-center justify-between">
-            <div>
-                <p className="font-semibold">Delete Your Account</p>
-                <p className="text-sm text-muted-foreground">Permanently delete all your data from the RCAP platform.</p>
-            </div>
-            <Button variant="destructive">Delete Account</Button>
-        </CardContent>
-    </Card>
-);
+const DangerZone = () => {
+    const [challengeInput, setChallengeInput] = useState('');
+    const isChallengeMet = challengeInput === 'DELETE';
+
+    return (
+        <Card className="border-destructive/50">
+             <CardHeader>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription className="text-destructive/80">These actions are permanent and cannot be undone.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+                <div>
+                    <p className="font-semibold">Delete Your Account</p>
+                    <p className="text-sm text-muted-foreground">Permanently delete all your data from the RCAP platform.</p>
+                </div>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive">Delete Account</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <div className="space-y-2 my-4">
+                            <Label htmlFor="delete-challenge">To confirm, please type "DELETE" below:</Label>
+                            <Input 
+                                id="delete-challenge" 
+                                value={challengeInput}
+                                onChange={(e) => setChallengeInput(e.target.value)}
+                                placeholder="DELETE"
+                            />
+                        </div>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setChallengeInput('')}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                disabled={!isChallengeMet}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                                I understand, delete my account
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </CardContent>
+        </Card>
+    );
+};
 
 const NotificationsSettings = () => (
   <Card id="notifications">
@@ -321,3 +369,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    
