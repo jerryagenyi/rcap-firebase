@@ -1,8 +1,21 @@
+
+'use client';
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, ListFilter, Search } from "lucide-react";
 import { mockActivities } from "@/lib/data";
 import ActivitiesList from "./components/activities-data-table";
 import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import ActivityFilters from "./components/filters";
+
 
 export default function ActivitiesPage() {
   const activityCount = mockActivities.length;
@@ -18,9 +31,11 @@ export default function ActivitiesPage() {
             {activityCount} activities
           </p>
         </div>
-        <Button variant="gradient">
-          <PlusCircle />
-          Create
+        <Button asChild variant="gradient">
+          <Link href="/dashboard/activities/create">
+            <PlusCircle />
+            Create
+          </Link>
         </Button>
       </div>
 
@@ -32,10 +47,23 @@ export default function ActivitiesPage() {
             className="h-12 pl-12 w-full"
           />
         </div>
-        <Button variant="outline" className="h-12">
-          <ListFilter className="mr-2 h-5 w-5" />
-          Filters
-        </Button>
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button variant="outline" className="h-12">
+                    <ListFilter className="mr-2 h-5 w-5" />
+                    Filters
+                </Button>
+            </SheetTrigger>
+            <SheetContent className="w-full sm:max-w-md p-0">
+                <SheetHeader className="p-6 pb-0">
+                    <SheetTitle>Filter Activities</SheetTitle>
+                    <SheetDescription>
+                        Refine your activity list using the filters below.
+                    </SheetDescription>
+                </SheetHeader>
+                <ActivityFilters />
+            </SheetContent>
+        </Sheet>
       </div>
 
       <ActivitiesList data={mockActivities} />
