@@ -7,11 +7,22 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
-       <div className="absolute top-8 left-8 flex items-center gap-2 text-lg font-semibold text-primary">
-          <Logo className="h-8 w-8" />
-          <span>HealthLink RCAP</span>
+      <header className="absolute top-8 text-center">
+        <div className="flex items-center justify-center gap-2">
+            <Logo className="h-16 w-16" />
         </div>
-      {children}
+        <h1 className="text-3xl font-bold text-primary">RCAP</h1>
+        <p className="text-sm text-secondary">Federal Ministry of Health</p>
+        <p className="text-xs text-secondary">Risk Communication Activity Platform</p>
+      </header>
+
+      <main className="flex w-full flex-1 items-center justify-center">
+        {children}
+      </main>
+
+      <footer className="absolute bottom-8 text-center text-xs text-secondary">
+        <p>© 2025 Federal Ministry of Health • RCAP v1.0.0</p>
+      </footer>
     </div>
   );
 }
