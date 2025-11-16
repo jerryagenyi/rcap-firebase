@@ -5,26 +5,111 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { User, Bell, Palette, Database, HelpCircle } from 'lucide-react';
+import { User, Bell, Palette, Database, HelpCircle, ShieldCheck, KeyRound, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
 
-// Placeholder content for each tab
-const AccountSettings = () => (
-  <Card>
-    <CardHeader>
-      <CardTitle>Account Settings</CardTitle>
-      <CardDescription>
-        Manage your profile, password, and account settings.
-      </CardDescription>
-    </CardHeader>
-    <CardContent>
-      <p>Account settings content will go here.</p>
-    </CardContent>
-  </Card>
-);
+const AccountSettings = () => {
+    const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
+    
+    return (
+        <div className="space-y-8">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Profile Information</CardTitle>
+                    <CardDescription>Update your personal details here.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="flex items-center gap-6">
+                        <Avatar className="h-20 w-20">
+                            <AvatarImage src={userAvatar?.imageUrl} />
+                            <AvatarFallback>FA</AvatarFallback>
+                        </Avatar>
+                        <div className="space-y-2">
+                             <Button variant="outline">Change Photo</Button>
+                             <p className="text-xs text-muted-foreground">JPG, GIF or PNG. 1MB max.</p>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="fullName">Full Name</Label>
+                            <Input id="fullName" defaultValue="Federal Admin" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email Address</Label>
+                            <Input id="email" type="email" defaultValue="admin@rcap.gov" />
+                        </div>
+                         <div className="space-y-2">
+                            <Label htmlFor="phone">Phone Number</Label>
+                            <Input id="phone" type="tel" placeholder="+234 123 456 7890" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="jobTitle">Job Title</Label>
+                            <Input id="jobTitle" defaultValue="National Coordinator" />
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
+                            <Label htmlFor="bio">Bio</Label>
+                            <Textarea id="bio" placeholder="Tell us a little about yourself." className="min-h-[100px]" />
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter className="border-t pt-6">
+                    <Button variant="gradient" className="ml-auto">Save Changes</Button>
+                </CardFooter>
+            </Card>
+
+            <Card>
+                 <CardHeader>
+                    <CardTitle>Password Management</CardTitle>
+                    <CardDescription>Change your password here. Ensure it is a strong one.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="space-y-2">
+                        <Label htmlFor="currentPassword">Current Password</Label>
+                        <Input id="currentPassword" type="password" />
+                    </div>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="newPassword">New Password</Label>
+                            <Input id-="newPassword" type="password" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                            <Input id="confirmPassword" type="password" />
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter className="border-t pt-6">
+                    <Button variant="gradient" className="ml-auto">Update Password</Button>
+                </CardFooter>
+            </Card>
+
+            <Card className="border-destructive/50">
+                 <CardHeader>
+                    <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                    <CardDescription className="text-destructive/80">These actions are permanent and cannot be undone.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex items-center justify-between">
+                    <div>
+                        <p className="font-semibold">Delete Your Account</p>
+                        <p className="text-sm text-muted-foreground">Permanently delete all your data from the RCAP platform.</p>
+                    </div>
+                    <Button variant="destructive">Delete Account</Button>
+                </CardContent>
+            </Card>
+        </div>
+    )
+};
 
 const NotificationsSettings = () => (
   <Card>
