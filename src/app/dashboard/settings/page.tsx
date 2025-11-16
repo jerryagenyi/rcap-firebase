@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -18,6 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
 
 const AccountSettings = () => {
     const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
@@ -116,12 +118,85 @@ const NotificationsSettings = () => (
     <CardHeader>
       <CardTitle>Notification Preferences</CardTitle>
       <CardDescription>
-        Choose how you want to be notified.
+        Choose how and when you want to be notified.
       </CardDescription>
     </CardHeader>
-    <CardContent>
-      <p>Notification preferences content will go here.</p>
+    <CardContent className="space-y-8">
+      
+      {/* Email Notifications */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Email Notifications</h3>
+        <div className="space-y-4">
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="email-approvals" className="text-base">Approval Requests</Label>
+              <p className="text-sm text-muted-foreground">
+                Receive emails for new approval requests and status updates.
+              </p>
+            </div>
+            <Switch id="email-approvals" defaultChecked />
+          </div>
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="email-assignments" className="text-base">Task Assignments</Label>
+              <p className="text-sm text-muted-foreground">
+                Get notified when you are assigned to a new activity or task.
+              </p>
+            </div>
+            <Switch id="email-assignments" defaultChecked />
+          </div>
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="email-alerts" className="text-base">Urgent Alerts</Label>
+              <p className="text-sm text-muted-foreground">
+                Receive immediate emails for critical outbreak alerts.
+              </p>
+            </div>
+            <Switch id="email-alerts" defaultChecked />
+          </div>
+        </div>
+      </div>
+      
+      <Separator />
+
+      {/* Push Notifications */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Push Notifications</h3>
+        <div className="space-y-4">
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="push-everything" className="text-base">Everything</Label>
+              <p className="text-sm text-muted-foreground">
+                Receive push notifications for all activities.
+              </p>
+            </div>
+            <Switch id="push-everything" />
+          </div>
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="push-mentions" className="text-base">Direct Mentions</Label>
+              <p className="text-sm text-muted-foreground">
+                Get notified only when someone @mentions you.
+              </p>
+            </div>
+            <Switch id="push-mentions" defaultChecked />
+          </div>
+          <div className="flex items-start justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="push-none" className="text-base">Nothing</Label>
+              <p className="text-sm text-muted-foreground">
+                No push notifications will be sent.
+              </p>
+            </div>
+            <Switch id="push-none" />
+          </div>
+        </div>
+      </div>
+
     </CardContent>
+     <CardFooter className="border-t pt-6">
+        <Button variant="gradient" className="ml-auto">Save Preferences</Button>
+    </CardFooter>
   </Card>
 );
 
