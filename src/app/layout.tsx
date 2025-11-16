@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Roboto } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import ClientDeveloperMenu from '@/components/layout/dev-menu-client';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const roboto = Roboto({ 
   subsets: ['latin'],
@@ -24,9 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn('font-body antialiased', roboto.variable)}>
-        {children}
-        <Toaster />
-        <ClientDeveloperMenu />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+          <ClientDeveloperMenu />
+        </ThemeProvider>
       </body>
     </html>
   );

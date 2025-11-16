@@ -21,6 +21,7 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function Header() {
   const pathname = usePathname();
@@ -50,6 +51,8 @@ export default function Header() {
             className="w-full rounded-full bg-background pl-9 md:w-[200px] lg:w-[320px] h-10"
           />
         </div>
+        
+        <ThemeToggle />
 
         <Button variant="ghost" size="icon" className="relative rounded-full h-10 w-10">
           <MessageSquare className="h-5 w-5" />
