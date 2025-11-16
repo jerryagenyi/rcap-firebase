@@ -2,99 +2,99 @@
   "placeholderImages": [
     {
       "id": "user1",
-      "description": "Abstract gradient 1",
-      "imageUrl": "https://images.unsplash.com/photo-1599233130198-54c7a6b7d277?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE5OTY1MHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 1",
+      "imageUrl": "https://images.unsplash.com/photo-1633419385314-a953e680509a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user2",
-      "description": "Abstract gradient 2",
-      "imageUrl": "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE3NTQwMHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 2",
+      "imageUrl": "https://images.unsplash.com/photo-1634429986345-d8e64b85935f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user3",
-      "description": "Abstract gradient 3",
-      "imageUrl": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE5NTM5OHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 3",
+      "imageUrl": "https://images.unsplash.com/photo-1628135314732-c1249c3b8893?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user4",
-      "description": "Abstract gradient 4",
-      "imageUrl": "https://images.unsplash.com/photo-1557683316-9a7c395e2bf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzIwOTA4NHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 4",
+      "imageUrl": "https://images.unsplash.com/photo-1633515438836-59a68d4512b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user5",
-      "description": "Abstract gradient 5",
-      "imageUrl": "https://images.unsplash.com/photo-1557682250-33bd709cbe85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE1OTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 5",
+      "imageUrl": "https://images.unsplash.com/photo-1633412802713-d45012577488?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user6",
-      "description": "Abstract gradient 6",
-      "imageUrl": "https://images.unsplash.com/photo-1614850523060-8da1d56ae167?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzIxODk3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 6",
+      "imageUrl": "https://images.unsplash.com/photo-1618335829735-3c7261361920?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user7",
-      "description": "Abstract gradient 7",
-      "imageUrl": "https://images.unsplash.com/photo-1554034483-04fda0d3507b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE1OTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 7",
+      "imageUrl": "https://images.unsplash.com/photo-1632782163108-1e434f195034?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user8",
-      "description": "Abstract gradient 8",
-      "imageUrl": "https://images.unsplash.com/photo-1557683311-e8706409b85c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE1OTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 8",
+      "imageUrl": "https://images.unsplash.com/photo-1634034379057-26e742727b36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user9",
-      "description": "Abstract gradient 9",
-      "imageUrl": "https://images.unsplash.com/photo-1579546929662-711aa81148e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhYnN0cmFjdCUyMGdyYWRpZW50fGVufDB8fHx8MTc2MzE1OTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 9",
+      "imageUrl": "https://images.unsplash.com/photo-1617791160536-595a0e63198c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhYnN0cmFjdCUyMGxpbmUlMjBhcnR8ZW58MHx8fHwxNzYzOTExODc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user10",
-      "description": "Abstract gradient 10",
-      "imageUrl": "https://images.unsplash.com/photo-1579546928686-286c9fbde1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 10",
+      "imageUrl": "https://images.unsplash.com/photo-1633519391007-6c24a6a5ba14?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user11",
-      "description": "Abstract gradient 11",
-      "imageUrl": "https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMXx8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 11",
+      "imageUrl": "https://images.unsplash.com/photo-1634114221051-a9128f62b7e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMXx8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user12",
-      "description": "Abstract gradient 12",
-      "imageUrl": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMnx8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 12",
+      "imageUrl": "https://images.unsplash.com/photo-1633215882196-f5b119445149?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMnx8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user13",
-      "description": "Abstract gradient 13",
-      "imageUrl": "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 13",
+      "imageUrl": "https://images.unsplash.com/photo-1633519385311-8d267c485a4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user14",
-      "description": "Abstract gradient 14",
-      "imageUrl": "https://images.unsplash.com/photo-1557682250-33bd709cbe85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNHx8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 14",
+      "imageUrl": "https://images.unsplash.com/photo-1633419384813-f90382ca5c0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNHx8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user15",
-      "description": "Abstract gradient 15",
-      "imageUrl": "https://images.unsplash.com/photo-1557683316-9a7c395e2bf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 15",
+      "imageUrl": "https://images.unsplash.com/photo-1633419383393-f1c7d2427a92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "user16",
-      "description": "Abstract gradient 16",
-      "imageUrl": "https://images.unsplash.com/photo-1604012435422-491a9a8a3074?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNnx8YWJzdHJhY3QlMjBncmFkaWVudHxlbnwwfHx8fDE3NjMxNTkzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract gradient"
+      "description": "Abstract line art 16",
+      "imageUrl": "https://images.unsplash.com/photo-1634034378905-5386d34b3f88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNnx8YWJzdHJhY3QlMjBsaW5lJTIwYXJ0fGVufDB8fHx8MTc2MzkxMTg3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "line art"
     },
     {
       "id": "map",
