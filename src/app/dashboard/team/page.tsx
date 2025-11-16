@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { mockTeamMembers } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, UserPlus, Mail, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X } from 'lucide-react';
+import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -114,9 +114,6 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
             <p className="text-xs text-primary mt-1">{member.team}</p>
 
             <div className="flex gap-2 mt-6">
-              <Button variant="outline" size="icon" className="h-10 w-10">
-                <Mail className="h-5 w-5" />
-              </Button>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" size="icon" className="h-10 w-10">
@@ -306,5 +303,3 @@ export default function TeamPage() {
     </div>
   );
 }
-
-    
