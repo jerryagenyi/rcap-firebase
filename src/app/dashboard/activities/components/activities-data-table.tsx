@@ -1,210 +1,79 @@
 "use client";
 
-import * as React from "react";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-  type ColumnFiltersState,
-  type SortingState,
-} from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import type { Activity, ActivityStatus } from "@/lib/types";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { Building, MapPin, Tag, Calendar, Eye, Pencil, Trash2 } from "lucide-react";
 
-const statusColors: Record<ActivityStatus, string> = {
-    Draft: "bg-gray-500 hover:bg-gray-500/80",
-    Submitted: "bg-blue-500 hover:bg-blue-500/80",
-    Approved: "bg-green-600 hover:bg-green-600/80",
-    Rejected: "bg-red-600 hover:bg-red-600/80",
-    Completed: "bg-primary hover:bg-primary/80"
+const statusStyles: Record<ActivityStatus, string> = {
+  Approved: "bg-green-500 text-white",
+  Submitted: "bg-blue-500 text-white",
+  Draft: "bg-gray-500 text-white",
+  Rejected: "bg-red-500 text-white",
+  Completed: "bg-primary text-white",
 };
 
-export const columns: ColumnDef<Activity>[] = [
-  {
-    accessorKey: "title",
-    header: "Title",
-    cell: ({ row }) => (
-      <div className="font-medium text-foreground">{row.getValue("title")}</div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-        const status = row.getValue("status") as ActivityStatus;
-        return <Badge className={`${statusColors[status]} text-white`}>{status}</Badge>
-    },
-  },
-  {
-    accessorKey: "organization",
-    header: "Organization",
-  },
-  {
-    accessorKey: "location",
-    header: "Location",
-  },
-  {
-    accessorKey: "lastModified",
-    header: "Last Modified",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("lastModified"));
-      // Using a specific format to avoid hydration errors
-      return <div>{date.toLocaleDateString('en-CA')}</div>;
-    },
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const activity = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(activity.id)}
-            >
-              Copy activity ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Edit activity</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
-
-export default function ActivitiesDataTable({ data }: { data: Activity[] }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-      columnFilters,
-    },
-  });
-
+function ActivityCard({ activity }: { activity: Activity }) {
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter by title..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+    <Card className="flex items-start gap-4 p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+      <Checkbox className="h-6 w-6 mt-1" />
+      <div className="flex-1">
+        <div className="flex items-start justify-between">
+          <h3 className="text-lg font-bold text-foreground">{activity.title}</h3>
+          <Badge className={`${statusStyles[activity.status]} rounded-lg px-3 py-1`}>{activity.status}</Badge>
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Building className="h-4 w-4" />
+            <span>{activity.organization}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4" />
+            <span>{activity.location}</span>
+          </div>
+          <div className="flex items-center gap-2">
+             <Tag className="h-4 w-4 text-primary" />
+             <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-md">{activity.type}</span>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            <span>Created: {new Date(activity.dateCreated).toLocaleDateString()}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            <span>Modified: {new Date(activity.lastModified).toLocaleDateString()}</span>
+          </div>
+        </div>
+        
+        <div className="mt-4 flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary">
+                <Eye className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary">
+                <Pencil className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500/70 hover:bg-red-500/10 hover:text-red-500">
+                <Trash2 className="h-5 w-5" />
+            </Button>
+        </div>
+
       </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
+    </Card>
+  );
+}
+
+export default function ActivitiesList({ data }: { data: Activity[] }) {
+  return (
+    <div className="grid gap-4">
+      {data.map((activity) => (
+        <ActivityCard key={activity.id} activity={activity} />
+      ))}
     </div>
   );
 }
