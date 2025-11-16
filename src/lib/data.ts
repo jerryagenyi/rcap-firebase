@@ -49,6 +49,11 @@ export const navItems: NavItem[] = [
     href: "/dashboard/profile",
     icon: UserCheck,
   },
+  {
+    title: "Settings",
+    href: "/dashboard/settings",
+    icon: Settings,
+  },
 ];
 
 export const federalDashboardMetrics = [
