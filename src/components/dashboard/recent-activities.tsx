@@ -4,6 +4,7 @@ import { mockActivities } from "@/lib/data";
 import type { ActivityStatus } from "@/lib/types";
 import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const statusColors: Record<ActivityStatus, string> = {
     Draft: "bg-gray-500",
@@ -23,8 +24,10 @@ export default function RecentActivities() {
                     <CardTitle>Recent Activities</CardTitle>
                     <CardDescription>A summary of the latest activities.</CardDescription>
                 </div>
-                <Button variant="outline" size="sm">
-                    View All <ArrowRight className="ml-2 h-4 w-4"/>
+                <Button variant="outline" size="sm" asChild>
+                    <Link href="/dashboard/activities">
+                        View All <ArrowRight className="ml-2 h-4 w-4"/>
+                    </Link>
                 </Button>
             </CardHeader>
             <CardContent>
