@@ -2,43 +2,43 @@
   "placeholderImages": [
     {
       "id": "user1",
-      "description": "User avatar 1",
+      "description": "Professional woman with glasses",
       "imageUrl": "https://images.unsplash.com/photo-1521146764736-56c929d59c83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBmYWNlfGVufDB8fHx8MTc2MzE5OTY1MHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person face"
+      "imageHint": "woman portrait"
     },
     {
       "id": "user2",
-      "description": "User avatar 2",
+      "description": "Smiling woman in a bright setting",
       "imageUrl": "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzYzMTc1NDAwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "woman smiling"
     },
     {
       "id": "user3",
-      "description": "User avatar 3",
+      "description": "Man in a thoughtful pose",
       "imageUrl": "https://images.unsplash.com/photo-1522556189639-b150ed9c4330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjMxOTUzOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "man portrait"
     },
     {
       "id": "user4",
-      "description": "User avatar 4",
+      "description": "Professional woman against a blue background",
       "imageUrl": "https://images.unsplash.com/photo-1512227847796-ddde7e3979c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwcHJvZmVzc2lvbmFsfGVufDB8fHx8MTc2MzIwOTA4NHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person professional"
+      "imageHint": "professional woman"
     },
     {
       "id": "user5",
-      "description": "User avatar 5",
+      "description": "Smiling man in a casual setting",
       "imageUrl": "https://images.unsplash.com/photo-1621624666561-84d0107001dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBzbWlsaW5nfGVufDB8fHx8MTc2MzE1OTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "man smiling"
     },
     {
       "id": "user6",
-      "description": "User avatar 6",
+      "description": "Woman's portrait with a neutral expression",
       "imageUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MzIxODk3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "woman portrait"
     },
     {
       "id": "map",
-      "description": "Placeholder for a map",
+      "description": "Stylized map of Africa",
       "imageUrl": "https://images.unsplash.com/photo-1626695436755-3e288720849c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYXAlMjBhZnJpY2F8ZW58MHx8fHwxNzYzMjM0NDY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "map africa"
     }
