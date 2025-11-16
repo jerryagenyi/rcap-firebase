@@ -23,6 +23,7 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
+import { navItems } from '@/lib/data';
 
 const AccountSettings = () => {
     const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
@@ -417,5 +418,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    
