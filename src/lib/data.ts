@@ -1,5 +1,3 @@
-
-
 import type { NavItem, Activity, Notification, User } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -23,7 +21,10 @@ import {
   List,
   Calendar,
   FileText,
-  TrendingUp
+  TrendingUp,
+  Map,
+  CheckCircle,
+  Clock,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -136,6 +137,71 @@ export const federalDashboardMetrics = [
     icon: UserCheck,
     accentColor: "bg-accent",
     trendColor: "text-accent"
+  },
+];
+
+export const stateDashboardMetrics = [
+  {
+    title: "State Activities",
+    value: "182",
+    trend: "+8% this month",
+    icon: ClipboardList,
+    accentColor: "bg-primary",
+    trendColor: "text-green-500",
+  },
+  {
+    title: "LGAs Covered",
+    value: "18 / 20",
+    trend: "90% coverage",
+    icon: Map,
+    accentColor: "bg-blue-500",
+    progress: 90,
+  },
+  {
+    title: "Pending Approvals",
+    value: "12",
+    trend: "3 overdue",
+    icon: Clock,
+    accentColor: "bg-orange-500",
+  },
+  {
+    title: "State Field Workers",
+    value: "1,240",
+    trend: "↑ 50 new this quarter",
+    icon: Users,
+    accentColor: "bg-accent",
+    trendColor: "text-accent"
+  },
+];
+
+export const lgaDashboardMetrics = [
+  {
+    title: "My Assigned Activities",
+    value: "8",
+    trend: "3 starting this week",
+    icon: ClipboardList,
+    accentColor: "bg-primary",
+  },
+  {
+    title: "Completed this Month",
+    value: "12",
+    trend: "On track with target",
+    icon: CheckCircle,
+    accentColor: "bg-green-500",
+  },
+  {
+    title: "Pending Reports",
+    value: "3",
+    trend: "1 overdue",
+    icon: FileText,
+    accentColor: "bg-orange-500",
+  },
+   {
+    title: "My Team Members",
+    value: "5",
+    trend: "In Ikeja LGA",
+    icon: Users,
+    accentColor: "bg-accent",
   },
 ];
 

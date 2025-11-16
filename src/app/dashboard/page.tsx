@@ -1,67 +1,60 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { PlusCircle, FileText, Users } from 'lucide-react';
-import MetricCard from '@/components/dashboard/metric-card';
-import { federalDashboardMetrics } from '@/lib/data';
-import PerformanceCharts from '@/components/dashboard/performance-charts';
-import MapCard from '@/components/dashboard/map-card';
-import EmergencyCenter from '@/components/dashboard/emergency-center';
-import RecentActivities from '@/components/dashboard/recent-activities';
+'use client';
+
+import { useState } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import NationalDashboard from '@/components/dashboard/role-specific/national-dashboard';
+import StateDashboard from '@/components/dashboard/role-specific/state-dashboard';
+import LgaDashboard from '@/components/dashboard/role-specific/lga-dashboard';
 
 export default function DashboardPage() {
+  const [role, setRole] = useState('federal');
+
+  const getGreeting = () => {
+    switch(role) {
+      case 'federal':
+        return { title: 'National Overview', description: 'Welcome back, here\'s a look at the nation\'s health activities.'};
+      case 'state':
+        return { title: 'State Overview (Lagos)', description: 'Welcome back, here\'s a look at your state\'s health activities.'};
+      case 'lga':
+        return { title: 'LGA Dashboard (Ikeja)', description: 'Welcome back, here are your tasks for today.'};
+      default:
+        return { title: 'Dashboard', description: 'Welcome back.'};
+    }
+  }
+
+  const { title, description } = getGreeting();
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            National Overview
+            {title}
           </h1>
           <p className="text-muted-foreground">
-            Welcome back, here&apos;s a look at the nation&apos;s health
-            activities.
+            {description}
           </p>
         </div>
-        <div className="flex gap-4">
-          <Button variant="gradient">
-            <PlusCircle />
-            Create Activity
-          </Button>
-          <Button variant="outline">
-            <FileText />
-            View Reports
-          </Button>
-           <Button variant="outline">
-            <Users />
-            Manage Teams
-          </Button>
-        </div>
+         <Tabs value={role} onValueChange={setRole} className="w-auto">
+          <TabsList>
+            <TabsTrigger value="federal">Federal</TabsTrigger>
+            <TabsTrigger value="state">State</TabsTrigger>
+            <TabsTrigger value="lga">LGA</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {federalDashboardMetrics.map((metric) => (
-          <MetricCard key={metric.title} {...metric} />
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <PerformanceCharts />
-        </div>
-        <div className="lg:col-span-1">
-          <MapCard />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-         <EmergencyCenter />
-         <RecentActivities />
-      </div>
+      <Tabs value={role}>
+        <TabsContent value="federal">
+            <NationalDashboard />
+        </TabsContent>
+        <TabsContent value="state">
+            <StateDashboard />
+        </TabsContent>
+         <TabsContent value="lga">
+            <LgaDashboard />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
