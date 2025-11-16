@@ -1,3 +1,4 @@
+
 import type { NavItem, Activity, Notification } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -59,27 +60,27 @@ export const navItems: NavItem[] = [
     children: [
         {
             title: "Account",
-            href: "/dashboard/settings",
+            href: "/dashboard/settings#account",
             icon: User
         },
         {
             title: "Notifications",
-            href: "/dashboard/settings",
+            href: "/dashboard/settings#notifications",
             icon: Bell
         },
         {
             title: "Appearance",
-            href: "/dashboard/settings",
+            href: "/dashboard/settings#appearance",
             icon: Palette
         },
         {
             title: "Data & Sync",
-            href: "/dashboard/settings",
+            href: "/dashboard/settings#data",
             icon: Database
         },
         {
             title: "Help",
-            href: "/dashboard/settings",
+            href: "/dashboard/settings#help",
             icon: HelpCircle
         }
     ]
@@ -258,3 +259,5 @@ export const mockNotifications: Notification[] = [
     iconColor: "text-gray-500"
   },
 ];
+
+    

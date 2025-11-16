@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { User, Bell, Palette, Database, HelpCircle, ShieldCheck, KeyRound, Trash2 } from 'lucide-react';
+import { User, Bell, Palette, Database, HelpCircle, ShieldCheck, KeyRound, Trash2, HardDrive, RefreshCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,6 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
+import { Progress } from '@/components/ui/progress';
 
 const AccountSettings = () => {
     const userAvatar = PlaceHolderImages.find((p) => p.id === 'user1');
@@ -278,12 +279,72 @@ const DataSettings = () => (
     <CardHeader>
       <CardTitle>Data & Sync</CardTitle>
       <CardDescription>
-        Manage your data and synchronization settings.
+        Manage your data synchronization, cache, and usage.
       </CardDescription>
     </CardHeader>
-    <CardContent>
-      <p>Data settings content will go here.</p>
+    <CardContent className="space-y-8">
+
+      {/* Auto-Sync Settings */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Synchronization</h3>
+        <div className="flex items-start justify-between rounded-lg border p-4">
+          <div className="space-y-0.5">
+            <Label htmlFor="auto-sync" className="text-base">Auto-sync in background</Label>
+            <p className="text-sm text-muted-foreground">
+              Keep your data up-to-date automatically across devices.
+            </p>
+          </div>
+          <Switch id="auto-sync" defaultChecked />
+        </div>
+      </div>
+      
+      <Separator />
+
+      {/* Cache Management */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Cache Management</h3>
+        <div className="flex items-center justify-between rounded-lg border p-4">
+          <div className="space-y-0.5">
+            <Label className="text-base">Clear Local Cache</Label>
+            <p className="text-sm text-muted-foreground">
+              This will clear all locally stored data. It might help solve some issues.
+            </p>
+          </div>
+          <Button variant="outline">
+            <Trash2 className="mr-2 h-4 w-4" />
+            Clear Cache
+          </Button>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Data Usage */}
+       <div className="space-y-4">
+        <h3 className="text-lg font-medium text-foreground">Data Usage</h3>
+        <div className="rounded-lg border p-4 space-y-4">
+          <div className="flex items-center gap-4">
+            <HardDrive className="h-6 w-6 text-muted-foreground" />
+            <div className="flex-1">
+              <Label className="text-base">Local Storage Usage</Label>
+              <p className="text-sm text-muted-foreground">
+                Amount of disk space used by the application for offline access.
+              </p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Progress value={25} className="h-2"/>
+            <div className="flex justify-between">
+                <p className="text-xs text-muted-foreground">250 MB used of 1 GB</p>
+                <p className="text-xs text-muted-foreground">Last synced: 5 minutes ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </CardContent>
+    <CardFooter className="border-t pt-6">
+      <Button variant="gradient" className="ml-auto">Save Data Settings</Button>
+    </CardFooter>
   </Card>
 );
 
@@ -303,6 +364,11 @@ const HelpSettings = () => (
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('account');
+
+  // Find the settings item and its children
+  const settingsItem = navItems.find(item => item.title === 'Settings');
+  const settingsTabs = settingsItem?.children || [];
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -317,26 +383,16 @@ export default function SettingsPage() {
       <Tabs value={activeTab} onValueChange={setActiveTab} orientation="vertical" className="w-full">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <TabsList className="flex-col h-auto items-start bg-transparent p-0 border-r">
-            <TabsTrigger value="account" className="w-full justify-start gap-2 py-3 px-4 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none">
-              <User size={20} />
-              Account
-            </TabsTrigger>
-            <TabsTrigger value="notifications" className="w-full justify-start gap-2 py-3 px-4 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none">
-              <Bell size={20} />
-              Notifications
-            </TabsTrigger>
-            <TabsTrigger value="appearance" className="w-full justify-start gap-2 py-3 px-4 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none">
-              <Palette size={20} />
-              Appearance
-            </TabsTrigger>
-            <TabsTrigger value="data" className="w-full justify-start gap-2 py-3 px-4 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none">
-              <Database size={20} />
-              Data & Sync
-            </TabsTrigger>
-            <TabsTrigger value="help" className="w-full justify-start gap-2 py-3 px-4 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none">
-              <HelpCircle size={20} />
-              Help
-            </TabsTrigger>
+            {settingsTabs.map(tab => (
+              <TabsTrigger 
+                key={tab.href.split('#')[1] || 'account'} 
+                value={tab.href.split('#')[1] || 'account'} 
+                className="w-full justify-start gap-2 py-3 px-4 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none"
+              >
+                <tab.icon size={20} />
+                {tab.title}
+              </TabsTrigger>
+            ))}
           </TabsList>
 
           <div className="md:col-span-3">
