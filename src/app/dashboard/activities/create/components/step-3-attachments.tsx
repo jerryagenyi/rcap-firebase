@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, ArrowRight, UploadCloud, File, X, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, UploadCloud, File, X, Loader2, CheckCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 type FileUpload = {
