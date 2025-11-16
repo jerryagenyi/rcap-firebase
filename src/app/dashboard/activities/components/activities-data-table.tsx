@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Building, MapPin, Tag, Calendar, Eye, Pencil, Trash2 } from "lucide-react";
 import { format } from "date-fns";
+import Link from "next/link";
 
 const statusStyles: Record<ActivityStatus, string> = {
   Approved: "bg-green-500 text-white",
@@ -26,7 +27,9 @@ function ActivityCard({ activity }: { activity: Activity }) {
       <Checkbox className="h-6 w-6 mt-1" />
       <div className="flex-1">
         <div className="flex items-start justify-between">
-          <h3 className="text-lg font-bold text-foreground">{activity.title}</h3>
+            <Link href={`/dashboard/activities/${activity.id}`}>
+              <h3 className="text-lg font-bold text-foreground hover:underline">{activity.title}</h3>
+            </Link>
           <Badge className={`${statusStyles[activity.status]} rounded-lg px-3 py-1`}>{activity.status}</Badge>
         </div>
 
@@ -57,11 +60,15 @@ function ActivityCard({ activity }: { activity: Activity }) {
         </div>
         
         <div className="mt-4 flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary">
-                <Eye className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary" asChild>
+                <Link href={`/dashboard/activities/${activity.id}`}>
+                    <Eye className="h-5 w-5" />
+                </Link>
             </Button>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary">
-                <Pencil className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary" asChild>
+                <Link href={`/dashboard/activities/${activity.id}/edit`}>
+                    <Pencil className="h-5 w-5" />
+                </Link>
             </Button>
             <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500/70 hover:bg-red-500/10 hover:text-red-500">
                 <Trash2 className="h-5 w-5" />
