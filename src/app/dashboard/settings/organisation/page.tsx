@@ -57,7 +57,8 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2, Eye, Separator } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2, Eye } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -552,3 +553,5 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
+
+    
