@@ -1,5 +1,4 @@
 
-
 import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -30,6 +29,11 @@ import {
   Building,
   Megaphone,
   DollarSign,
+  BrainCircuit,
+  Box,
+  GraduationCap,
+  Network,
+  FlaskConical,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -127,6 +131,34 @@ export const navItems: NavItem[] = [
         }
     ]
   },
+];
+
+export const futureNavItems: NavItem[] = [
+    {
+        title: "AI Planning",
+        href: "/dashboard/planning",
+        icon: BrainCircuit,
+    },
+    {
+        title: "Resources",
+        href: "/dashboard/resources",
+        icon: Box,
+    },
+    {
+        title: "Training",
+        href: "/dashboard/training",
+        icon: GraduationCap,
+    },
+    {
+        title: "Integrations",
+        href: "/dashboard/integrations",
+        icon: Network,
+    },
+    {
+        title: "Research Lab",
+        href: "/dashboard/research",
+        icon: FlaskConical,
+    },
 ];
 
 export const federalDashboardMetrics = [

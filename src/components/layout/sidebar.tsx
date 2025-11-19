@@ -11,13 +11,15 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
+  SidebarSeparator,
+  SidebarGroupLabel,
 } from '@/components/ui/sidebar';
 import { Logo } from '@/components/icons';
-import { navItems } from '@/lib/data';
+import { navItems, futureNavItems } from '@/lib/data';
 import { usePathname } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, ChevronDown, HelpCircle } from 'lucide-react';
+import { LogOut, ChevronDown, HelpCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import type { NavItem } from '@/lib/types';
@@ -116,6 +118,15 @@ export default function AppSidebar() {
               <SidebarNavItem item={item} pathname={pathname} />
             </SidebarMenuItem>
           ))}
+        </SidebarMenu>
+        <SidebarSeparator className="my-4" />
+        <SidebarMenu>
+            <SidebarGroupLabel className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> Future Features</SidebarGroupLabel>
+            {futureNavItems.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                    <SidebarNavItem item={item} pathname={pathname} />
+                </SidebarMenuItem>
+            ))}
         </SidebarMenu>
       </SidebarContent>
 
