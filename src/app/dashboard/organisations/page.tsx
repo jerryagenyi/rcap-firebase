@@ -32,9 +32,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
-import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building, Trash2, ChevronDown } from 'lucide-react';
+import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building, Trash2, ChevronDown, FilterX } from 'lucide-react';
 import { mockOrganisations } from '@/lib/data';
-import type { Organisation } from '@/lib/types';
+import type { Organisation, OrganisationCategory, OrganisationLevel } from '@/lib/types';
 import PaginationControls from '@/components/shared/pagination-controls';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
@@ -138,18 +138,46 @@ export default function OrganisationsPage() {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectedOrgs, setSelectedOrgs] = useState<string[]>([]);
 
+    const [levelFilter, setLevelFilter] = useState('all');
+    const [categoryFilter, setCategoryFilter] = useState('all');
+    const [statusFilter, setStatusFilter] = useState('all');
+    
+    const levels: OrganisationLevel[] = ['Federal', 'State', 'LGA'];
+    const categories: OrganisationCategory[] = ['Government', 'NGO', 'CSO'];
+    const statuses: Organisation['status'][] = ['Active', 'Pending', 'Suspended'];
 
     const filteredOrganisations = useMemo(() => {
-        if (!searchQuery) {
-            return mockOrganisations;
+        let filtered = mockOrganisations;
+
+        if (searchQuery) {
+            const lowercasedQuery = searchQuery.toLowerCase();
+            filtered = filtered.filter(org =>
+                org.name.toLowerCase().includes(lowercasedQuery) ||
+                org.level.toLowerCase().includes(lowercasedQuery) ||
+                (org.parent && org.parent.toLowerCase().includes(lowercasedQuery))
+            );
         }
-        const lowercasedQuery = searchQuery.toLowerCase();
-        return mockOrganisations.filter(org =>
-            org.name.toLowerCase().includes(lowercasedQuery) ||
-            org.level.toLowerCase().includes(lowercasedQuery) ||
-            (org.parent && org.parent.toLowerCase().includes(lowercasedQuery))
-        );
-    }, [searchQuery]);
+        
+        if (levelFilter !== 'all') {
+            filtered = filtered.filter(org => org.level === levelFilter);
+        }
+        if (categoryFilter !== 'all') {
+            filtered = filtered.filter(org => org.category === categoryFilter);
+        }
+        if (statusFilter !== 'all') {
+            filtered = filtered.filter(org => org.status === statusFilter);
+        }
+
+        return filtered;
+    }, [searchQuery, levelFilter, categoryFilter, statusFilter]);
+    
+    const resetFilters = () => {
+        setSearchQuery('');
+        setLevelFilter('all');
+        setCategoryFilter('all');
+        setStatusFilter('all');
+        setCurrentPage(1);
+    };
 
     const totalPages = Math.ceil(filteredOrganisations.length / itemsPerPage);
 
@@ -194,17 +222,46 @@ export default function OrganisationsPage() {
         </Button>
       </div>
 
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        <Input
-          placeholder="Search by name, level, or parent..."
-          className="h-12 pl-12 w-full"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setCurrentPage(1);
-          }}
-        />
+      <div className="flex flex-col gap-4">
+        <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+            placeholder="Search by name, level, or parent..."
+            className="h-12 pl-12 w-full"
+            value={searchQuery}
+            onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+            }}
+            />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <Select value={levelFilter} onValueChange={setLevelFilter}>
+                <SelectTrigger className="h-12"><SelectValue placeholder="Filter by Level" /></SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All Levels</SelectItem>
+                    {levels.map(level => <SelectItem key={level} value={level}>{level}</SelectItem>)}
+                </SelectContent>
+            </Select>
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="h-12"><SelectValue placeholder="Filter by Category" /></SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    {categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+                </SelectContent>
+            </Select>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="h-12"><SelectValue placeholder="Filter by Status" /></SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All Statuses</SelectItem>
+                    {statuses.map(status => <SelectItem key={status} value={status}>{status}</SelectItem>)}
+                </SelectContent>
+            </Select>
+            <Button variant="outline" className="h-12" onClick={resetFilters}>
+                <FilterX className="mr-2" />
+                Reset Filters
+            </Button>
+        </div>
       </div>
 
         {selectedOrgs.length > 0 && (
@@ -267,7 +324,7 @@ export default function OrganisationsPage() {
                     <div className="p-2 bg-muted rounded-md">
                         <Building className="h-5 w-5 text-muted-foreground" />
                     </div>
-                    <span className="font-medium text-foreground">{org.name}</span>
+                    <Link href={`/dashboard/organisations/${org.id}`} className="font-medium text-foreground hover:underline">{org.name}</Link>
                   </div>
                 </TableCell>
                 <TableCell>
@@ -290,7 +347,9 @@ export default function OrganisationsPage() {
                             </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View Details</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href={`/dashboard/organisations/${org.id}`}>View Details</Link>
+                            </DropdownMenuItem>
                              <DropdownMenuItem asChild>
                                 <Link href={`/dashboard/organisations/${org.id}/edit`}>Edit Organisation</Link>
                             </DropdownMenuItem>
@@ -315,18 +374,25 @@ export default function OrganisationsPage() {
         </Table>
       </div>
 
-      <PaginationControls
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-        itemsPerPage={itemsPerPage}
-        onItemsPerPageChange={(value) => {
-            setItemsPerPage(Number(value));
-            setCurrentPage(1);
-        }}
-        totalItems={filteredOrganisations.length}
-        itemName="organisations"
-      />
+      {paginatedOrganisations.length > 0 ? (
+        <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            onItemsPerPageChange={(value) => {
+                setItemsPerPage(Number(value));
+                setCurrentPage(1);
+            }}
+            totalItems={filteredOrganisations.length}
+            itemName="organisations"
+        />
+        ) : (
+        <div className="text-center p-8 border rounded-lg">
+            <h3 className="font-semibold">No organisations found</h3>
+            <p className="text-sm text-muted-foreground">Try adjusting your search or filters.</p>
+        </div>
+      )}
     </div>
   );
 }
