@@ -62,7 +62,7 @@ const MessageItem = ({ message }: { message: { sender: { name: string; avatarId:
                 </Avatar>
             )}
             <div className={cn("max-w-md rounded-lg p-4", isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
-                <p className="font-bold text-sm mb-1">{message.sender.name}</p>
+                <p className="font-bold text-sm mb-1">{message.sender.name} {isCurrentUser && <span className="font-normal opacity-70">(You)</span>}</p>
                 <p>{message.content}</p>
                  <p className={cn("text-xs mt-2", isCurrentUser ? "text-primary-foreground/70" : "text-muted-foreground/70")}>
                     {format(new Date(message.timestamp), 'PPpp')}
@@ -351,3 +351,6 @@ export default function MessagesPage() {
     );
 }
 
+
+
+    
