@@ -284,6 +284,7 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
 
         <div className="flex justify-end gap-4">
             <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
+            <Button type="button" variant="secondary">Save as Draft</Button>
             <Button type="submit" variant="gradient">
               {mode === 'create' ? 'Submit for Approval' : 'Save Changes'} <Send className="ml-2" />
             </Button>
@@ -292,5 +293,3 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
     </Form>
   );
 }
-
-    
