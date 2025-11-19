@@ -121,14 +121,24 @@ export default function AppSidebar() {
           ))}
         </SidebarMenu>
         <SidebarSeparator className="my-4" />
-        <SidebarMenu>
-            <SidebarGroupLabel className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> Future Features</SidebarGroupLabel>
-            {futureNavItems.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                    <SidebarNavItem item={item} pathname={pathname} />
-                </SidebarMenuItem>
-            ))}
-        </SidebarMenu>
+        <Collapsible>
+          <CollapsibleTrigger className="w-full">
+            <SidebarGroupLabel className="flex items-center gap-2 w-full">
+                <Sparkles className="h-5 w-5 text-primary" /> 
+                <span className="flex-1 text-left">Future Features</span>
+                <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:-rotate-180" />
+            </SidebarGroupLabel>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <SidebarMenu className="mt-2">
+                {futureNavItems.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                        <SidebarNavItem item={item} pathname={pathname} />
+                    </SidebarMenuItem>
+                ))}
+            </SidebarMenu>
+          </CollapsibleContent>
+        </Collapsible>
       </SidebarContent>
 
       <SidebarFooter className="border-t p-2">
