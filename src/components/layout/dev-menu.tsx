@@ -29,7 +29,7 @@ const DeveloperMenu = () => {
               transition={{ duration: 0.2 }}
               className="w-56 rounded-lg border bg-card p-2 shadow-lg"
             >
-              <h3 className="px-2 py-1.5 text-sm font-semibold">Dev Menu</h3>
+              <h3 className="px-2 py-1.5 text-sm font-semibold">View Switcher</h3>
               <ul className="space-y-1">
                 {navItems.map((item) => (
                   <li key={item.href}>
@@ -70,11 +70,11 @@ const DeveloperMenu = () => {
                   {isOpen ? <X /> : <TestTube2 />}
                 </motion.div>
               </AnimatePresence>
-              <span className="ml-2">{isOpen ? 'Close' : 'Dev Menu'}</span>
+              <span className="ml-2">{isOpen ? 'Close' : 'View Switcher'}</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent side="left">
-            <p>Toggle Developer Menu</p>
+            <p>Toggle View Switcher</p>
           </TooltipContent>
         </Tooltip>
       </div>
