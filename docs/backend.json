@@ -1,0 +1,81 @@
+{
+    "entities": {
+        "UserProfile": {
+            "title": "User Profile",
+            "description": "Represents a user's profile information.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The user's full name."
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The user's email address."
+                },
+                "avatarId": {
+                    "type": "string",
+                    "description": "ID for the user's avatar image."
+                },
+                "role": {
+                    "type": "string",
+                    "description": "The user's role in the system."
+                },
+                "team": {
+                    "type": "string",
+                    "description": "The team or organization the user belongs to."
+                }
+            },
+            "required": ["name", "email", "role"]
+        },
+        "Activity": {
+            "title": "Activity",
+            "description": "Represents a health-related activity.",
+            "type": "object",
+            "properties": {
+                "title": { "type": "string" },
+                "status": { "type": "string", "enum": ["Draft", "Submitted", "Approved", "Rejected", "Completed"] },
+                "organization": { "type": "string" },
+                "location": { "type": "string" },
+                "dateCreated": { "type": "string", "format": "date-time" },
+                "lastModified": { "type": "string", "format": "date-time" },
+                "description": { "type": "string" },
+                "type": { "type": "string" }
+            },
+            "required": ["title", "status", "organization", "dateCreated"]
+        },
+        "Organisation": {
+            "title": "Organisation",
+            "description": "Represents an organization in the system.",
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" },
+                "level": { "type": "string", "enum": ["Federal", "State", "LGA"] },
+                "type": { "type": "string", "enum": ["Government", "NGO", "CSO", "LGA"] },
+                "members": { "type": "number" },
+                "activities": { "type": "number" },
+                "status": { "type": "string", "enum": ["Active", "Pending", "Suspended"] },
+                "parent": { "type": ["string", "null"] }
+            },
+            "required": ["name", "level", "type", "status"]
+        }
+    },
+    "auth": {
+        "providers": ["anonymous"]
+    },
+    "firestore": {
+        "/users/{userId}": {
+            "schema": { "$ref": "#/entities/UserProfile" },
+            "description": "Stores user profile information."
+        },
+        "/activities": {
+            "schema": { "$ref": "#/entities/Activity" },
+            "description": "Collection of all activities."
+        },
+        "/organisations": {
+            "schema": { "$ref": "#/entities/Organisation" },
+            "description": "Collection of all organisations."
+        }
+    }
+}

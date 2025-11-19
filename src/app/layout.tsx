@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import ClientDeveloperMenu from '@/components/layout/dev-menu-client';
 import { ThemeProvider } from '@/components/theme-provider';
+import { FirebaseClientProvider } from '@/firebase';
 
-const roboto = Roboto({ 
+const inter = Inter({ 
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
   variable: '--font-sans' 
 });
 
@@ -24,16 +24,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn('font-body antialiased', roboto.variable)}>
+      <body className={cn('font-body antialiased', inter.variable)}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <Toaster />
-          <ClientDeveloperMenu />
+          <FirebaseClientProvider>
+            {children}
+            <Toaster />
+            <ClientDeveloperMenu />
+          </FirebaseClientProvider>
         </ThemeProvider>
       </body>
     </html>
