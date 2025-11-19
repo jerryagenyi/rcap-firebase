@@ -1,0 +1,173 @@
+
+'use client';
+
+import { useState } from 'react';
+import { mockConversations, mockTeamMembers } from '@/lib/data';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Textarea } from '@/components/ui/textarea';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { format, formatDistanceToNow } from 'date-fns';
+import { Search, PenSquare, Send, Reply, Forward, Paperclip } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { Conversation, Message } from '@/lib/types';
+
+const ConversationListItem = ({ conversation, onSelect, isActive }: { conversation: Conversation, onSelect: () => void, isActive: boolean }) => {
+    const lastMessage = conversation.messages[conversation.messages.length - 1];
+    const sender = lastMessage.sender;
+    const avatar = PlaceHolderImages.find(p => p.id === sender.avatarId);
+
+    return (
+        <button
+            onClick={onSelect}
+            className={cn(
+                "flex w-full items-start gap-4 rounded-lg p-3 text-left transition-colors",
+                isActive ? "bg-primary/10" : "hover:bg-muted"
+            )}
+        >
+            <Avatar className="h-12 w-12 border-2 border-background">
+                <AvatarImage src={avatar?.imageUrl} />
+                <AvatarFallback>{sender.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div className="flex-1 overflow-hidden">
+                <div className="flex items-baseline justify-between">
+                    <p className={cn("font-semibold truncate", !conversation.isRead && "text-foreground")}>{conversation.subject}</p>
+                    <p className="text-xs text-muted-foreground shrink-0">{formatDistanceToNow(new Date(conversation.lastMessageTimestamp), { addSuffix: true })}</p>
+                </div>
+                <p className="text-sm text-muted-foreground truncate">{sender.name}: {lastMessage.content}</p>
+            </div>
+            {!conversation.isRead && <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />}
+        </button>
+    );
+};
+
+const MessageItem = ({ message }: { message: { sender: { name: string; avatarId: string }, content: string, timestamp: string } }) => {
+    const avatar = PlaceHolderImages.find(p => p.id === message.sender.avatarId);
+    // This is a mock; in a real app, you'd compare with the current user's ID
+    const isCurrentUser = message.sender.name === "Dr. Amina Yusuf";
+
+    return (
+        <div className={cn("flex items-start gap-4", isCurrentUser && "justify-end")}>
+            {!isCurrentUser && (
+                 <Avatar className="h-10 w-10">
+                    <AvatarImage src={avatar?.imageUrl} />
+                    <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+            )}
+            <div className={cn("max-w-md rounded-lg p-4", isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
+                <p className="font-bold text-sm mb-1">{message.sender.name}</p>
+                <p>{message.content}</p>
+                 <p className={cn("text-xs mt-2", isCurrentUser ? "text-primary-foreground/70" : "text-muted-foreground/70")}>
+                    {format(new Date(message.timestamp), 'PPpp')}
+                </p>
+            </div>
+            {isCurrentUser && (
+                 <Avatar className="h-10 w-10">
+                    <AvatarImage src={avatar?.imageUrl} />
+                    <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+            )}
+        </div>
+    );
+};
+
+
+export default function MessagesPage() {
+    const [selectedConversationId, setSelectedConversationId] = useState<string | null>(mockConversations[0].id);
+
+    const selectedConversation = mockConversations.find(c => c.id === selectedConversationId);
+
+    return (
+        <div className="flex flex-col h-full max-h-[calc(100vh-10rem)] gap-8">
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                    Messages
+                </h1>
+                <p className="text-muted-foreground">
+                    Your internal communication hub.
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1 overflow-hidden">
+                {/* Conversations List */}
+                <Card className="md:col-span-1 lg:col-span-1 flex flex-col">
+                    <CardHeader className="flex-row items-center justify-between">
+                       <div>
+                            <CardTitle>Inbox</CardTitle>
+                            <CardDescription>3 Unread</CardDescription>
+                       </div>
+                       <Button variant="ghost" size="icon" className="h-9 w-9">
+                           <PenSquare className="h-5 w-5" />
+                       </Button>
+                    </CardHeader>
+                    <div className="relative px-4 pb-4">
+                        <Search className="absolute left-7 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input placeholder="Search messages..." className="pl-9" />
+                    </div>
+                    <ScrollArea className="flex-1 px-2">
+                        <div className="space-y-1 p-2">
+                            {mockConversations.map(conv => (
+                                <ConversationListItem
+                                    key={conv.id}
+                                    conversation={conv}
+                                    onSelect={() => setSelectedConversationId(conv.id)}
+                                    isActive={selectedConversationId === conv.id}
+                                />
+                            ))}
+                        </div>
+                    </ScrollArea>
+                </Card>
+
+                {/* Conversation View */}
+                <Card className="md:col-span-2 lg:col-span-3 flex flex-col">
+                    {selectedConversation ? (
+                        <>
+                            <CardHeader className="border-b">
+                                <CardTitle className="truncate">{selectedConversation.subject}</CardTitle>
+                                <CardDescription>
+                                    With: {selectedConversation.participants.map(p => p.name).join(', ')}
+                                </CardDescription>
+                            </CardHeader>
+                            <ScrollArea className="flex-1 p-6">
+                                <div className="space-y-6">
+                                    {selectedConversation.messages.map(msg => (
+                                        <MessageItem key={msg.id} message={msg} />
+                                    ))}
+                                </div>
+                            </ScrollArea>
+                             <CardContent className="border-t bg-muted/50 p-4">
+                                <div className="relative">
+                                    <Textarea
+                                        placeholder="Type your reply..."
+                                        className="pr-20"
+                                    />
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
+                                            <Paperclip className="h-4 w-4" />
+                                        </Button>
+                                        <Button size="icon" className="h-8 w-8">
+                                            <Send className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 mt-2">
+                                     <Button variant="outline" size="sm"><Reply className="mr-2 h-4 w-4" /> Reply</Button>
+                                     <Button variant="outline" size="sm"><Forward className="mr-2 h-4 w-4" /> Forward</Button>
+                                </div>
+                            </CardContent>
+                        </>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center h-full text-center">
+                            <PenSquare className="h-16 w-16 text-muted-foreground/50" />
+                            <h3 className="text-xl font-semibold mt-4">Select a conversation</h3>
+                            <p className="text-muted-foreground">Or start a new one to begin messaging.</p>
+                        </div>
+                    )}
+                </Card>
+            </div>
+        </div>
+    );
+}

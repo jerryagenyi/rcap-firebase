@@ -1,5 +1,6 @@
 
-import type { NavItem, Activity, Notification, User, Organisation, Announcement } from "@/lib/types";
+
+import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -64,6 +65,12 @@ export const navItems: NavItem[] = [
     href: "/dashboard/announcements",
     icon: Megaphone,
     badge: 2
+  },
+  {
+    title: 'Messages',
+    href: '/dashboard/messages',
+    icon: MessageSquare,
+    badge: 1
   },
   // Personal Section
   {
@@ -871,4 +878,67 @@ export const mockAnnouncements: Announcement[] = [
     }
 ];
 
+export const mockConversations: Conversation[] = [
+    {
+        id: 'CONV-001',
+        subject: 'Re: Cholera Prevention Training Workshop',
+        participants: [
+            { id: 'USR-001', name: 'Dr. Amina Yusuf' },
+            { id: 'USR-002', name: 'Bolanle Adebayo' },
+        ],
+        isRead: false,
+        lastMessageTimestamp: '2025-12-12T10:00:00Z',
+        messages: [
+            {
+                id: 'MSG-001-1',
+                sender: { name: 'Bolanle Adebayo', avatarId: 'user2' },
+                content: 'Hi Dr. Yusuf, I have a question about the budget for the Cholera workshop. Can we allocate more funds for transportation?',
+                timestamp: '2025-12-11T14:30:00Z',
+            },
+            {
+                id: 'MSG-001-2',
+                sender: { name: 'Dr. Amina Yusuf', avatarId: 'user1' },
+                content: 'Bolanle, good question. Let me review the current budget allocation. I think we can make some adjustments. I will get back to you shortly.',
+                timestamp: '2025-12-12T10:00:00Z',
+            },
+        ],
+    },
+    {
+        id: 'CONV-002',
+        subject: 'Urgent: Lassa Fever Outbreak Response',
+        participants: [
+            { id: 'USR-001', name: 'Dr. Amina Yusuf' },
+            { id: 'USR-006', name: 'Ngozi Eze' },
+        ],
+        isRead: true,
+        lastMessageTimestamp: '2025-12-11T18:45:00Z',
+        messages: [
+            {
+                id: 'MSG-002-1',
+                sender: { name: 'Ngozi Eze', avatarId: 'user6' },
+                content: 'We have a critical situation in Ibadan North. Need immediate support and resources for the Lassa Fever outbreak.',
+                timestamp: '2025-12-11T18:45:00Z',
+            },
+        ],
+    },
+    {
+        id: 'CONV-003',
+        subject: 'Quarterly Report Submission',
+        participants: [
+            { id: 'USR-001', name: 'Dr. Amina Yusuf' },
+            { id: 'USR-004', name: 'Fatima Bello' },
+            { id: 'USR-005', name: 'Musa Ibrahim' },
+        ],
+        isRead: true,
+        lastMessageTimestamp: '2025-12-10T11:20:00Z',
+        messages: [
+             {
+                id: 'MSG-003-1',
+                sender: { name: 'Fatima Bello', avatarId: 'user4' },
+                content: 'Hi all, a reminder that the Q4 reports are due next Friday. Please ensure all activity data is up to date.',
+                timestamp: '2025-12-10T11:20:00Z',
+            },
+        ],
+    },
+];
     

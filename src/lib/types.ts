@@ -82,3 +82,19 @@ export type Announcement = {
   isRead: boolean;
   priority: AnnouncementPriority;
 };
+
+export type Message = {
+    id: string;
+    sender: Pick<User, 'name' | 'avatarId'>;
+    content: string;
+    timestamp: string;
+};
+
+export type Conversation = {
+    id: string;
+    subject: string;
+    participants: Pick<User, 'id' | 'name'>[];
+    messages: Message[];
+    isRead: boolean;
+    lastMessageTimestamp: string;
+};
