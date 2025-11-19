@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
+  // Main Section
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -52,7 +53,8 @@ export const navItems: NavItem[] = [
     href: "/dashboard/team",
     icon: Users,
   },
-   {
+  // Management Section
+  {
     title: "Organisations",
     href: "/dashboard/organisations",
     icon: Building,
@@ -63,6 +65,7 @@ export const navItems: NavItem[] = [
     icon: Megaphone,
     badge: 2
   },
+  // Personal Section
   {
     title: 'Notifications',
     href: '/dashboard/notifications',
@@ -104,6 +107,7 @@ export const navItems: NavItem[] = [
             href: "/dashboard/settings/data",
             icon: Database
         },
+        // Billing Section (under settings)
         {
             title: "Pricing",
             href: "/pricing",
@@ -866,4 +870,3 @@ export const mockAnnouncements: Announcement[] = [
         priority: 'low',
     }
 ];
-
