@@ -41,12 +41,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { UploadCloud, Users, Palette, Building, ChevronRight } from 'lucide-react';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const OrganisationProfile = () => {
     const currentOrg = mockOrganisations[0];
@@ -111,10 +118,10 @@ const OrganisationBranding = () => {
                 <div className="flex items-center gap-4">
                      <Popover>
                         <PopoverTrigger asChild>
-                            <Button variant="outline" className="h-10 w-auto justify-start pr-2">
+                           <Button variant={'outline'} className="w-auto justify-start text-left font-normal">
                                 <div className="flex items-center gap-2">
                                     <div className="h-6 w-6 rounded-md border" style={{ backgroundColor: primaryColor }} />
-                                    <span className="font-mono text-xs">{primaryColor}</span>
+                                    <span className="w-20 truncate font-mono text-xs">{primaryColor}</span>
                                 </div>
                             </Button>
                         </PopoverTrigger>
@@ -142,7 +149,14 @@ const OrganisationBranding = () => {
     </Card>
 )};
 
-const AccessManagement = () => (
+const AccessManagement = () => {
+    const roles = {
+        'Administrators': mockTeamMembers.filter(m => m.role.includes('Admin') || m.role.includes('Coordinator')),
+        'State Coordinators': mockTeamMembers.filter(m => m.role === 'State Coordinator'),
+        'Field Officers': mockTeamMembers.filter(m => m.role === 'Field Officer'),
+    };
+
+    return (
      <Card>
         <CardHeader className="flex flex-row items-center justify-between">
             <div>
@@ -156,23 +170,40 @@ const AccessManagement = () => (
             </Button>
         </CardHeader>
         <CardContent>
-            <div className="space-y-2">
-                <div className="flex items-center justify-between rounded-lg border p-4">
-                    <p className="font-medium">Administrators</p>
-                    <Badge variant="secondary">3 Members</Badge>
-                </div>
-                 <div className="flex items-center justify-between rounded-lg border p-4">
-                    <p className="font-medium">State Coordinators</p>
-                    <Badge variant="secondary">8 Members</Badge>
-                </div>
-                 <div className="flex items-center justify-between rounded-lg border p-4">
-                    <p className="font-medium">Field Officers</p>
-                    <Badge variant="secondary">34 Members</Badge>
-                </div>
-            </div>
+             <Accordion type="multiple" className="w-full">
+                {Object.entries(roles).map(([role, members]) => (
+                    <AccordionItem value={role} key={role}>
+                        <AccordionTrigger className="rounded-lg border p-4 text-base font-medium hover:no-underline [&[data-state=open]]:border-primary [&[data-state=open]]:bg-primary/5">
+                             <div className="flex items-center justify-between w-full">
+                                <p className="font-medium">{role}</p>
+                                <Badge variant="secondary">{members.length} Members</Badge>
+                            </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="p-4">
+                            <div className="space-y-3">
+                                {members.map(member => {
+                                     const avatar = PlaceHolderImages.find((p) => p.id === member.avatarId);
+                                    return (
+                                    <div key={member.id} className="flex items-center gap-3">
+                                        <Avatar className="h-9 w-9">
+                                            <AvatarImage src={avatar?.imageUrl} alt={member.name} />
+                                            <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className="font-semibold text-sm">{member.name}</p>
+                                            <p className="text-xs text-muted-foreground">{member.email}</p>
+                                        </div>
+                                    </div>
+                                    )
+                                })}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                ))}
+             </Accordion>
         </CardContent>
     </Card>
-);
+)};
 
 const SubOrganisations = () => {
     const subOrgs = mockOrganisations.filter(org => org.parent);
