@@ -96,7 +96,7 @@ const OrganisationBranding = () => {
             <CardTitle>Branding</CardTitle>
             <CardDescription>Customize the look and feel for your organisation's members.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="p-6 space-y-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                 <Avatar className="h-20 w-20 rounded-md">
                     <AvatarFallback className="rounded-md">
@@ -115,7 +115,7 @@ const OrganisationBranding = () => {
                     <p className="text-xs text-muted-foreground">PNG, JPG, or SVG. Max 800x800px.</p>
                 </div>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-4">
                 <Label>Primary Color</Label>
                 <div className="flex items-center gap-4">
                      <Popover>
@@ -143,6 +143,13 @@ const OrganisationBranding = () => {
                         </PopoverContent>
                     </Popover>
                 </div>
+                <Alert>
+                    <Info className="h-4 w-4" />
+                    <AlertTitle>Theme Customization</AlertTitle>
+                    <AlertDescription>
+                        This color will be used as the primary accent for buttons, links, and highlights for all members of your organisation.
+                    </AlertDescription>
+                </Alert>
             </div>
         </CardContent>
         <CardFooter className="border-t pt-6">
@@ -176,8 +183,8 @@ const AccessManagement = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {rolesWithMembers.map(role => (
-            <Collapsible key={role.name} className="border rounded-lg" defaultOpen>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-t-lg">
+            <Collapsible key={role.name} className="border rounded-lg">
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-t-lg group">
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
@@ -236,7 +243,7 @@ const DangerZone = () => {
                 <CardTitle className="text-destructive">Danger Zone</CardTitle>
                 <CardDescription className="text-destructive/80">These actions have significant and permanent consequences.</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 pt-0 sm:p-6 sm:pt-6">
                 <div className="flex-1">
                     <p className="font-semibold">Transfer Ownership</p>
                     <p className="text-sm text-muted-foreground">Transfer this organisation to another administrator.</p>
