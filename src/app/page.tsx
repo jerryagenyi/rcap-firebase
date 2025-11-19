@@ -4,7 +4,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Logo } from '@/components/icons';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const Feature = ({ children }: { children: React.ReactNode }) => (
@@ -18,101 +17,73 @@ export default function LandingPage() {
     const dashboardImage = PlaceHolderImages.find(p => p.id === 'dashboard-screenshot');
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-20 items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Logo className="h-10 w-10" />
-            <span className="text-2xl font-bold">HealthLink RCAP</span>
-          </Link>
-          <div className="flex items-center gap-2">
-             <Button variant="ghost" asChild>
-                <Link href="/pricing">Pricing</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-                <Link href="/login">Sign In</Link>
-            </Button>
-            <Button variant="gradient" asChild size="lg">
-                <Link href="#">Contact Sales</Link>
+    <>
+      {/* Hero Section */}
+      <section className="py-24 sm:py-32 text-center">
+        <div className="container">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+            Coordinate Health Activities,
+            <br />
+            <span className="text-primary">Without the Chaos.</span>
+          </h1>
+          <p className="mt-6 text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto">
+            HealthLink RCAP is the central platform for public health organizations to plan, manage, and report on risk communication activities with clarity and efficiency.
+          </p>
+          <div className="mt-10 flex justify-center gap-4">
+            <Button variant="gradient" size="lg" asChild>
+              <Link href="/pricing">
+                Get Started for Free <ArrowRight className="ml-2" />
+              </Link>
             </Button>
           </div>
         </div>
-      </header>
+      </section>
 
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="py-24 sm:py-32 text-center">
-          <div className="container">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              Coordinate Health Activities,
-              <br />
-              <span className="text-primary">Without the Chaos.</span>
-            </h1>
-            <p className="mt-6 text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto">
-              HealthLink RCAP is the central platform for public health organizations to plan, manage, and report on risk communication activities with clarity and efficiency.
+      {/* App Screenshot */}
+      <section className="container">
+           <Card className="p-4 shadow-2xl shadow-primary/10">
+               <Image
+                  src="https://picsum.photos/seed/dashboard-ss/1200/800"
+                  alt="RCAP Dashboard Screenshot"
+                  width={1200}
+                  height={800}
+                  className="rounded-lg"
+                  data-ai-hint="app dashboard"
+              />
+          </Card>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-24 sm:py-32">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold">A Single Source of Truth</h2>
+            <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
+              From federal-level planning to on-the-ground field reports, RCAP brings everyone together.
             </p>
-            <div className="mt-10 flex justify-center gap-4">
-              <Button variant="gradient" size="lg" asChild>
-                <Link href="/pricing">
-                  Get Started for Free <ArrowRight className="ml-2" />
-                </Link>
-              </Button>
-            </div>
           </div>
-        </section>
-
-        {/* App Screenshot */}
-        <section className="container">
-             <Card className="p-4 shadow-2xl shadow-primary/10">
-                 <Image
-                    src="https://picsum.photos/seed/dashboard-ss/1200/800"
-                    alt="RCAP Dashboard Screenshot"
-                    width={1200}
-                    height={800}
-                    className="rounded-lg"
-                    data-ai-hint="app dashboard"
-                />
-            </Card>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-24 sm:py-32">
-          <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold">A Single Source of Truth</h2>
-              <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-                From federal-level planning to on-the-ground field reports, RCAP brings everyone together.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-3 gap-12">
+            <Feature>
+              <strong>Centralized Activity Tracking:</strong> Manage every health campaign, from draft to completion, in one place.
+            </Feature>
+            <Feature>
+              <strong>Hierarchical Organisation Management:</strong> Link federal, state, and local government organisations with clear lines of authority.
+            </Feature>
+            <Feature>
+              <strong>Real-time Reporting:</strong> Generate instant reports on activity progress, outcomes, and geographic distribution.
+            </Feature>
+             <Feature>
+              <strong>Role-Based Access Control:</strong> Ensure team members only see the information relevant to their role, from field officers to national coordinators.
+            </Feature>
               <Feature>
-                <strong>Centralized Activity Tracking:</strong> Manage every health campaign, from draft to completion, in one place.
-              </Feature>
-              <Feature>
-                <strong>Hierarchical Organisation Management:</strong> Link federal, state, and local government organisations with clear lines of authority.
-              </Feature>
-              <Feature>
-                <strong>Real-time Reporting:</strong> Generate instant reports on activity progress, outcomes, and geographic distribution.
-              </Feature>
-               <Feature>
-                <strong>Role-Based Access Control:</strong> Ensure team members only see the information relevant to their role, from field officers to national coordinators.
-              </Feature>
-                <Feature>
-                <strong>AI-Powered Insights (Coming Soon):</strong> Leverage AI to identify trends, predict risks, and get recommendations for more effective interventions.
-              </Feature>
-               <Feature>
-                <strong>Offline Data Sync:</strong> Enable field officers to log activities without an internet connection, with automatic syncing later.
-              </Feature>
-            </div>
+              <strong>AI-Powered Insights (Coming Soon):</strong> Leverage AI to identify trends, predict risks, and get recommendations for more effective interventions.
+            </Feature>
+             <Feature>
+              <strong>Offline Data Sync:</strong> Enable field officers to log activities without an internet connection, with automatic syncing later.
+            </Feature>
           </div>
-        </section>
-      </main>
-
-      <footer className="border-t">
-        <div className="container py-8 text-center text-sm text-muted-foreground">
-          <p>© 2025 HealthLink RCAP • A New Way to Coordinate Public Health</p>
         </div>
-      </footer>
-    </div>
+      </section>
+    </>
   );
 }

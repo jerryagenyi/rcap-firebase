@@ -60,7 +60,7 @@ const FAQS = [
 
 export default function PricingPage() {
     return (
-        <div className="flex flex-col">
+        <>
             {/* Hero Section */}
             <section className="py-20 text-center bg-background">
                 <div className="container">
@@ -196,6 +196,6 @@ export default function PricingPage() {
                     </Accordion>
                 </div>
             </section>
-        </div>
+        </>
     )
 }
