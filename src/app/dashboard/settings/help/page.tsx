@@ -5,90 +5,106 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Send } from 'lucide-react';
 
-
-const HelpSettings = () => (
-    <div id="help" className="space-y-8">
-        <Card>
-            <CardHeader>
-                <CardTitle>Frequently Asked Questions</CardTitle>
-                <CardDescription>Find answers to common questions.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>How do I reset my password?</AccordionTrigger>
-                        <AccordionContent>
-                            You can reset your password by going to the login page and clicking the "Forgot Password?" link. You will receive an email with instructions on how to reset it.
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>How do I create a new activity?</AccordionTrigger>
-                        <AccordionContent>
-                           Navigate to the "Activities" page and click the "Create" button.
-                        </AccordionContent>
-                    </AccordionItem>
-                     <AccordionItem value="item-3">
-                        <AccordionTrigger>Where can I find generated reports?</AccordionTrigger>
-                        <AccordionContent>
-                           All generated and custom reports are available under the "Reports" section in the main navigation.
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </CardContent>
-        </Card>
-
-        <Card>
-            <CardHeader>
-                <CardTitle>Contact Support</CardTitle>
-                <CardDescription>Still need help? Send us a message.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <div className="space-y-2">
-                    <Label htmlFor="support-subject">Subject</Label>
-                    <Input id="support-subject" placeholder="e.g., Issue with report generation" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="support-message">Message</Label>
-                    <Textarea id="support-message" placeholder="Describe your issue in detail..." className="min-h-[120px]" />
-                </div>
-            </CardContent>
-            <CardFooter className="border-t pt-6">
-                <Button variant="gradient" className="ml-auto">
-                    <Send className="mr-2" />
-                    Send Message
-                </Button>
-            </CardFooter>
-        </Card>
-    </div>
-);
-
+const documentationSections = [
+    {
+        title: "1. Introduction to RCAP",
+        items: [
+            { question: "What is RCAP?", answer: "An overview of the Risk Communication Activity Platform, its purpose, and target audience (Government, NGOs, CSOs)." },
+            { question: "Key Terminology", answer: "Definitions of core concepts like Activities, Organisations, Roles, and Hierarchies." },
+            { question: "Platform Goals", answer: "What RCAP aims to achieve for public health coordination." }
+        ]
+    },
+    {
+        title: "2. Getting Started",
+        items: [
+            { question: "Creating Your Account", answer: "A step-by-step guide to the registration and verification process." },
+            { question: "Logging In & Security", answer: "Instructions on signing in, password requirements, and multi-factor authentication (if applicable)." },
+            { question: "First Look: The Dashboard", answer: "An explanation of the role-based dashboard and its key components." }
+        ]
+    },
+    {
+        title: "3. Core Features in Detail",
+        items: [
+            { question: "Activity Management", answer: "How to create, edit, submit, and track the status of activities. Explanation of fields like 'Type', 'Location', etc." },
+            { question: "Organisation Management", answer: "How to view, add, and link organisations. Understanding parent-child relationships between Federal, State, and LGA levels." },
+            { question: "Team Directory", answer: "How to invite new members, manage existing users, and understand user roles (Super Admin, State Coordinator, Field Officer, etc.)." },
+            { question: "Messaging System", answer: "Guide to using the internal messaging for direct and group communication, including how to find conversations and start new ones." },
+            { question: "Reports & Analytics", answer: "How to generate, view, and export reports. Explanation of the different report templates and data visualizations." },
+        ]
+    },
+    {
+        title: "4. User Roles and Permissions",
+        items: [
+            { question: "Super Admin (Federal)", answer: "Detailed breakdown of full system access, capabilities, and responsibilities." },
+            { question: "State Admin / Coordinator", answer: "Explanation of state-level management duties, from approving activities to managing LGA hierarchies." },
+            { question: "LGA / Field Officer", answer: "A guide for field officers on creating reports and managing their assigned tasks." },
+            { question: "Data Analyst / Epidemiologist", answer: "Information on read-only access for data analysis and trend reporting." },
+        ]
+    },
+    {
+        title: "5. Account & Organisation Settings",
+        items: [
+            { question: "Managing Your Profile", answer: "How to update personal information, change your password, and set your profile picture." },
+            { question: "Notification Preferences", answer: "How to configure email, push, and SMS notifications for different event types." },
+            { question: "Organisation Settings", answer: "For admins: how to manage organisation details, branding, and ownership." }
+        ]
+    },
+    {
+        title: "6. Advanced Topics & Best Practices",
+        items: [
+            { question: "Best Practices for Reporting", answer: "Tips for writing clear, effective, and data-rich activity reports." },
+            { question: "Understanding Data Hierarchy", answer: "How data rolls up from LGA to State to Federal levels for comprehensive analytics." },
+            { question: "Using AI for Insights", answer: "An overview of how to leverage the AI report generation feature for deeper analysis (when available)." },
+        ]
+    }
+];
 
 export default function HelpSettingsPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Help & Support
+          Help & Documentation
         </h1>
         <p className="text-muted-foreground">
-          Find answers to your questions or contact our support team.
+          Find answers and detailed guides for using the RCAP platform.
         </p>
       </div>
 
-      <div className="space-y-8">
-        <HelpSettings />
-      </div>
+      <Card>
+          <CardHeader>
+              <CardTitle>Platform Knowledge Base</CardTitle>
+              <CardDescription>
+                  A comprehensive guide to understanding and using all features of RCAP.
+              </CardDescription>
+          </CardHeader>
+          <CardContent>
+              <Accordion type="single" collapsible className="w-full">
+                  {documentationSections.map(section => (
+                      <AccordionItem key={section.title} value={section.title}>
+                          <AccordionTrigger className="text-xl font-bold">{section.title}</AccordionTrigger>
+                          <AccordionContent>
+                              <Accordion type="single" collapsible className="w-full pl-4 border-l">
+                                  {section.items.map(item => (
+                                      <AccordionItem key={item.question} value={item.question}>
+                                          <AccordionTrigger className="text-base font-semibold">{item.question}</AccordionTrigger>
+                                          <AccordionContent className="text-muted-foreground">
+                                              {item.answer}
+                                          </AccordionContent>
+                                      </AccordionItem>
+                                  ))}
+                              </Accordion>
+                          </AccordionContent>
+                      </AccordionItem>
+                  ))}
+              </Accordion>
+          </CardContent>
+      </Card>
     </div>
   );
 }

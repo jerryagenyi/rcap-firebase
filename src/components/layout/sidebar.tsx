@@ -28,15 +28,19 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 
-const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string }) => {
-  const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname:string }) => {
+  const isActive = item.children 
+    ? pathname.startsWith(item.href) && !item.children.some(child => pathname.startsWith(child.href) && child.href.length > item.href.length)
+    : pathname === item.href || pathname.startsWith(`${item.href}/`);
+    
+  const isChildActive = item.children && item.children.some(child => pathname.startsWith(child.href));
 
   if (item.children) {
     return (
-        <Collapsible>
+        <Collapsible defaultOpen={isChildActive}>
             <CollapsibleTrigger asChild>
                 <SidebarMenuButton
-                    isActive={isActive}
+                    isActive={isChildActive}
                     tooltip={{ children: item.title }}
                     className="justify-between"
                 >
@@ -50,7 +54,7 @@ const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname: string })
             <CollapsibleContent>
                 <SidebarMenuSub>
                     {item.children.map((child) => {
-                        const isSubActive = pathname === child.href;
+                        const isSubActive = pathname === child.href || pathname.startsWith(`${child.href}/`);
                         return (
                             <SidebarMenuSubItem key={child.href}>
                                  <SidebarMenuSubButton asChild isActive={isSubActive}>
