@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, ListFilter, Search } from "lucide-react";
+import { PlusCircle, ListFilter, Search, Trash2 } from "lucide-react";
 import { mockActivities } from "@/lib/data";
 import ActivitiesList from "./components/activities-data-table";
 import { Input } from "@/components/ui/input";
@@ -17,12 +17,20 @@ import {
 } from "@/components/ui/sheet";
 import ActivityFilters from "./components/filters";
 import PaginationControls from "@/components/shared/pagination-controls";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 
 export default function ActivitiesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
 
   const filteredActivities = useMemo(() => {
     if (!searchQuery) {
@@ -43,6 +51,25 @@ export default function ActivitiesPage() {
     const endIndex = startIndex + itemsPerPage;
     return filteredActivities.slice(startIndex, endIndex);
   }, [currentPage, itemsPerPage, filteredActivities]);
+
+  const handleSelectActivity = (activityId: string, isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedActivities(prev => [...prev, activityId]);
+    } else {
+      setSelectedActivities(prev => prev.filter(id => id !== activityId));
+    }
+  };
+
+  const handleSelectAll = (isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedActivities(paginatedActivities.map(a => a.id));
+    } else {
+      setSelectedActivities([]);
+    }
+  };
+
+  const allOnPageSelected = selectedActivities.length > 0 && paginatedActivities.every(a => selectedActivities.includes(a.id));
+
 
   return (
     <div className="flex flex-col gap-8">
@@ -94,8 +121,36 @@ export default function ActivitiesPage() {
             </SheetContent>
         </Sheet>
       </div>
+       {selectedActivities.length > 0 && (
+        <div className="flex items-center justify-between p-4 rounded-lg bg-muted border">
+          <p className="text-sm font-medium">{selectedActivities.length} selected</p>
+          <div className="flex gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  Change Status <ChevronDown className="ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Approve</DropdownMenuItem>
+                <DropdownMenuItem>Mark as Completed</DropdownMenuItem>
+                <DropdownMenuItem>Reject</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button variant="destructive" onClick={() => setSelectedActivities([])}>
+              <Trash2 className="mr-2" /> Delete
+            </Button>
+          </div>
+        </div>
+      )}
 
-      <ActivitiesList data={paginatedActivities} />
+      <ActivitiesList 
+        data={paginatedActivities}
+        selectedActivities={selectedActivities}
+        onSelectActivity={handleSelectActivity}
+        onSelectAll={handleSelectAll}
+        allOnPageSelected={allOnPageSelected}
+      />
 
        <PaginationControls
         currentPage={currentPage}

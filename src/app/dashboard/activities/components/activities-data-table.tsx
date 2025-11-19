@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { Activity, ActivityStatus } from "@/lib/types";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Building, MapPin, Tag, Calendar, Eye, Pencil, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const statusStyles: Record<ActivityStatus, string> = {
   Approved: "bg-green-500 text-white",
@@ -17,14 +19,21 @@ const statusStyles: Record<ActivityStatus, string> = {
   Completed: "bg-primary text-white",
 };
 
-function ActivityCard({ activity }: { activity: Activity }) {
+function ActivityCard({ activity, isSelected, onSelect }: { activity: Activity, isSelected: boolean, onSelect: (id: string, selected: boolean) => void }) {
   // Consistently format dates to avoid hydration errors
   const createdDate = format(new Date(activity.dateCreated), "PPP");
   const modifiedDate = format(new Date(activity.lastModified), "PPP");
 
   return (
-    <Card className="flex items-start gap-4 p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <Checkbox className="h-6 w-6 mt-1" />
+    <Card className={cn(
+        "flex items-start gap-4 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+        isSelected && "bg-primary/5 border-primary"
+    )}>
+      <Checkbox 
+        className="h-6 w-6 mt-1" 
+        checked={isSelected}
+        onCheckedChange={(checked) => onSelect(activity.id, !!checked)}
+      />
       <div className="flex-1">
         <div className="flex items-start justify-between">
             <Link href={`/dashboard/activities/${activity.id}`}>
@@ -80,12 +89,42 @@ function ActivityCard({ activity }: { activity: Activity }) {
   );
 }
 
-export default function ActivitiesList({ data }: { data: Activity[] }) {
+type ActivitiesListProps = {
+  data: Activity[];
+  selectedActivities: string[];
+  onSelectActivity: (id: string, selected: boolean) => void;
+  onSelectAll: (selected: boolean) => void;
+  allOnPageSelected: boolean;
+};
+
+
+export default function ActivitiesList({ 
+    data, 
+    selectedActivities, 
+    onSelectActivity,
+    onSelectAll,
+    allOnPageSelected
+}: ActivitiesListProps) {
   return (
-    <div className="grid gap-4">
-      {data.map((activity) => (
-        <ActivityCard key={activity.id} activity={activity} />
-      ))}
+    <div className="space-y-4">
+        <div className="flex items-center px-6">
+            <Checkbox 
+                id="select-all-activities"
+                checked={allOnPageSelected}
+                onCheckedChange={(checked) => onSelectAll(!!checked)}
+            />
+            <label htmlFor="select-all-activities" className="ml-3 text-sm font-medium">Select all on this page</label>
+        </div>
+        <div className="grid gap-4">
+        {data.map((activity) => (
+            <ActivityCard 
+                key={activity.id} 
+                activity={activity} 
+                isSelected={selectedActivities.includes(activity.id)}
+                onSelect={onSelectActivity}
+            />
+        ))}
+        </div>
     </div>
   );
 }

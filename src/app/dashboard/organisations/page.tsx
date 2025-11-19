@@ -32,7 +32,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
-import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building } from 'lucide-react';
+import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building, Trash2, ChevronDown } from 'lucide-react';
 import { mockOrganisations } from '@/lib/data';
 import type { Organisation } from '@/lib/types';
 import PaginationControls from '@/components/shared/pagination-controls';
@@ -43,6 +43,8 @@ import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
+
 
 const statusStyles: Record<Organisation['status'], string> = {
   Active: 'bg-green-500 text-white',
@@ -134,6 +136,8 @@ export default function OrganisationsPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [selectedOrgs, setSelectedOrgs] = useState<string[]>([]);
+
 
     const filteredOrganisations = useMemo(() => {
         if (!searchQuery) {
@@ -154,6 +158,22 @@ export default function OrganisationsPage() {
         const endIndex = startIndex + itemsPerPage;
         return filteredOrganisations.slice(startIndex, endIndex);
     }, [currentPage, itemsPerPage, filteredOrganisations]);
+
+    const handleSelectOrg = (orgId: string, isSelected: boolean) => {
+        setSelectedOrgs(prev => isSelected ? [...prev, orgId] : prev.filter(id => id !== orgId));
+    };
+
+    const handleSelectAll = (isChecked: boolean | 'indeterminate') => {
+        if (isChecked === true) {
+            setSelectedOrgs(paginatedOrganisations.map(o => o.id));
+        } else {
+            setSelectedOrgs([]);
+        }
+    };
+    
+    const allOnPageSelected = selectedOrgs.length > 0 && paginatedOrganisations.length > 0 && paginatedOrganisations.every(o => selectedOrgs.includes(o.id));
+    const someOnPageSelected = selectedOrgs.length > 0 && !allOnPageSelected;
+
     
   return (
     <div className="flex flex-col gap-8">
@@ -187,10 +207,40 @@ export default function OrganisationsPage() {
         />
       </div>
 
+        {selectedOrgs.length > 0 && (
+            <div className="flex items-center justify-between p-4 rounded-lg bg-muted border">
+            <p className="text-sm font-medium">{selectedOrgs.length} selected</p>
+            <div className="flex gap-2">
+                <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                    Change Status <ChevronDown className="ml-2" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuItem>Active</DropdownMenuItem>
+                    <DropdownMenuItem>Pending</DropdownMenuItem>
+                    <DropdownMenuItem>Suspended</DropdownMenuItem>
+                </DropdownMenuContent>
+                </DropdownMenu>
+                <Button variant="destructive" onClick={() => setSelectedOrgs([])}>
+                <Trash2 className="mr-2" /> Delete
+                </Button>
+            </div>
+            </div>
+        )}
+
       <div className="rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-[50px]">
+                <Checkbox 
+                    onCheckedChange={handleSelectAll}
+                    checked={allOnPageSelected || someOnPageSelected}
+                    data-state={someOnPageSelected ? 'indeterminate' : (allOnPageSelected ? 'checked' : 'unchecked')}
+                />
+              </TableHead>
               <TableHead>Organisation</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Level</TableHead>
@@ -205,7 +255,13 @@ export default function OrganisationsPage() {
           </TableHeader>
           <TableBody>
             {paginatedOrganisations.map((org) => (
-              <TableRow key={org.id}>
+              <TableRow key={org.id} data-state={selectedOrgs.includes(org.id) ? 'selected' : ''}>
+                <TableCell>
+                    <Checkbox
+                        checked={selectedOrgs.includes(org.id)}
+                        onCheckedChange={(checked) => handleSelectOrg(org.id, !!checked)}
+                    />
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-muted rounded-md">

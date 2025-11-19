@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { mockTeamMembers } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X, UploadCloud, Download } from 'lucide-react';
+import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X, UploadCloud, Download, Trash2, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -43,6 +43,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import PaginationControls from '@/components/shared/pagination-controls';
+import { Checkbox } from '@/components/ui/checkbox';
+
 
 const statusStyles: Record<UserType['status'], string> = {
   Active: 'bg-green-500 text-white',
@@ -94,7 +96,7 @@ const TeamMemberProfileDialog = ({ member, open, onOpenChange }: { member: UserT
     );
 }
 
-const TeamMemberCard = ({ member }: { member: UserType }) => {
+const TeamMemberCard = ({ member, isSelected, onSelect }: { member: UserType, isSelected: boolean, onSelect: (id: string, selected: boolean) => void }) => {
   const avatar = PlaceHolderImages.find((p) => p.id === member.avatarId);
   const userRoles = [...new Set(mockTeamMembers.map(m => m.role))];
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -102,7 +104,10 @@ const TeamMemberCard = ({ member }: { member: UserType }) => {
   return (
     <>
         <Card className="p-6">
-          <CardContent className="flex flex-col items-center text-center p-0">
+            <div className="absolute top-4 left-4">
+                <Checkbox checked={isSelected} onCheckedChange={(checked) => onSelect(member.id, !!checked)} />
+            </div>
+          <CardContent className="flex flex-col items-center text-center p-0 pt-8">
             <div className="relative w-24 h-24">
                 <Avatar className="h-24 w-24 mb-4">
                 <AvatarImage src={avatar?.imageUrl} alt={member.name} />
@@ -223,6 +228,8 @@ export default function TeamPage() {
   const userRoles = [...new Set(mockTeamMembers.map(m => m.role))];
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+
   
   const filteredMembers = useMemo(() => {
     if (!searchQuery) {
@@ -244,6 +251,20 @@ export default function TeamPage() {
     return filteredMembers.slice(startIndex, endIndex);
   }, [currentPage, itemsPerPage, filteredMembers]);
 
+   const handleSelectMember = (memberId: string, isSelected: boolean) => {
+        setSelectedMembers(prev => isSelected ? [...prev, memberId] : prev.filter(id => id !== memberId));
+    };
+
+    const handleSelectAll = (isChecked: boolean | 'indeterminate') => {
+        if (isChecked === true) {
+            setSelectedMembers(paginatedMembers.map(m => m.id));
+        } else {
+            setSelectedMembers([]);
+        }
+    };
+    
+    const allOnPageSelected = selectedMembers.length > 0 && paginatedMembers.length > 0 && paginatedMembers.every(m => selectedMembers.includes(m.id));
+    const someOnPageSelected = selectedMembers.length > 0 && !allOnPageSelected;
 
   return (
     <div className="flex flex-col gap-8">
@@ -325,22 +346,99 @@ export default function TeamPage() {
         </Dialog>
       </div>
 
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        <Input 
-          placeholder="Search by name, email, or role..." 
-          className="h-12 pl-12 w-full" 
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value)
-            setCurrentPage(1);
-          }}
-        />
-      </div>
+       <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <div className="relative flex-1 w-full">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input 
+                placeholder="Search by name, email, or role..." 
+                className="h-12 pl-12 w-full" 
+                value={searchQuery}
+                onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    setCurrentPage(1);
+                }}
+                />
+            </div>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+                 <Checkbox 
+                    id="select-all-members"
+                    onCheckedChange={handleSelectAll}
+                    checked={allOnPageSelected || someOnPageSelected}
+                    data-state={someOnPageSelected ? 'indeterminate' : (allOnPageSelected ? 'checked' : 'unchecked')}
+                />
+                <Label htmlFor="select-all-members" className="text-sm font-medium">Select all</Label>
+            </div>
+        </div>
+
+        {selectedMembers.length > 0 && (
+            <div className="flex items-center justify-between p-4 rounded-lg bg-muted border">
+                <p className="text-sm font-medium">{selectedMembers.length} member(s) selected</p>
+                <div className="flex gap-2">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline">
+                                <Edit className="mr-2" /> Bulk Edit Role
+                            </Button>
+                        </DialogTrigger>
+                         <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>Bulk Edit Role</DialogTitle>
+                                <DialogDescription>Assign a new role to {selectedMembers.length} selected members.</DialogDescription>
+                            </DialogHeader>
+                             <div className="py-4 space-y-2">
+                                <Label htmlFor="bulk-role">New Role</Label>
+                                <Select>
+                                    <SelectTrigger id="bulk-role">
+                                        <SelectValue placeholder="Select a role" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {userRoles.map(role => (
+                                            <SelectItem key={role} value={role}>{role}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <DialogFooter>
+                                <DialogClose asChild>
+                                    <Button type="button" variant="outline">Cancel</Button>
+                                </DialogClose>
+                                <Button type="submit" variant="gradient">Apply Role</Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive">
+                                <Trash2 className="mr-2" /> Remove from Team
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                This will permanently remove {selectedMembers.length} members from the team.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                Yes, remove members
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
+            </div>
+        )}
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {paginatedMembers.map((member) => (
-          <TeamMemberCard key={member.id} member={member} />
+          <TeamMemberCard 
+            key={member.id} 
+            member={member} 
+            isSelected={selectedMembers.includes(member.id)}
+            onSelect={handleSelectMember}
+          />
         ))}
       </div>
       
