@@ -44,6 +44,18 @@ import { cn } from '@/lib/utils';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AnimatePresence, motion } from 'framer-motion';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const OrganisationProfile = () => {
     const currentOrg = mockOrganisations[0];
@@ -140,9 +152,6 @@ const OrganisationBranding = () => {
 )};
 
 const AccessManagement = () => {
-    const [isManaging, setIsManaging] = useState(false);
-    const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
-
     const rolesWithMembers = useMemo(() => {
         const grouped = mockTeamMembers.reduce((acc, member) => {
             if (!acc[member.role]) {
@@ -155,107 +164,60 @@ const AccessManagement = () => {
         return Object.entries(grouped).map(([name, members]) => ({ name, members }));
     }, []);
 
-    const handleSelectMember = (id: string, isSelected: boolean) => {
-        setSelectedMembers(prev => isSelected ? [...prev, id] : prev.filter(memberId => memberId !== id));
-    };
-
-    const handleSelectAll = (isChecked: boolean) => {
-        if (isChecked) {
-            setSelectedMembers(mockTeamMembers.map(m => m.id));
-        } else {
-            setSelectedMembers([]);
-        }
-    };
-    
     return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader>
         <div>
             <CardTitle>Access Management</CardTitle>
             <CardDescription>
                 Define roles and permissions for your organisation's team members.
             </CardDescription>
         </div>
-        {!isManaging ? (
-            <Button variant="outline" onClick={() => setIsManaging(true)}>
-                <Edit className="mr-2 h-4 w-4" /> Manage Members
-            </Button>
-        ) : (
-            <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setIsManaging(false)}>
-                    <X className="mr-2 h-4 w-4" /> Cancel
-                </Button>
-                <Button variant="gradient" onClick={() => setIsManaging(false)}>
-                    <Save className="mr-2 h-4 w-4" /> Save Changes
-                </Button>
-            </div>
-        )}
       </CardHeader>
-      <CardContent className="space-y-6">
-        {isManaging && (
-            <div className="flex items-center rounded-lg border p-3">
-                <Checkbox
-                    id="select-all-members"
-                    onCheckedChange={handleSelectAll}
-                    checked={selectedMembers.length === mockTeamMembers.length}
-                />
-                <Label htmlFor="select-all-members" className="ml-3 font-semibold">Select All Members</Label>
-            </div>
-        )}
+      <CardContent className="space-y-4">
         {rolesWithMembers.map(role => (
-            <div key={role.name}>
-                <h4 className="font-semibold text-lg border-b pb-2 mb-4">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {role.members.map(member => {
-                        const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
-                        return (
-                            <div key={member.id} className="flex items-center gap-3 rounded-lg border p-3">
-                                {isManaging && (
-                                    <Checkbox
-                                        id={`member-${member.id}`}
-                                        checked={selectedMembers.includes(member.id)}
-                                        onCheckedChange={(checked) => handleSelectMember(member.id, !!checked)}
-                                    />
-                                )}
-                                <Avatar className="h-10 w-10">
-                                    <AvatarImage src={avatar?.imageUrl} />
-                                    <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                    <p className="font-medium text-foreground">{member.name}</p>
-                                    <p className="text-xs text-muted-foreground">{member.email}</p>
+            <Collapsible key={role.name} className="border rounded-lg" defaultOpen>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-t-lg">
+                     <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
+                     <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="border-t p-4">
+                    <div className="space-y-3">
+                        {role.members.map(member => {
+                            const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
+                            return (
+                                <div key={member.id} className="flex items-center gap-3 rounded-lg border p-3">
+                                    <Avatar className="h-10 w-10">
+                                        <AvatarImage src={avatar?.imageUrl} />
+                                        <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-1">
+                                        <p className="font-medium text-foreground">{member.name}</p>
+                                        <p className="text-xs text-muted-foreground">{member.email}</p>
+                                    </div>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuItem>View Profile</DropdownMenuItem>
+                                            <DropdownMenuItem>Edit Permissions</DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                                Remove User
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+                            )
+                        })}
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
         ))}
       </CardContent>
-       <AnimatePresence>
-       {isManaging && selectedMembers.length > 0 && (
-           <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-           >
-                <CardFooter className="sticky bottom-0 bg-background/80 backdrop-blur-sm border-t p-4 flex items-center justify-between">
-                    <p className="font-semibold">{selectedMembers.length} member(s) selected</p>
-                    <div className="flex gap-2">
-                        <Select>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Change Role..." />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {rolesWithMembers.map(r => <SelectItem key={r.name} value={r.name}>{r.name}</SelectItem>)}
-                            </SelectContent>
-                        </Select>
-                        <Button variant="destructive"><Trash2 className="mr-2"/> Remove</Button>
-                    </div>
-                </CardFooter>
-           </motion.div>
-       )}
-       </AnimatePresence>
     </Card>
   );
 };
