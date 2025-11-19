@@ -57,7 +57,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2 } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2, Eye } from 'lucide-react';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -173,7 +173,7 @@ const AccessManagement = () => {
     const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
     
     const isAllSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
-    const isSomeSelected = selectedMembers.length > 0 && selectedMembers.length < allMemberIds.length;
+    const isSomeSelected = selectedMembers.length > 0 && !isAllSelected;
     
     const handleManageClick = () => {
         setIsBulkMode(true);
@@ -374,6 +374,7 @@ const SubOrganisations = () => {
                             <TableHead>Level</TableHead>
                             <TableHead>Members</TableHead>
                             <TableHead>Status</TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -383,6 +384,18 @@ const SubOrganisations = () => {
                                 <TableCell>{org.level}</TableCell>
                                 <TableCell>{org.members}</TableCell>
                                 <TableCell><Badge variant={org.status === 'Active' ? 'default' : 'destructive'}>{org.status}</Badge></TableCell>
+                                <TableCell className="text-right">
+                                    <div className="flex justify-end gap-2">
+                                        <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
+                                            <Link href={`/dashboard/organisations/${org.id}`}>
+                                                <Eye className="h-4 w-4" />
+                                            </Link>
+                                        </Button>
+                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -481,3 +494,5 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
+
+    
