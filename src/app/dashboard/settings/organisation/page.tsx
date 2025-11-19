@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -178,8 +179,8 @@ const AccessManagement = () => {
     const allUserRoleNames = [...new Set(mockTeamMembers.map(m => m.role))];
     const allMemberIds = useMemo(() => userRoles.flatMap(role => role.memberIds), [userRoles]);
     
-    const allOnPageSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
-    const someSelected = selectedMembers.length > 0 && !allOnPageSelected;
+    const allSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
+    const someSelected = selectedMembers.length > 0 && !allSelected;
 
     const handleSelectMember = (memberId: string) => {
         setSelectedMembers(prev => 
@@ -260,10 +261,10 @@ const AccessManagement = () => {
                     <div className="flex items-center gap-2">
                         <Checkbox 
                             id="select-all-members"
-                            checked={allOnPageSelected || someSelected}
+                            checked={allSelected || someSelected}
                             onCheckedChange={handleSelectAll}
                             aria-label="Select all members"
-                            data-state={someSelected ? 'indeterminate' : (allOnPageSelected ? 'checked' : 'unchecked')}
+                            data-state={someSelected ? 'indeterminate' : (allSelected ? 'checked' : 'unchecked')}
                         />
                         <Label htmlFor="select-all-members" className="font-semibold">
                             {selectedMembers.length > 0 ? `${selectedMembers.length} selected` : "Select all"}
