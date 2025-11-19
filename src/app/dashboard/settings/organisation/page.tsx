@@ -37,7 +37,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, MoreHorizontal, User as UserIcon, Edit, Trash2, ArrowRight, Info, Save, X, ChevronDown } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, MoreHorizontal, User as UserIcon, Edit, Trash2, ArrowRight, Info, Save, X, ChevronDown, Eye } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -190,11 +190,11 @@ const AccessManagement = () => {
         );
     };
 
-    const handleSelectAll = () => {
-        if (allSelected) {
-            setSelectedMembers([]);
-        } else {
+    const handleSelectAll = (isChecked: boolean | 'indeterminate') => {
+        if (isChecked === true) {
             setSelectedMembers(allMemberIds);
+        } else {
+            setSelectedMembers([]);
         }
     }
 
@@ -261,10 +261,10 @@ const AccessManagement = () => {
                     <div className="flex items-center gap-2">
                         <Checkbox 
                             id="select-all-members"
-                            checked={allSelected}
+                            checked={allOnPageSelected || someSelected}
                             onCheckedChange={handleSelectAll}
                             aria-label="Select all members"
-                            data-state={someSelected ? 'indeterminate' : (allSelected ? 'checked' : 'unchecked')}
+                            data-state={someSelected ? 'indeterminate' : (allOnPageSelected ? 'checked' : 'unchecked')}
                         />
                         <Label htmlFor="select-all-members" className="font-semibold">
                             {selectedMembers.length > 0 ? `${selectedMembers.length} selected` : "Select all"}
@@ -337,51 +337,69 @@ const AccessManagement = () => {
                 onOpenChange={(isOpen) => handleOpenChange(role.name, isOpen)}
                 className="rounded-lg border data-[state=open]:border-b-0"
             >
-                <div className="flex items-center">
-                    <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group data-[state=open]:rounded-b-none flex-1">
-                        <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
-                        <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
+                <div className="flex items-center p-4">
+                     <CollapsibleTrigger asChild className='flex-1'>
+                        <div className="flex items-center justify-between w-full hover:bg-muted/50 rounded-lg group -m-4 p-4 cursor-pointer">
+                            <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
+                            <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
+                        </div>
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                   <div className="divide-y border-b border-x rounded-b-lg">
-                        {role.members.map((member) => {
-                            const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
-                            return (
-                                <div key={member.id} className="flex items-center gap-3 py-3 px-4">
-                                    {isManaging && (
-                                        <Checkbox 
-                                            id={`member-${member.id}`} 
-                                            checked={selectedMembers.includes(member.id)}
-                                            onCheckedChange={() => handleSelectMember(member.id)}
-                                        />
-                                    )}
-                                    <Avatar className={cn("h-10 w-10")}>
-                                        <AvatarImage src={avatar?.imageUrl} />
-                                        <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1">
-                                        <p className="font-medium text-foreground">{member.name}</p>
-                                        <p className="text-xs text-muted-foreground">{member.email}</p>
-                                    </div>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                                                <MoreHorizontal className="h-4 w-4" />
+                   <div className="pl-6 border-l ml-4">
+                        <div className="divide-y rounded-b-lg">
+                            {role.members.map((member) => {
+                                const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
+                                return (
+                                    <div key={member.id} className="flex items-center gap-3 py-3 px-4">
+                                        {isManaging && (
+                                            <Checkbox 
+                                                id={`member-${member.id}`} 
+                                                checked={selectedMembers.includes(member.id)}
+                                                onCheckedChange={() => handleSelectMember(member.id)}
+                                            />
+                                        )}
+                                        <Avatar className={cn("h-10 w-10")}>
+                                            <AvatarImage src={avatar?.imageUrl} />
+                                            <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex-1">
+                                            <p className="font-medium text-foreground">{member.name}</p>
+                                            <p className="text-xs text-muted-foreground">{member.email}</p>
+                                        </div>
+                                        <div className='flex items-center gap-1'>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary">
+                                                <Eye className="h-4 w-4" />
                                             </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem>View Profile</DropdownMenuItem>
-                                            <DropdownMenuItem>Edit Permissions</DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                                Remove User
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
-                            )
-                        })}
+                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-primary/10 hover:text-primary">
+                                                <Edit className="h-4 w-4" />
+                                            </Button>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild>
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive/70 hover:bg-destructive/10 hover:text-destructive">
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This will permanently remove {member.name} from the organisation.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                                            Yes, remove member
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </CollapsibleContent>
             </Collapsible>
