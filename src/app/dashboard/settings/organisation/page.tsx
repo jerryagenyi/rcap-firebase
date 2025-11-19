@@ -165,6 +165,8 @@ const AccessManagement = () => {
     };
     const roleKeys = Object.keys(roles);
     const allMemberIds = useMemo(() => Object.values(roles).flat().map(m => m.id), [roles]);
+    const userRoles = [...new Set(mockTeamMembers.map(m => m.role))];
+
 
     const [openAccordions, setOpenAccordions] = useState<string[]>([]);
     const [isBulkMode, setIsBulkMode] = useState(false);
@@ -291,25 +293,58 @@ const AccessManagement = () => {
          {isBulkMode && selectedMembers.length > 0 && (
             <CardFooter className="bg-muted/50 p-4 border-t flex items-center justify-between">
                 <p className="text-sm font-medium">{selectedMembers.length} member(s) selected</p>
-                 <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button variant="destructive"><Trash2 className="mr-2" /> Remove Selected</Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This will permanently remove {selectedMembers.length} member(s) from the team. This action cannot be undone.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
-                                Yes, remove {selectedMembers.length} member(s)
-                            </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
+                <div className="flex gap-2">
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="outline"><Edit className="mr-2" /> Bulk Edit Role</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Bulk Edit Role</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Assign a new role to the {selectedMembers.length} selected member(s). This will override their current roles.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                             <div className="py-4 space-y-2">
+                                <Label htmlFor="bulk-role">New Role</Label>
+                                <Select>
+                                    <SelectTrigger id="bulk-role">
+                                        <SelectValue placeholder="Select a role" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {userRoles.map(role => (
+                                            <SelectItem key={role} value={role}>{role}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>Apply new role</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive"><Trash2 className="mr-2" /> Remove Selected</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This will permanently remove {selectedMembers.length} member(s) from the team. This action cannot be undone.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                    Yes, remove {selectedMembers.length} member(s)
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
             </CardFooter>
         )}
     </Card>
@@ -446,5 +481,3 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
-
-    
