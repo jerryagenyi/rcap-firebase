@@ -1,3 +1,4 @@
+
 import type { LucideIcon } from "lucide-react";
 
 export type NavItem = {
@@ -51,4 +52,14 @@ export type ReportTemplate = {
     name: string;
     description: string;
     icon: LucideIcon;
+}
+
+export type Organisation = {
+    id: string;
+    name: string;
+    level: 'Federal' | 'State' | 'LGA';
+    members: number;
+    activities: number;
+    status: 'Active' | 'Pending' | 'Suspended';
+    parent: string | null;
 }

@@ -1,5 +1,5 @@
 
-import type { NavItem, Activity, Notification, User } from "@/lib/types";
+import type { NavItem, Activity, Notification, User, Organisation } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -26,6 +26,7 @@ import {
   Map,
   CheckCircle,
   Clock,
+  Building,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -48,6 +49,11 @@ export const navItems: NavItem[] = [
     title: "Team",
     href: "/dashboard/team",
     icon: Users,
+  },
+   {
+    title: "Organisations",
+    href: "/dashboard/organisations",
+    icon: Building,
   },
   {
     title: 'Notifications',
@@ -730,4 +736,52 @@ export const reportTemplates = [
     { id: 'weekly-summary', name: 'Weekly Summary', description: 'A snapshot of the week\'s performance.', icon: Calendar },
     { id: 'monthly-report', name: 'Monthly Report', description: 'A comprehensive monthly review.', icon: FileText },
     { id: 'performance-analysis', name: 'Performance Analysis', description: 'Deep-dive into activity trends.', icon: TrendingUp },
+];
+
+export const mockOrganisations: Organisation[] = [
+    {
+        id: 'ORG-001',
+        name: 'Federal MOH',
+        level: 'Federal',
+        members: 45,
+        activities: 340,
+        status: 'Active',
+        parent: null
+    },
+    {
+        id: 'ORG-002',
+        name: 'Lagos State MOH',
+        level: 'State',
+        members: 28,
+        activities: 182,
+        status: 'Active',
+        parent: null
+    },
+     {
+        id: 'ORG-003',
+        name: 'Kano State PHCDA',
+        level: 'State',
+        members: 35,
+        activities: 218,
+        status: 'Active',
+        parent: null
+    },
+    {
+        id: 'ORG-004',
+        name: 'Rivers State MOH',
+        level: 'State',
+        members: 22,
+        activities: 156,
+        status: 'Pending',
+        parent: null
+    },
+    {
+        id: 'ORG-005',
+        name: 'Ikeja LGA PHC',
+        level: 'LGA',
+        members: 12,
+        activities: 45,
+        status: 'Active',
+        parent: 'Lagos State MOH'
+    }
 ];
