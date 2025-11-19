@@ -36,7 +36,8 @@ const AppearanceSettings = () => (
         </div>
       </div>
     </CardContent>
-    <CardFooter className="border-t pt-6">
+    <CardFooter className="border-t pt-6 flex justify-between">
+      <Button variant="outline">Reset to Default</Button>
       <Button variant="gradient" className="ml-auto">Save Changes</Button>
     </CardFooter>
   </Card>
