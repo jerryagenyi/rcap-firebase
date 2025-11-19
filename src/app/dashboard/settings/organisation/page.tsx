@@ -173,8 +173,13 @@ const AccessManagement = () => {
             return acc;
         }, {} as Record<string, typeof mockTeamMembers>);
         
-        return Object.entries(grouped).map(([name, members]) => ({ name, members }));
+        return Object.entries(grouped).map(([name, members]) => ({ name, members, memberIds: members.map(m => m.id) }));
     }, []);
+
+    const allMemberIds = useMemo(() => userRoles.flatMap(role => role.memberIds), [userRoles]);
+    const allSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
+    const someSelected = selectedMembers.length > 0 && !allSelected;
+
 
     const handleSelectMember = (memberId: string) => {
         setSelectedMembers(prev => 
@@ -184,27 +189,26 @@ const AccessManagement = () => {
         );
     };
 
+    const handleSelectAll = () => {
+        if (allSelected) {
+            setSelectedMembers([]);
+        } else {
+            setSelectedMembers(allMemberIds);
+        }
+    }
+
     const toggleManageMode = () => {
         const nextIsManaging = !isManaging;
         setIsManaging(nextIsManaging);
         setSelectedMembers([]);
         
         if (nextIsManaging) {
-            const allOpen = userRoles.reduce((acc, role) => {
-                acc[role.name] = true;
-                return acc;
-            }, {} as Record<string, boolean>);
-            setOpenRoles(allOpen);
+            expandAll();
         } else {
-            setOpenRoles({});
+            collapseAll();
         }
     };
     
-    const handleOpenChange = (roleName: string, isOpen: boolean) => {
-        if (isManaging) return;
-        setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
-    };
-
     const expandAll = () => {
         const allOpen = userRoles.reduce((acc, role) => {
             acc[role.name] = true;
@@ -218,6 +222,11 @@ const AccessManagement = () => {
     };
 
     const hasOpenRoles = Object.values(openRoles).some(isOpen => isOpen);
+    
+    const handleOpenChange = (roleName: string, isOpen: boolean) => {
+        if (isManaging) return; // Prevent closing while managing
+        setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
+    };
 
     return (
     <Card>
@@ -229,7 +238,7 @@ const AccessManagement = () => {
             </CardDescription>
         </div>
         <div className="flex items-center gap-2">
-            {!isManaging ? (
+             {!isManaging ? (
                 <>
                     <Button variant="link" onClick={hasOpenRoles ? collapseAll : expandAll}>
                         {hasOpenRoles ? 'Collapse All' : 'Expand All'}
@@ -237,7 +246,17 @@ const AccessManagement = () => {
                     <Button variant="outline" onClick={toggleManageMode}>Manage</Button>
                 </>
             ) : (
-                <div className="flex gap-2">
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <Checkbox 
+                            id="select-all-members"
+                            checked={allSelected}
+                            onCheckedChange={handleSelectAll}
+                            aria-label="Select all members"
+                            data-state={someSelected ? 'indeterminate' : (allSelected ? 'checked' : 'unchecked')}
+                        />
+                        <Label htmlFor="select-all-members">Select all</Label>
+                    </div>
                     <Button variant="ghost" onClick={toggleManageMode}>Cancel</Button>
                     <Button variant="gradient">Save Changes</Button>
                 </div>
@@ -250,55 +269,53 @@ const AccessManagement = () => {
                 key={role.name}
                 open={openRoles[role.name] || false}
                 onOpenChange={(isOpen) => handleOpenChange(role.name, isOpen)}
-                className="rounded-lg border"
+                className="rounded-lg border data-[state=open]:border-b-0"
             >
-                <div className="flex">
+                <div className="flex items-center">
                     <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group data-[state=open]:rounded-b-none flex-1">
                         <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                         <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                    <div className="pl-4">
-                        <div className="divide-y">
-                            {role.members.map((member) => {
-                                const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
-                                return (
-                                    <div key={member.id} className="flex items-center gap-3 py-3 pr-4">
-                                        {isManaging && (
-                                            <Checkbox 
-                                                id={`member-${member.id}`} 
-                                                checked={selectedMembers.includes(member.id)}
-                                                onCheckedChange={() => handleSelectMember(member.id)}
-                                            />
-                                        )}
-                                        <Avatar className="h-10 w-10">
-                                            <AvatarImage src={avatar?.imageUrl} />
-                                            <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div className="flex-1">
-                                            <p className="font-medium text-foreground">{member.name}</p>
-                                            <p className="text-xs text-muted-foreground">{member.email}</p>
-                                        </div>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8">
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuItem>View Profile</DropdownMenuItem>
-                                                <DropdownMenuItem>Edit Permissions</DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                                    Remove User
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                   <div className="divide-y border-x border-b rounded-b-lg">
+                        {role.members.map((member) => {
+                            const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
+                            return (
+                                <div key={member.id} className="flex items-center gap-3 py-3 px-4">
+                                    {isManaging && (
+                                        <Checkbox 
+                                            id={`member-${member.id}`} 
+                                            checked={selectedMembers.includes(member.id)}
+                                            onCheckedChange={() => handleSelectMember(member.id)}
+                                        />
+                                    )}
+                                    <Avatar className={cn("h-10 w-10", !isManaging && "ml-4")}>
+                                        <AvatarImage src={avatar?.imageUrl} />
+                                        <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-1">
+                                        <p className="font-medium text-foreground">{member.name}</p>
+                                        <p className="text-xs text-muted-foreground">{member.email}</p>
                                     </div>
-                                )
-                            })}
-                        </div>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuItem>View Profile</DropdownMenuItem>
+                                            <DropdownMenuItem>Edit Permissions</DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                                Remove User
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+                            )
+                        })}
                     </div>
                 </CollapsibleContent>
             </Collapsible>
