@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { mockConversations, mockTeamMembers } from '@/lib/data';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,9 +11,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { format, formatDistanceToNow } from 'date-fns';
-import { Search, PenSquare, Send, Reply, Forward, Paperclip } from 'lucide-react';
+import { Search, PenSquare, Send, Reply, Forward, Paperclip, Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Conversation, Message } from '@/lib/types';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Label } from '@/components/ui/label';
 
 const ConversationListItem = ({ conversation, onSelect, isActive }: { conversation: Conversation, onSelect: () => void, isActive: boolean }) => {
     const lastMessage = conversation.messages[conversation.messages.length - 1];
@@ -71,6 +75,95 @@ const MessageItem = ({ message }: { message: { sender: { name: string; avatarId:
                 </Avatar>
             )}
         </div>
+    );
+};
+
+const ForwardMessageDialog = () => {
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
+  
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm">
+            <Forward className="mr-2 h-4 w-4" /> Forward
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Forward Message</DialogTitle>
+            <DialogDescription>
+              Select recipients and add an optional message.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4 space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="recipients">Recipients</Label>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-full justify-between"
+                  >
+                    {value
+                      ? mockTeamMembers.find((member) => member.email.toLowerCase() === value)?.name
+                      : "Select member..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                  <Command>
+                    <CommandInput placeholder="Search members..." />
+                    <CommandList>
+                        <CommandEmpty>No member found.</CommandEmpty>
+                        <CommandGroup>
+                        {mockTeamMembers.map((member) => (
+                            <CommandItem
+                            key={member.email}
+                            value={member.email}
+                            onSelect={(currentValue) => {
+                                setValue(currentValue === value ? "" : currentValue);
+                                setOpen(false);
+                            }}
+                            >
+                            <Check
+                                className={cn(
+                                "mr-2 h-4 w-4",
+                                value === member.email ? "opacity-100" : "opacity-0"
+                                )}
+                            />
+                            {member.name}
+                            </CommandItem>
+                        ))}
+                        </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="forward-message">Additional Message (Optional)</Label>
+              <Textarea
+                id="forward-message"
+                placeholder="FYI, thought you should see this..."
+                className="min-h-[100px]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button type="submit" variant="gradient">
+              <Send className="mr-2 h-4 w-4" /> Forward Message
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     );
 };
 
@@ -155,7 +248,7 @@ export default function MessagesPage() {
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                      <Button variant="outline" size="sm"><Reply className="mr-2 h-4 w-4" /> Reply</Button>
-                                     <Button variant="outline" size="sm"><Forward className="mr-2 h-4 w-4" /> Forward</Button>
+                                     <ForwardMessageDialog />
                                 </div>
                             </CardContent>
                         </>
