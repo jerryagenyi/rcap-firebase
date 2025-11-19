@@ -159,7 +159,10 @@ const OrganisationBranding = () => {
 )};
 
 const AccessManagement = () => {
-    const rolesWithMembers = useMemo(() => {
+    const [isManaging, setIsManaging] = useState(false);
+    const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+    
+    const userRoles = useMemo(() => {
         const grouped = mockTeamMembers.reduce((acc, member) => {
             if (!acc[member.role]) {
                 acc[member.role] = [];
@@ -171,29 +174,57 @@ const AccessManagement = () => {
         return Object.entries(grouped).map(([name, members]) => ({ name, members }));
     }, []);
 
+    const handleSelectMember = (memberId: string) => {
+        setSelectedMembers(prev => 
+            prev.includes(memberId) 
+                ? prev.filter(id => id !== memberId)
+                : [...prev, memberId]
+        );
+    };
+
+    const toggleManageMode = () => {
+        setIsManaging(prev => !prev);
+        setSelectedMembers([]); // Reset selection when toggling mode
+    };
+
     return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex-row items-center justify-between">
         <div>
             <CardTitle>Access Management</CardTitle>
             <CardDescription>
                 Define roles and permissions for your organisation's team members.
             </CardDescription>
         </div>
+        {!isManaging ? (
+            <Button variant="outline" onClick={toggleManageMode}>Manage</Button>
+        ) : (
+            <div className="flex gap-2">
+                <Button variant="ghost" onClick={toggleManageMode}>Cancel</Button>
+                <Button variant="gradient">Save Changes</Button>
+            </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
-        {rolesWithMembers.map(role => (
-            <Collapsible key={role.name} className="border rounded-lg">
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-t-lg group">
+        {userRoles.map(role => (
+            <Collapsible key={role.name}>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group border">
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="border-t p-4">
-                    <div className="space-y-4 divide-y">
+                <CollapsibleContent className="border-l border-r border-b rounded-b-lg p-4">
+                    <div className="space-y-2 divide-y">
                         {role.members.map((member, index) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
-                                <div key={member.id} className="flex items-center gap-3 pt-4 first:pt-0">
+                                <div key={member.id} className="flex items-center gap-3 pt-2 first:pt-0">
+                                    {isManaging && (
+                                        <Checkbox 
+                                            id={`member-${member.id}`} 
+                                            checked={selectedMembers.includes(member.id)}
+                                            onCheckedChange={() => handleSelectMember(member.id)}
+                                        />
+                                    )}
                                     <Avatar className="h-10 w-10">
                                         <AvatarImage src={avatar?.imageUrl} />
                                         <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
