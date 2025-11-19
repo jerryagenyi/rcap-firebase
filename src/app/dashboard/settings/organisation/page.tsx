@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -25,14 +25,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -41,23 +33,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2, Eye } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, MoreHorizontal, User as UserIcon, Edit, Trash2, ArrowRight, Info } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -104,7 +83,7 @@ const OrganisationBranding = () => {
             <CardDescription>Customize the look and feel for your organisation's members.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                 <Avatar className="h-20 w-20 rounded-md">
                     <AvatarFallback className="rounded-md">
                         <Building />
@@ -159,198 +138,44 @@ const OrganisationBranding = () => {
 )};
 
 const AccessManagement = () => {
-    const roles = {
-        'Administrators': mockTeamMembers.filter(m => ['Super Admin', 'Federal Admin', 'State Admin'].includes(m.role)),
-        'State Coordinators': mockTeamMembers.filter(m => m.role === 'State Coordinator'),
-        'Field Officers': mockTeamMembers.filter(m => m.role === 'Field Officer'),
-    };
-    const roleKeys = Object.keys(roles);
-    const allMemberIds = useMemo(() => Object.values(roles).flat().map(m => m.id), [roles]);
-    const userRoles = [...new Set(mockTeamMembers.map(m => m.role))];
-
-
-    const [openAccordions, setOpenAccordions] = useState<string[]>([]);
-    const [isBulkMode, setIsBulkMode] = useState(false);
-    const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
-    
-    const isAllSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
-    const isSomeSelected = selectedMembers.length > 0 && !isAllSelected;
-    
-    const handleManageClick = () => {
-        setIsBulkMode(true);
-        setOpenAccordions(roleKeys);
-    };
-
-    const handleDoneClick = () => {
-        setIsBulkMode(false);
-        setOpenAccordions([]);
-        setSelectedMembers([]);
-    };
-
-    const handleSelectMember = (memberId: string, isSelected: boolean) => {
-        if (isSelected) {
-            setSelectedMembers(prev => [...prev, memberId]);
-        } else {
-            setSelectedMembers(prev => prev.filter(id => id !== memberId));
-        }
-    };
-    
-    const handleSelectAll = (isChecked: boolean | 'indeterminate') => {
-        if (isChecked === true) {
-            setSelectedMembers(allMemberIds);
-        } else {
-            setSelectedMembers([]);
-        }
-    };
-
-    return (
-     <Card>
-        <CardHeader className="flex flex-row items-start justify-between">
-          <div className="flex-1 space-y-1.5">
-            <CardTitle>Access Management</CardTitle>
-            <CardDescription>Define roles and permissions for your team.</CardDescription>
-            {isBulkMode && (
-              <div className="flex items-center gap-4 pt-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="select-all"
-                    checked={isAllSelected || isSomeSelected}
-                    onCheckedChange={handleSelectAll}
-                    data-state={isSomeSelected ? 'indeterminate' : isAllSelected ? 'checked' : 'unchecked'}
-                  />
-                  <Label htmlFor="select-all" className="text-sm font-medium">
-                    {selectedMembers.length > 0 ? `${selectedMembers.length} selected` : 'Select All'}
-                  </Label>
-                </div>
-                {selectedMembers.length > 0 && (
-                   <div className="flex items-center gap-2">
-                        <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                                <Button variant="outline" size="sm"><Edit className="mr-2 h-4 w-4" /> Bulk Edit Role</Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>Bulk Edit Role</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        Assign a new role to the {selectedMembers.length} selected member(s). This will override their current roles.
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <div className="py-4 space-y-2">
-                                    <Label htmlFor="bulk-role">New Role</Label>
-                                    <Select>
-                                        <SelectTrigger id="bulk-role">
-                                            <SelectValue placeholder="Select a role" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {userRoles.map(role => (
-                                                <SelectItem key={role} value={role}>{role}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction>Apply new role</AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
-
-                        <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                                <Button variant="destructive" size="sm"><Trash2 className="mr-2 h-4 w-4" /> Remove</Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This will permanently remove {selectedMembers.length} member(s) from the team. This action cannot be undone.
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
-                                        Yes, remove {selectedMembers.length} member(s)
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
-                    </div>
-                )}
-              </div>
-            )}
-          </div>
-            {!isBulkMode ? (
-                <Button variant="outline" onClick={handleManageClick}>
-                    Manage Team <Users className="ml-2" />
-                </Button>
-            ) : (
-                <Button variant="secondary" onClick={handleDoneClick}>Done</Button>
-            )}
-        </CardHeader>
-        <CardContent>
-             <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="w-full space-y-4">
-                {roleKeys.map((role) => {
-                    const members = roles[role as keyof typeof roles];
-                    return (
-                        <AccordionItem value={role} key={role} className="border-none">
-                            <AccordionTrigger className="rounded-lg border p-4 text-base font-medium hover:no-underline [&[data-state=open]]:border-primary [&[data-state=open]]:bg-primary/5">
-                                <div className="flex items-center justify-between w-full">
-                                    <p className="font-medium">{role}</p>
-                                    <Badge variant="secondary">{members.length} Members</Badge>
-                                </div>
-                            </AccordionTrigger>
-                            <AccordionContent className="p-4">
-                                <div className="space-y-3">
-                                    {members.map(member => {
-                                        const avatar = PlaceHolderImages.find((p) => p.id === member.avatarId);
-                                        return (
-                                            <div key={member.id} className="flex items-center gap-3 rounded-md p-2 -m-2 hover:bg-muted">
-                                                {isBulkMode && (
-                                                    <Checkbox 
-                                                        id={`select-${member.id}`} 
-                                                        onCheckedChange={(checked) => handleSelectMember(member.id, checked as boolean)}
-                                                        checked={selectedMembers.includes(member.id)}
-                                                    />
-                                                )}
-                                                <Avatar className="h-9 w-9">
-                                                    <AvatarImage src={avatar?.imageUrl} alt={member.name} />
-                                                    <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                                </Avatar>
-                                                <div className="flex-1">
-                                                    <p className="font-semibold text-sm">{member.name}</p>
-                                                    <p className="text-xs text-muted-foreground">{member.email}</p>
-                                                </div>
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                                                            <MoreHorizontal className="h-4 w-4" />
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuItem>
-                                                            <UserIcon className="mr-2 h-4 w-4" /> View Profile
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem>
-                                                            <Edit className="mr-2 h-4 w-4" /> Edit Permissions
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuSeparator />
-                                                        <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                                            <Trash2 className="mr-2 h-4 w-4" /> Remove User
-                                                        </DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-                    )
-                })}
-             </Accordion>
-        </CardContent>
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Access Management</CardTitle>
+        <CardDescription>
+          Define roles and permissions for your organisation's team members.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Alert>
+          <Info className="h-4 w-4" />
+          <AlertTitle>Looking to manage team members?</AlertTitle>
+          <AlertDescription>
+            All user and role management is now handled on the main{' '}
+            <strong>Team</strong> page for a more streamlined experience.
+            <ul className="mt-2 list-disc list-inside text-xs">
+              <li>
+                Use the <strong>Bulk Edit</strong> features on the Team page to
+                manage multiple users at once.
+              </li>
+              <li>
+                Click the menu on an individual user's card to edit their specific
+                role and permissions.
+              </li>
+            </ul>
+          </AlertDescription>
+        </Alert>
+      </CardContent>
+      <CardFooter className="border-t pt-6">
+        <Button asChild className="ml-auto">
+          <Link href="/dashboard/team">
+            Go to Team Page <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        </Button>
+      </CardFooter>
     </Card>
-)};
+  );
+};
 
 
 const DangerZone = () => {
@@ -366,14 +191,14 @@ const DangerZone = () => {
                 <CardTitle className="text-destructive">Danger Zone</CardTitle>
                 <CardDescription className="text-destructive/80">These actions have significant and permanent consequences.</CardDescription>
             </CardHeader>
-            <CardContent className="flex items-center justify-between">
-                <div>
+            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex-1">
                     <p className="font-semibold">Transfer Ownership</p>
                     <p className="text-sm text-muted-foreground">Transfer this organisation to another administrator.</p>
                 </div>
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
-                        <Button variant="destructive">Transfer</Button>
+                        <Button variant="destructive" className="w-full sm:w-auto">Transfer</Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
@@ -419,14 +244,14 @@ const DangerZone = () => {
                 </AlertDialog>
             </CardContent>
             <Separator className="bg-destructive/20" />
-            <CardContent className="flex items-center justify-between pt-6">
-                <div>
+            <CardContent className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex-1">
                     <p className="font-semibold">Delete this Organisation</p>
                     <p className="text-sm text-muted-foreground">Permanently delete this organisation and all its data.</p>
                 </div>
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
-                        <Button variant="destructive">Delete Organisation</Button>
+                        <Button variant="destructive" className="w-full sm:w-auto">Delete Organisation</Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
