@@ -20,7 +20,7 @@ export default function PricingLayout({
                 <Link href="/login">Sign In</Link>
             </Button>
             <Button variant="gradient" asChild>
-                <Link href="/register">Get Started</Link>
+                <Link href="#">Contact Sales</Link>
             </Button>
           </div>
         </div>

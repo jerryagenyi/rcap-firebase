@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 
 const TIER_FEATURES = {
@@ -76,7 +76,7 @@ export default function PricingPage() {
                         <CardHeader>
                             <div className="flex items-center justify-between">
                                 <CardTitle className="text-3xl">Free</CardTitle>
-                                <Badge variant="outline">Free Forever</Badge>
+                                <Badge variant="outline">For New Networks</Badge>
                             </div>
                             <CardDescription>For small teams and organizations getting started.</CardDescription>
                         </CardHeader>
@@ -92,7 +92,9 @@ export default function PricingPage() {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button variant="secondary" className="w-full" size="lg" disabled>Your Current Plan</Button>
+                            <Button variant="secondary" className="w-full" size="lg" asChild>
+                                <Link href="#">Get Started</Link>
+                            </Button>
                         </CardFooter>
                     </Card>
 

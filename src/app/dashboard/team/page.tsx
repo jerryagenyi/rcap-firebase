@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { mockTeamMembers } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X } from 'lucide-react';
+import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X, UploadCloud } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -258,23 +258,45 @@ export default function TeamPage() {
           <DialogTrigger asChild>
             <Button variant="gradient">
               <UserPlus />
-              Invite Member
+              Invite Members
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-lg">
             <DialogHeader>
-              <DialogTitle>Invite New Team Member</DialogTitle>
+              <DialogTitle>Invite New Team Members</DialogTitle>
               <DialogDescription>
-                Enter the email address and assign a role to send an invitation.
+                Enter email addresses and assign a role to send invitations.
               </DialogDescription>
             </DialogHeader>
-            <div className="py-4 space-y-4">
+            <div className="py-4 space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" placeholder="name@example.com" />
+                <Label htmlFor="emails">Email Addresses</Label>
+                <Textarea id="emails" placeholder="Enter emails separated by commas, spaces, or new lines..." className="min-h-[120px]" />
+                <p className="text-xs text-muted-foreground">You can paste a list of emails here.</p>
               </div>
+               <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or
+                    </span>
+                  </div>
+                </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="csv-upload">Upload a CSV</Label>
+                    <label htmlFor="csv-upload" className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted hover:bg-muted/80">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <UploadCloud className="w-8 h-8 mb-3 text-muted-foreground" />
+                            <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                            <p className="text-xs text-muted-foreground">CSV file with an 'email' column</p>
+                        </div>
+                        <Input id="csv-upload" type="file" className="hidden" accept=".csv" />
+                    </label>
+                </div>
               <div className="space-y-2">
-                <Label htmlFor="role-invite">Role</Label>
+                <Label htmlFor="role-invite">Assign Role</Label>
                 <Select>
                   <SelectTrigger id="role-invite">
                     <SelectValue placeholder="Select a role" />
@@ -291,7 +313,7 @@ export default function TeamPage() {
               <DialogClose asChild>
                 <Button type="button" variant="outline">Cancel</Button>
               </DialogClose>
-              <Button type="submit" variant="gradient">Send Invitation</Button>
+              <Button type="submit" variant="gradient">Send Invitations</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
