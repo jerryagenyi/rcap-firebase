@@ -160,7 +160,7 @@ const OrganisationBranding = () => {
 
 const AccessManagement = () => {
     const roles = {
-        'Administrators': mockTeamMembers.filter(m => m.role.includes('Admin') || m.role.includes('Coordinator')),
+        'Administrators': mockTeamMembers.filter(m => ['Super Admin', 'Federal Admin', 'State Admin'].includes(m.role)),
         'State Coordinators': mockTeamMembers.filter(m => m.role === 'State Coordinator'),
         'Field Officers': mockTeamMembers.filter(m => m.role === 'Field Officer'),
     };
@@ -385,7 +385,7 @@ const SubOrganisations = () => {
                                 <TableCell className="font-medium">{org.name}</TableCell>
                                 <TableCell>{org.level}</TableCell>
                                 <TableCell>{org.members}</TableCell>
-                                <TableCell><Badge variant={org.status === 'Active' ? 'default' : 'destructive'}>{org.status}</Badge></TableCell>
+                                <TableCell><Badge className={cn(org.status === 'Active' ? 'bg-green-500' : 'bg-yellow-500', 'text-white')}>{org.status}</Badge></TableCell>
                                 <TableCell className="text-right">
                                     <div className="flex justify-end gap-2">
                                         <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
