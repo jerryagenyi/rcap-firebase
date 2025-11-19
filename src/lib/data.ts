@@ -28,6 +28,7 @@ import {
   Clock,
   Building,
   Megaphone,
+  DollarSign,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -102,6 +103,11 @@ export const navItems: NavItem[] = [
             title: "Data & Sync",
             href: "/dashboard/settings/data",
             icon: Database
+        },
+        {
+            title: "Pricing",
+            href: "/pricing",
+            icon: DollarSign,
         },
         {
             title: "Help & Support",
@@ -860,3 +866,4 @@ export const mockAnnouncements: Announcement[] = [
         priority: 'low',
     }
 ];
+
