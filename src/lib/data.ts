@@ -747,8 +747,8 @@ export const mockOrganisations: Organisation[] = [
     {
         id: 'ORG-001',
         name: 'Federal MOH',
+        category: 'Government',
         level: 'Federal',
-        type: 'Government',
         members: 45,
         activities: 340,
         status: 'Active',
@@ -757,8 +757,8 @@ export const mockOrganisations: Organisation[] = [
     {
         id: 'ORG-002',
         name: 'Lagos State MOH',
+        category: 'Government',
         level: 'State',
-        type: 'Government',
         members: 28,
         activities: 182,
         status: 'Active',
@@ -767,8 +767,8 @@ export const mockOrganisations: Organisation[] = [
      {
         id: 'ORG-003',
         name: 'Kano State PHCDA',
+        category: 'Government',
         level: 'State',
-        type: 'Government',
         members: 35,
         activities: 218,
         status: 'Active',
@@ -777,8 +777,8 @@ export const mockOrganisations: Organisation[] = [
     {
         id: 'ORG-004',
         name: 'Rivers State MOH',
+        category: 'Government',
         level: 'State',
-        type: 'Government',
         members: 22,
         activities: 156,
         status: 'Pending',
@@ -787,8 +787,8 @@ export const mockOrganisations: Organisation[] = [
     {
         id: 'ORG-005',
         name: 'Ikeja LGA PHC',
+        category: 'Government',
         level: 'LGA',
-        type: 'LGA',
         members: 12,
         activities: 45,
         status: 'Active',

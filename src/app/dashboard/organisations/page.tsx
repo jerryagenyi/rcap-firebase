@@ -152,7 +152,7 @@ export default function OrganisationsPage() {
           <TableHeader>
             <TableRow>
               <TableHead>Organisation</TableHead>
-              <TableHead>Type</TableHead>
+              <TableHead>Category</TableHead>
               <TableHead>Level</TableHead>
               <TableHead>Members</TableHead>
               <TableHead>Activities</TableHead>
@@ -175,7 +175,7 @@ export default function OrganisationsPage() {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="secondary">{org.type}</Badge>
+                  <Badge variant="secondary">{org.category}</Badge>
                 </TableCell>
                 <TableCell>{org.level}</TableCell>
                 <TableCell>{org.members}</TableCell>

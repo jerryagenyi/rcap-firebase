@@ -54,11 +54,14 @@ export type ReportTemplate = {
     icon: LucideIcon;
 }
 
+export type OrganisationCategory = 'Government' | 'NGO' | 'CSO';
+export type OrganisationLevel = 'Federal' | 'State' | 'LGA';
+
 export type Organisation = {
     id: string;
     name: string;
-    level: 'Federal' | 'State' | 'LGA';
-    type: 'Government' | 'NGO' | 'CSO' | 'LGA';
+    category: OrganisationCategory;
+    level: OrganisationLevel;
     members: number;
     activities: number;
     status: 'Active' | 'Pending' | 'Suspended';
