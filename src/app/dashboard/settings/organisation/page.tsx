@@ -91,7 +91,7 @@ const OrganisationProfile = () => {
 };
 
 const OrganisationBranding = () => {
-    const [primaryColor, setPrimaryColor] = useState('hsl(var(--primary))');
+    const [primaryColor, setPrimaryColor] = useState('#7151B3');
 
     const colorSwatches = [
         '#7151B3', '#53A7EA', '#2ECC71', '#F1C40F', '#E67E22', '#E74C3C', '#34495E', '#1ABC9C'
@@ -558,3 +558,4 @@ export default function OrganisationSettingsPage() {
     
 
     
+
