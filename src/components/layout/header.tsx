@@ -125,8 +125,14 @@ export default function Header() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80">
             <DropdownMenuLabel className="flex items-center justify-between">
-              <span>Notifications</span>
-              <Badge variant="destructive">{unreadCount} new</Badge>
+                <div className='flex flex-col gap-1'>
+                    <span>Notifications</span>
+                    {unreadCount > 0 && <Badge variant="destructive" className='w-fit'>{unreadCount} new</Badge>}
+                </div>
+              <Button variant="ghost" size="sm" onClick={() => console.log('Mark all as read')}>
+                <CheckCheck className="mr-2 h-4 w-4" />
+                Mark all as read
+              </Button>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
@@ -150,10 +156,6 @@ export default function Header() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
              <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => console.log('Mark all as read')}>
-                <CheckCheck className="mr-2 h-4 w-4" />
-                <span>Mark all as read</span>
-              </DropdownMenuItem>
               <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => console.log('Clear all')}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 <span>Clear all</span>
