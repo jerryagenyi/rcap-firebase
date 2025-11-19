@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -233,48 +234,47 @@ const AccessManagement = () => {
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="px-4 pb-2 border-x border-b rounded-b-lg">
-                    <div className="pl-6 border-l">
-                        {role.members.map((member, index) => {
-                            const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
-                            return (
-                                <div key={member.id} className={cn(
-                                    "flex items-center gap-3 py-3",
-                                    index !== 0 && "border-t"
-                                )}>
-                                    {isManaging && (
-                                        <Checkbox 
-                                            id={`member-${member.id}`} 
-                                            checked={selectedMembers.includes(member.id)}
-                                            onCheckedChange={() => handleSelectMember(member.id)}
-                                        />
-                                    )}
-                                    <Avatar className="h-10 w-10">
-                                        <AvatarImage src={avatar?.imageUrl} />
-                                        <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1">
-                                        <p className="font-medium text-foreground">{member.name}</p>
-                                        <p className="text-xs text-muted-foreground">{member.email}</p>
+                <CollapsibleContent className="border-b border-x rounded-b-lg">
+                    <div className="pl-6">
+                        <div className="divide-y">
+                            {role.members.map((member) => {
+                                const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
+                                return (
+                                    <div key={member.id} className="flex items-center gap-3 py-3">
+                                        {isManaging && (
+                                            <Checkbox 
+                                                id={`member-${member.id}`} 
+                                                checked={selectedMembers.includes(member.id)}
+                                                onCheckedChange={() => handleSelectMember(member.id)}
+                                            />
+                                        )}
+                                        <Avatar className="h-10 w-10">
+                                            <AvatarImage src={avatar?.imageUrl} />
+                                            <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex-1">
+                                            <p className="font-medium text-foreground">{member.name}</p>
+                                            <p className="text-xs text-muted-foreground">{member.email}</p>
+                                        </div>
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                    <MoreHorizontal className="h-4 w-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end">
+                                                <DropdownMenuItem>View Profile</DropdownMenuItem>
+                                                <DropdownMenuItem>Edit Permissions</DropdownMenuItem>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                                    Remove User
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
                                     </div>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                                                <MoreHorizontal className="h-4 w-4" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem>View Profile</DropdownMenuItem>
-                                            <DropdownMenuItem>Edit Permissions</DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                                Remove User
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
-                            )
-                        })}
+                                )
+                            })}
+                        </div>
                     </div>
                 </CollapsibleContent>
             </Collapsible>
