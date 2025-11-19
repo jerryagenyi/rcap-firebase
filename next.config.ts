@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'mockmind-api.uifaces.co',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
 };
