@@ -14,13 +14,18 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Mail, Smartphone, Bell } from 'lucide-react';
+import { Mail, Smartphone, Bell, MessageSquare } from 'lucide-react';
 
-const NotificationCategory = ({ title, description }: { title: string; description: string }) => (
+const NotificationCategory = ({ title, description, icon: Icon }: { title: string; description: string, icon: React.ElementType }) => (
   <Card>
     <CardHeader>
-      <CardTitle>{title}</CardTitle>
-      <CardDescription>{description}</CardDescription>
+      <div className="flex items-start gap-4">
+        <Icon className="h-8 w-8 text-primary mt-1" />
+        <div>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </div>
+      </div>
     </CardHeader>
     <CardContent className="space-y-6">
       <div>
@@ -93,21 +98,30 @@ export default function DetailedNotificationsPage() {
       </div>
 
       <div className="space-y-8">
+         <NotificationCategory
+          title="Messages"
+          description="Notifications for new direct messages and group conversations."
+          icon={MessageSquare}
+        />
         <NotificationCategory
           title="Approvals"
           description="Notifications related to activity approvals, rejections, and comments."
+          icon={Bell}
         />
         <NotificationCategory
           title="Assignments"
           description="Notifications for when you are assigned to new tasks or activities."
+          icon={Bell}
         />
         <NotificationCategory
           title="Alerts"
           description="Urgent notifications about public health alerts and emergencies."
+          icon={Bell}
         />
         <NotificationCategory
           title="System Updates"
           description="Notifications about system maintenance, new features, and updates."
+          icon={Bell}
         />
       </div>
       
