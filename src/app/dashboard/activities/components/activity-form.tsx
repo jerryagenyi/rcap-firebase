@@ -63,6 +63,7 @@ const activityTypes = [...new Set(mockActivities.map(a => a.type))];
 export function ActivityForm({ mode, activity }: ActivityFormProps) {
     const router = useRouter();
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -107,8 +108,13 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
   };
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
     console.log("Submitting form data:", data);
-    setIsSubmitted(true);
+    // Simulate network request
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 1500);
   };
 
   if (isSubmitted) {
@@ -283,13 +289,24 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
         </Card>
 
         <div className="flex justify-end gap-4">
-            <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
-            <Button type="button" variant="secondary">Save as Draft</Button>
-            <Button type="submit" variant="gradient">
-              {mode === 'create' ? 'Submit for Approval' : 'Save Changes'} <Send className="ml-2" />
+            <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSubmitting}>Cancel</Button>
+            <Button type="button" variant="secondary" disabled={isSubmitting}>Save as Draft</Button>
+            <Button type="submit" variant="gradient" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  {mode === 'create' ? 'Submit for Approval' : 'Save Changes'} <Send className="ml-2" />
+                </>
+              )}
             </Button>
         </div>
       </form>
     </Form>
   );
 }
+
+    
