@@ -62,7 +62,7 @@ export default function PricingPage() {
     return (
         <>
             {/* Hero Section */}
-            <section className="py-20 text-center bg-background">
+            <section className="py-20 sm:py-28 text-center bg-background">
                 <div className="container">
                     <h1 className="text-5xl font-bold tracking-tight">Choose Your Plan</h1>
                     <p className="mt-4 text-xl text-muted-foreground">Start for free, and scale with AI-powered features as you grow.</p>
@@ -70,7 +70,7 @@ export default function PricingPage() {
             </section>
 
             {/* Pricing Cards */}
-            <section className="py-16 bg-muted/40">
+            <section className="py-16 sm:py-24 bg-muted/40">
                 <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                     {/* Free Tier */}
                     <Card className="flex flex-col">
@@ -130,7 +130,7 @@ export default function PricingPage() {
             </section>
 
              {/* Feature Comparison */}
-            <section className="py-20">
+            <section className="py-20 sm:py-28">
                 <div className="container max-w-6xl">
                     <h2 className="text-4xl font-bold text-center mb-12">Feature Comparison</h2>
                     <div className="overflow-x-auto rounded-lg border">
@@ -178,7 +178,7 @@ export default function PricingPage() {
             </section>
 
              {/* FAQ Section */}
-            <section className="py-20 bg-muted/40">
+            <section className="py-20 sm:py-28 bg-muted/40">
                 <div className="container max-w-4xl">
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
