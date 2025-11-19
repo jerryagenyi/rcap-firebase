@@ -1,6 +1,6 @@
 
 'use client';
-import { Bell, Search, Wifi, MessageSquare } from 'lucide-react';
+import { Bell, Search, Wifi, MessageSquare, CheckCheck, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -147,6 +147,17 @@ export default function Header() {
                    {!notif.isRead && <div className="h-2 w-2 rounded-full bg-primary mt-2" />}
                 </DropdownMenuItem>
               ))}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+             <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <CheckCheck className="mr-2 h-4 w-4" />
+                <span>Mark all as read</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive focus:text-destructive">
+                <Trash2 className="mr-2 h-4 w-4" />
+                <span>Clear all</span>
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
