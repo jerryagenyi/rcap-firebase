@@ -179,9 +179,8 @@ const AccessManagement = () => {
     const allUserRoleNames = [...new Set(mockTeamMembers.map(m => m.role))];
     const allMemberIds = useMemo(() => userRoles.flatMap(role => role.memberIds), [userRoles]);
     
-    const allSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
-    const someSelected = selectedMembers.length > 0 && !allSelected;
-    const allOnPageSelected = selectedMembers.length > 0 && allMemberIds.every(id => selectedMembers.includes(id));
+    const allOnPageSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
+    const someSelected = selectedMembers.length > 0 && !allOnPageSelected;
 
 
     const handleSelectMember = (memberId: string) => {
@@ -272,63 +271,63 @@ const AccessManagement = () => {
                             {selectedMembers.length > 0 ? `${selectedMembers.length} selected` : "Select all"}
                         </Label>
                     </div>
-                </div>
-                <div className="flex items-center gap-2">
-                     <Dialog>
-                        <DialogTrigger asChild>
-                            <Button variant="outline" disabled={selectedMembers.length === 0}>
-                                <Edit className="mr-2 h-4 w-4" />
-                                Bulk Edit Role
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md">
-                            <DialogHeader>
-                                <DialogTitle>Bulk Edit Role</DialogTitle>
-                                <DialogDescription>
-                                    Assign a new role to {selectedMembers.length} selected member(s). This will override their current roles.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <div className="py-4">
-                                <Label htmlFor="bulk-role-select" className="mb-2 block">New Role</Label>
-                                <Select>
-                                    <SelectTrigger id="bulk-role-select">
-                                        <SelectValue placeholder="Select a new role" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {allUserRoleNames.map(role => (
-                                            <SelectItem key={role} value={role}>{role}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <DialogFooter>
-                                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
-                                <Button variant="gradient">Apply Changes</Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog>
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button variant="destructive" disabled={selectedMembers.length === 0}>
-                                <Trash2 className="mr-2 h-4 w-4" />
-                                Remove
-                            </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This will permanently remove {selectedMembers.length} member(s) from the organisation. This action cannot be undone.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
-                                    Yes, remove members
-                                </AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
+                    <div className="flex items-center gap-2">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="outline" size="sm" disabled={selectedMembers.length === 0}>
+                                    <Edit className="mr-2 h-4 w-4" />
+                                    Bulk Edit Role
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle>Bulk Edit Role</DialogTitle>
+                                    <DialogDescription>
+                                        Assign a new role to {selectedMembers.length} selected member(s). This will override their current roles.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="py-4">
+                                    <Label htmlFor="bulk-role-select" className="mb-2 block">New Role</Label>
+                                    <Select>
+                                        <SelectTrigger id="bulk-role-select">
+                                            <SelectValue placeholder="Select a new role" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {allUserRoleNames.map(role => (
+                                                <SelectItem key={role} value={role}>{role}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <DialogFooter>
+                                    <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                                    <Button variant="gradient">Apply Changes</Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="destructive" size="sm" disabled={selectedMembers.length === 0}>
+                                    <Trash2 className="mr-2 h-4 w-4" />
+                                    Remove
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This will permanently remove {selectedMembers.length} member(s) from the organisation. This action cannot be undone.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                        Yes, remove members
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
                 </div>
             </div>
         )}
@@ -349,7 +348,7 @@ const AccessManagement = () => {
                 </div>
                 <CollapsibleContent>
                    <div className="pl-6 ml-4">
-                        <div className="divide-y rounded-b-lg border-l">
+                        <div className="divide-y border-l">
                             {role.members.map((member) => {
                                 const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                                 return (
