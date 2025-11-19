@@ -169,7 +169,7 @@ export default function OrganisationsPage() {
         <Button asChild variant="gradient">
             <Link href="/dashboard/organisations/create">
                 <PlusCircle />
-                Create Organisation
+                Add Organisation
             </Link>
         </Button>
       </div>
@@ -241,7 +241,7 @@ export default function OrganisationsPage() {
                              <DialogTrigger asChild>
                                 <DropdownMenuItem>
                                     <LinkIcon className="mr-2 h-4 w-4" />
-                                    <span>Link Organisation</span>
+                                    <span>Link to Parent</span>
                                 </DropdownMenuItem>
                             </DialogTrigger>
                             <DropdownMenuSeparator />

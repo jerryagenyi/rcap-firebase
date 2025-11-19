@@ -8,10 +8,10 @@ export default function CreateOrganisationPage() {
     <div className="flex flex-col gap-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Create New Organisation
+          Add New Organisation
         </h1>
         <p className="text-muted-foreground">
-          Fill out the form below to register a new organisation in the system.
+          Fill out the form below to register a new organisation or invite an external one to the platform.
         </p>
       </div>
       <OrganisationForm mode="create" />
