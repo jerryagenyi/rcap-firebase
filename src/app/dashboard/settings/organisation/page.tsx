@@ -186,23 +186,20 @@ const AccessManagement = () => {
     const toggleManageMode = () => {
         const nextIsManaging = !isManaging;
         setIsManaging(nextIsManaging);
-        setSelectedMembers([]); // Reset selection when toggling mode
+        setSelectedMembers([]);
         
         if (nextIsManaging) {
-            // Open all collapsible sections
             const allOpen = userRoles.reduce((acc, role) => {
                 acc[role.name] = true;
                 return acc;
             }, {} as Record<string, boolean>);
             setOpenRoles(allOpen);
         } else {
-            // Close all
             setOpenRoles({});
         }
     };
     
     const handleOpenChange = (roleName: string, isOpen: boolean) => {
-        // Prevent closing when in manage mode
         if (isManaging) return;
         setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
     };
@@ -232,12 +229,12 @@ const AccessManagement = () => {
                 open={openRoles[role.name] || false}
                 onOpenChange={(isOpen) => handleOpenChange(role.name, isOpen)}
             >
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-t-lg group border-x border-t data-[state=closed]:rounded-b-lg data-[state=closed]:border-b">
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group border data-[state=open]:rounded-b-none">
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
-                <CollapsibleContent>
-                    <div className="divide-y border-x border-b rounded-b-lg">
+                <CollapsibleContent className="border-l ml-6 pl-6">
+                    <div className="divide-y rounded-b-lg">
                         {role.members.map((member, index) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
@@ -413,3 +410,5 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
+
+    
