@@ -36,12 +36,14 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, MoreHorizontal, User as UserIcon, Edit, Trash2, ArrowRight, Info } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, MoreHorizontal, User as UserIcon, Edit, Trash2, ArrowRight, Info, Save, X, ChevronDown } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Checkbox } from '@/components/ui/checkbox';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const OrganisationProfile = () => {
     const currentOrg = mockOrganisations[0];
@@ -138,41 +140,122 @@ const OrganisationBranding = () => {
 )};
 
 const AccessManagement = () => {
-    const roles = useMemo(() => {
-        const roleCounts = mockTeamMembers.reduce((acc, member) => {
-            acc[member.role] = (acc[member.role] || 0) + 1;
+    const [isManaging, setIsManaging] = useState(false);
+    const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+
+    const rolesWithMembers = useMemo(() => {
+        const grouped = mockTeamMembers.reduce((acc, member) => {
+            if (!acc[member.role]) {
+                acc[member.role] = [];
+            }
+            acc[member.role].push(member);
             return acc;
-        }, {} as Record<string, number>);
+        }, {} as Record<string, typeof mockTeamMembers>);
         
-        return Object.entries(roleCounts).map(([name, count]) => ({ name, count }));
+        return Object.entries(grouped).map(([name, members]) => ({ name, members }));
     }, []);
 
-  return (
+    const handleSelectMember = (id: string, isSelected: boolean) => {
+        setSelectedMembers(prev => isSelected ? [...prev, id] : prev.filter(memberId => memberId !== id));
+    };
+
+    const handleSelectAll = (isChecked: boolean) => {
+        if (isChecked) {
+            setSelectedMembers(mockTeamMembers.map(m => m.id));
+        } else {
+            setSelectedMembers([]);
+        }
+    };
+    
+    return (
     <Card>
-      <CardHeader>
-        <CardTitle>Access Management</CardTitle>
-        <CardDescription>
-          Define roles and permissions for your organisation's team members.
-        </CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+            <CardTitle>Access Management</CardTitle>
+            <CardDescription>
+                Define roles and permissions for your organisation's team members.
+            </CardDescription>
+        </div>
+        {!isManaging ? (
+            <Button variant="outline" onClick={() => setIsManaging(true)}>
+                <Edit className="mr-2 h-4 w-4" /> Manage Members
+            </Button>
+        ) : (
+            <div className="flex gap-2">
+                <Button variant="secondary" onClick={() => setIsManaging(false)}>
+                    <X className="mr-2 h-4 w-4" /> Cancel
+                </Button>
+                <Button variant="gradient" onClick={() => setIsManaging(false)}>
+                    <Save className="mr-2 h-4 w-4" /> Save Changes
+                </Button>
+            </div>
+        )}
       </CardHeader>
-      <CardContent className="space-y-4">
-        {roles.map(role => (
-            <div key={role.name} className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
-                <div>
-                    <h4 className="font-semibold">{role.name}</h4>
-                    <p className="text-sm text-muted-foreground">{role.count} member(s)</p>
+      <CardContent className="space-y-6">
+        {isManaging && (
+            <div className="flex items-center rounded-lg border p-3">
+                <Checkbox
+                    id="select-all-members"
+                    onCheckedChange={handleSelectAll}
+                    checked={selectedMembers.length === mockTeamMembers.length}
+                />
+                <Label htmlFor="select-all-members" className="ml-3 font-semibold">Select All Members</Label>
+            </div>
+        )}
+        {rolesWithMembers.map(role => (
+            <div key={role.name}>
+                <h4 className="font-semibold text-lg border-b pb-2 mb-4">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {role.members.map(member => {
+                        const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
+                        return (
+                            <div key={member.id} className="flex items-center gap-3 rounded-lg border p-3">
+                                {isManaging && (
+                                    <Checkbox
+                                        id={`member-${member.id}`}
+                                        checked={selectedMembers.includes(member.id)}
+                                        onCheckedChange={(checked) => handleSelectMember(member.id, !!checked)}
+                                    />
+                                )}
+                                <Avatar className="h-10 w-10">
+                                    <AvatarImage src={avatar?.imageUrl} />
+                                    <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    <p className="font-medium text-foreground">{member.name}</p>
+                                    <p className="text-xs text-muted-foreground">{member.email}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
-                <Button variant="outline" className="mt-2 sm:mt-0">Manage</Button>
             </div>
         ))}
       </CardContent>
-       <CardFooter className="border-t pt-6">
-        <Button asChild className="ml-auto">
-          <Link href="/dashboard/team">
-            View All Members <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
-      </CardFooter>
+       <AnimatePresence>
+       {isManaging && selectedMembers.length > 0 && (
+           <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+           >
+                <CardFooter className="sticky bottom-0 bg-background/80 backdrop-blur-sm border-t p-4 flex items-center justify-between">
+                    <p className="font-semibold">{selectedMembers.length} member(s) selected</p>
+                    <div className="flex gap-2">
+                        <Select>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Change Role..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {rolesWithMembers.map(r => <SelectItem key={r.name} value={r.name}>{r.name}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                        <Button variant="destructive"><Trash2 className="mr-2"/> Remove</Button>
+                    </div>
+                </CardFooter>
+           </motion.div>
+       )}
+       </AnimatePresence>
     </Card>
   );
 };
