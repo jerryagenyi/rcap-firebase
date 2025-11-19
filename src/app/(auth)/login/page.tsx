@@ -86,11 +86,9 @@ export default function LoginPage() {
             >
               Sign In
             </Button>
-            <p className="text-center text-sm text-secondary">
-              Don&apos;t have an account?{' '}
-              <Link href="/register" className="font-medium text-primary hover:underline">
-                Create Account
-              </Link>
+            <p className="text-center text-sm text-muted-foreground">
+              Access to RCAP is by invitation only. Please contact your
+              organisation's administrator if you require access.
             </p>
           </div>
         </form>
