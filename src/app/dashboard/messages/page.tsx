@@ -167,6 +167,94 @@ const ForwardMessageDialog = () => {
     );
 };
 
+const NewMessageDialog = () => {
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
+  
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-9 w-9">
+                    <PenSquare className="h-5 w-5" />
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-xl">
+                <DialogHeader>
+                    <DialogTitle>Compose New Message</DialogTitle>
+                    <DialogDescription>
+                        Select recipients and compose your message below.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="py-4 space-y-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="recipients-compose">To:</Label>
+                        <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={open}
+                                className="w-full justify-between"
+                            >
+                                {value
+                                ? mockTeamMembers.find((member) => member.email.toLowerCase() === value)?.name
+                                : "Select recipients..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                            <Command>
+                                <CommandInput placeholder="Search members..." />
+                                <CommandList>
+                                    <CommandEmpty>No member found.</CommandEmpty>
+                                    <CommandGroup>
+                                    {mockTeamMembers.map((member) => (
+                                        <CommandItem
+                                        key={member.email}
+                                        value={member.email}
+                                        onSelect={(currentValue) => {
+                                            setValue(currentValue === value ? "" : currentValue);
+                                            setOpen(false);
+                                        }}
+                                        >
+                                        <Check
+                                            className={cn(
+                                            "mr-2 h-4 w-4",
+                                            value === member.email ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                        {member.name}
+                                        </CommandItem>
+                                    ))}
+                                    </CommandGroup>
+                                </CommandList>
+                            </Command>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="subject-compose">Subject</Label>
+                        <Input id="subject-compose" placeholder="Enter message subject" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="message-body-compose">Message</Label>
+                        <Textarea id="message-body-compose" placeholder="Type your message here..." className="min-h-[150px]" />
+                    </div>
+                </div>
+                <DialogFooter>
+                    <DialogClose asChild>
+                    <Button type="button" variant="outline">
+                        Cancel
+                    </Button>
+                    </DialogClose>
+                    <Button type="submit" variant="gradient">
+                        <Send className="mr-2 h-4 w-4" /> Send Message
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+}
 
 export default function MessagesPage() {
     const [selectedConversationId, setSelectedConversationId] = useState<string | null>(mockConversations[0].id);
@@ -192,9 +280,7 @@ export default function MessagesPage() {
                             <CardTitle>Inbox</CardTitle>
                             <CardDescription>3 Unread</CardDescription>
                        </div>
-                       <Button variant="ghost" size="icon" className="h-9 w-9">
-                           <PenSquare className="h-5 w-5" />
-                       </Button>
+                       <NewMessageDialog />
                     </CardHeader>
                     <div className="relative px-4 pb-4">
                         <Search className="absolute left-7 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -264,3 +350,4 @@ export default function MessagesPage() {
         </div>
     );
 }
+
