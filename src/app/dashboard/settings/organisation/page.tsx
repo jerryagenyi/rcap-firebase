@@ -45,6 +45,8 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { UploadCloud, Users, Palette, Building, ChevronRight } from 'lucide-react';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 const OrganisationProfile = () => {
     const currentOrg = mockOrganisations[0];
@@ -72,7 +74,14 @@ const OrganisationProfile = () => {
     );
 };
 
-const OrganisationBranding = () => (
+const OrganisationBranding = () => {
+    const [primaryColor, setPrimaryColor] = useState('hsl(var(--primary))');
+
+    const colorSwatches = [
+        '#7151B3', '#53A7EA', '#2ECC71', '#F1C40F', '#E67E22', '#E74C3C', '#34495E', '#1ABC9C'
+    ];
+
+    return (
     <Card>
         <CardHeader>
             <CardTitle>Branding</CardTitle>
@@ -100,8 +109,28 @@ const OrganisationBranding = () => (
             <div className="space-y-2">
                 <Label>Primary Color</Label>
                 <div className="flex items-center gap-4">
-                    <div className="h-10 w-16 rounded-md border" style={{ backgroundColor: 'hsl(var(--primary))' }} />
-                    <Input placeholder="#6366f1" className="max-w-xs" />
+                     <Popover>
+                        <PopoverTrigger asChild>
+                            <Button variant="outline" className="h-10 w-24 justify-start">
+                                <div className="h-6 w-6 rounded-md border mr-2" style={{ backgroundColor: primaryColor }} />
+                                {primaryColor}
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-2">
+                            <div className="grid grid-cols-4 gap-2">
+                                {colorSwatches.map(color => (
+                                    <Button
+                                        key={color}
+                                        variant="outline"
+                                        size="icon"
+                                        className={cn("h-8 w-8 rounded-md", primaryColor === color && "ring-2 ring-ring ring-offset-2")}
+                                        style={{ backgroundColor: color }}
+                                        onClick={() => setPrimaryColor(color)}
+                                    />
+                                ))}
+                            </div>
+                        </PopoverContent>
+                    </Popover>
                 </div>
             </div>
         </CardContent>
@@ -109,7 +138,7 @@ const OrganisationBranding = () => (
             <Button variant="gradient" className="ml-auto">Save Branding</Button>
         </CardFooter>
     </Card>
-);
+)};
 
 const AccessManagement = () => (
      <Card>
