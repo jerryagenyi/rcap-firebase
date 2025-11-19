@@ -93,7 +93,7 @@ export const navItems: NavItem[] = [
             icon: UserCheck
         },
         {
-            title: "Organisation",
+            title: "Organisation Settings",
             href: "/dashboard/settings/organisation",
             icon: Building
         },
