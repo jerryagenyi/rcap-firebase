@@ -105,7 +105,7 @@ export const navItems: NavItem[] = [
             icon: Building
         },
         {
-            title: "Notifications",
+            title: "Notification Preferences",
             href: "/dashboard/settings/notifications-preferences",
             icon: Bell
         },
