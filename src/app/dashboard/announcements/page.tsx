@@ -78,6 +78,11 @@ export default function AnnouncementsPage() {
 
         // Sort
         announcements.sort((a, b) => {
+            if (sortOrder === 'unread') {
+                if (a.isRead !== b.isRead) {
+                    return a.isRead ? 1 : -1;
+                }
+            }
             if (sortOrder === 'priority') {
                 const priorityOrder = { high: 0, medium: 1, low: 2 };
                 return priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -138,6 +143,7 @@ export default function AnnouncementsPage() {
                             <SelectContent>
                                 <SelectItem value="newest">Newest First</SelectItem>
                                 <SelectItem value="priority">By Priority</SelectItem>
+                                <SelectItem value="unread">Unread First</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
