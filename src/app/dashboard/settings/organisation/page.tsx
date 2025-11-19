@@ -205,9 +205,19 @@ const AccessManagement = () => {
         setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
     };
 
+    const expandAll = () => {
+        const allOpen = userRoles.reduce((acc, role) => {
+            acc[role.name] = true;
+            return acc;
+        }, {} as Record<string, boolean>);
+        setOpenRoles(allOpen);
+    };
+
     const collapseAll = () => {
         setOpenRoles({});
     };
+
+    const hasOpenRoles = Object.values(openRoles).some(isOpen => isOpen);
 
     return (
     <Card>
@@ -221,7 +231,9 @@ const AccessManagement = () => {
         <div className="flex items-center gap-2">
             {!isManaging ? (
                 <>
-                    <Button variant="link" onClick={collapseAll}>Collapse All</Button>
+                    <Button variant="link" onClick={hasOpenRoles ? collapseAll : expandAll}>
+                        {hasOpenRoles ? 'Collapse All' : 'Expand All'}
+                    </Button>
                     <Button variant="outline" onClick={toggleManageMode}>Manage</Button>
                 </>
             ) : (
@@ -247,7 +259,7 @@ const AccessManagement = () => {
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                    <div className="pl-6">
+                    <div className="pl-4">
                         <div className="divide-y">
                             {role.members.map((member) => {
                                 const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
