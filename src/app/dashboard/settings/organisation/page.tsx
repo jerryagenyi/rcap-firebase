@@ -205,6 +205,10 @@ const AccessManagement = () => {
         setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
     };
 
+    const collapseAll = () => {
+        setOpenRoles({});
+    };
+
     return (
     <Card>
       <CardHeader className="flex-row items-center justify-between">
@@ -214,14 +218,19 @@ const AccessManagement = () => {
                 Define roles and permissions for your organisation's team members.
             </CardDescription>
         </div>
-        {!isManaging ? (
-            <Button variant="outline" onClick={toggleManageMode}>Manage</Button>
-        ) : (
-            <div className="flex gap-2">
-                <Button variant="ghost" onClick={toggleManageMode}>Cancel</Button>
-                <Button variant="gradient">Save Changes</Button>
-            </div>
-        )}
+        <div className="flex items-center gap-2">
+            {!isManaging ? (
+                <>
+                    <Button variant="link" onClick={collapseAll}>Collapse All</Button>
+                    <Button variant="outline" onClick={toggleManageMode}>Manage</Button>
+                </>
+            ) : (
+                <div className="flex gap-2">
+                    <Button variant="ghost" onClick={toggleManageMode}>Cancel</Button>
+                    <Button variant="gradient">Save Changes</Button>
+                </div>
+            )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-2">
         {userRoles.map(role => (
@@ -229,18 +238,21 @@ const AccessManagement = () => {
                 key={role.name}
                 open={openRoles[role.name] || false}
                 onOpenChange={(isOpen) => handleOpenChange(role.name, isOpen)}
+                className="rounded-lg border"
             >
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group border data-[state=open]:rounded-b-none">
-                     <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
-                     <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="border-b border-x rounded-b-lg">
+                <div className="flex">
+                    <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group data-[state=open]:rounded-b-none flex-1">
+                        <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
+                        <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
+                    </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent>
                     <div className="pl-6">
                         <div className="divide-y">
                             {role.members.map((member) => {
                                 const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                                 return (
-                                    <div key={member.id} className="flex items-center gap-3 py-3">
+                                    <div key={member.id} className="flex items-center gap-3 py-3 pr-4">
                                         {isManaging && (
                                             <Checkbox 
                                                 id={`member-${member.id}`} 
