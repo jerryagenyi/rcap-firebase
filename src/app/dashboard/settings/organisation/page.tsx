@@ -47,9 +47,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, ChevronRight } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2 } from 'lucide-react';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -155,6 +163,30 @@ const AccessManagement = () => {
         'State Coordinators': mockTeamMembers.filter(m => m.role === 'State Coordinator'),
         'Field Officers': mockTeamMembers.filter(m => m.role === 'Field Officer'),
     };
+    const roleKeys = Object.keys(roles);
+
+    const [openAccordions, setOpenAccordions] = useState<string[]>([]);
+    const [isBulkMode, setIsBulkMode] = useState(false);
+    const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+    
+    const handleManageClick = () => {
+        setIsBulkMode(true);
+        setOpenAccordions(roleKeys);
+    };
+
+    const handleDoneClick = () => {
+        setIsBulkMode(false);
+        setOpenAccordions([]);
+        setSelectedMembers([]);
+    };
+
+    const handleSelectMember = (memberId: string, isSelected: boolean) => {
+        if (isSelected) {
+            setSelectedMembers(prev => [...prev, memberId]);
+        } else {
+            setSelectedMembers(prev => prev.filter(id => id !== memberId));
+        }
+    };
 
     return (
      <Card>
@@ -163,45 +195,100 @@ const AccessManagement = () => {
                 <CardTitle>Access Management</CardTitle>
                 <CardDescription>Define roles and permissions for your team.</CardDescription>
             </div>
-            <Button asChild variant="outline">
-                <Link href="/dashboard/team">
+            {!isBulkMode ? (
+                <Button variant="outline" onClick={handleManageClick}>
                     Manage Team <Users className="ml-2" />
-                </Link>
-            </Button>
+                </Button>
+            ) : (
+                <Button variant="secondary" onClick={handleDoneClick}>Done</Button>
+            )}
         </CardHeader>
         <CardContent>
-             <Accordion type="multiple" className="w-full">
-                {Object.entries(roles).map(([role, members]) => (
-                    <AccordionItem value={role} key={role}>
-                        <AccordionTrigger className="rounded-lg border p-4 text-base font-medium hover:no-underline [&[data-state=open]]:border-primary [&[data-state=open]]:bg-primary/5">
-                             <div className="flex items-center justify-between w-full">
-                                <p className="font-medium">{role}</p>
-                                <Badge variant="secondary">{members.length} Members</Badge>
-                            </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="p-4">
-                            <div className="space-y-3">
-                                {members.map(member => {
-                                     const avatar = PlaceHolderImages.find((p) => p.id === member.avatarId);
-                                    return (
-                                    <div key={member.id} className="flex items-center gap-3">
-                                        <Avatar className="h-9 w-9">
-                                            <AvatarImage src={avatar?.imageUrl} alt={member.name} />
-                                            <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <p className="font-semibold text-sm">{member.name}</p>
-                                            <p className="text-xs text-muted-foreground">{member.email}</p>
-                                        </div>
-                                    </div>
-                                    )
-                                })}
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                ))}
+             <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="w-full">
+                {roleKeys.map((role) => {
+                    const members = roles[role as keyof typeof roles];
+                    return (
+                        <AccordionItem value={role} key={role}>
+                            <AccordionTrigger className="rounded-lg border p-4 text-base font-medium hover:no-underline [&[data-state=open]]:border-primary [&[data-state=open]]:bg-primary/5">
+                                <div className="flex items-center justify-between w-full">
+                                    <p className="font-medium">{role}</p>
+                                    <Badge variant="secondary">{members.length} Members</Badge>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="p-4">
+                                <div className="space-y-3">
+                                    {members.map(member => {
+                                        const avatar = PlaceHolderImages.find((p) => p.id === member.avatarId);
+                                        return (
+                                            <div key={member.id} className="flex items-center gap-3 rounded-md p-2 -m-2 hover:bg-muted">
+                                                {isBulkMode && (
+                                                    <Checkbox 
+                                                        id={`select-${member.id}`} 
+                                                        onCheckedChange={(checked) => handleSelectMember(member.id, checked as boolean)}
+                                                        checked={selectedMembers.includes(member.id)}
+                                                    />
+                                                )}
+                                                <Avatar className="h-9 w-9">
+                                                    <AvatarImage src={avatar?.imageUrl} alt={member.name} />
+                                                    <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                                </Avatar>
+                                                <div className="flex-1">
+                                                    <p className="font-semibold text-sm">{member.name}</p>
+                                                    <p className="text-xs text-muted-foreground">{member.email}</p>
+                                                </div>
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                            <MoreHorizontal className="h-4 w-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent align="end">
+                                                        <DropdownMenuItem>
+                                                            <UserIcon className="mr-2 h-4 w-4" /> View Profile
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem>
+                                                            <Edit className="mr-2 h-4 w-4" /> Edit Permissions
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuSeparator />
+                                                        <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                                            <Trash2 className="mr-2 h-4 w-4" /> Remove User
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    )
+                })}
              </Accordion>
         </CardContent>
+         {isBulkMode && selectedMembers.length > 0 && (
+            <CardFooter className="bg-muted/50 p-4 border-t flex items-center justify-between">
+                <p className="text-sm font-medium">{selectedMembers.length} member(s) selected</p>
+                 <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive"><Trash2 className="mr-2" /> Remove Selected</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This will permanently remove {selectedMembers.length} member(s) from the team. This action cannot be undone.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                Yes, remove {selectedMembers.length} member(s)
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </CardFooter>
+        )}
     </Card>
 )};
 
