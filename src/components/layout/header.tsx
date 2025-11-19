@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
-import { navItems, mockActivities, mockNotifications } from '@/lib/data';
+import { navItems, mockActivities, mockNotifications, mockTeamMembers } from '@/lib/data';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -31,6 +31,7 @@ export default function Header() {
   const pathname = usePathname();
   const pageTitle = navItems.find((item) => item.href === pathname)?.title || 'Dashboard';
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user1');
+  const currentUser = mockTeamMembers[0];
   const unreadCount = mockNotifications.filter(n => !n.isRead).length;
   const recentNotifications = mockNotifications.slice(0, 3);
   const [searchQuery, setSearchQuery] = useState('');
@@ -172,21 +173,33 @@ export default function Header() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={userAvatar?.imageUrl} alt="User avatar" />
-                <AvatarFallback>FA</AvatarFallback>
+            <Button variant="ghost" className="relative h-12 gap-2 px-2">
+               <Avatar className="h-10 w-10">
+                <AvatarImage src={userAvatar?.imageUrl} alt={currentUser.name} />
+                <AvatarFallback>{currentUser.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
               </Avatar>
+              <div className="text-left hidden lg:block">
+                <p className="font-semibold text-sm">{currentUser.name}</p>
+                <p className="text-xs text-muted-foreground">{currentUser.role}</p>
+              </div>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/profile">Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/settings">Settings</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/settings/help">Support</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/login">Logout</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
