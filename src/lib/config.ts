@@ -10,7 +10,7 @@ type AnnouncementStyle = {
 export const announcementStyles: Record<AnnouncementType, AnnouncementStyle> = {
     "Platform Update": {
         icon: Bot,
-        badge: "inline-flex items-center gap-2 rounded-md bg-blue-500/10 px-2 py-1 text-sm font-semibold text-blue-500",
+        badge: "inline-flex items-center gap-2 rounded-md bg-primary/10 px-2 py-1 text-sm font-semibold text-primary",
     },
     "Federal Announcement": {
         icon: Shield,
