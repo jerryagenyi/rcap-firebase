@@ -11,7 +11,7 @@ export default function PublicHeader() {
       <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Logo className="h-10 w-10" />
-          <span className="text-2xl font-bold">HealthLink RCAP</span>
+          <span className="text-2xl font-bold">RCAP</span>
         </Link>
         <div className="flex items-center gap-2">
           <Button variant="ghost" asChild>
