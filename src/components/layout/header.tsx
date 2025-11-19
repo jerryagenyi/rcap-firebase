@@ -1,6 +1,5 @@
-
 'use client';
-import { Bell, Search, Wifi, MessageSquare, CheckCheck, Trash2 } from 'lucide-react';
+import { Bell, Search, Wifi, MessageSquare, CheckCheck, Trash2, ChevronDown, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -11,6 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuGroup,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
@@ -27,6 +28,39 @@ import { useState, useMemo } from 'react';
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { useRouter } from 'next/navigation';
 
+const userRoles = [
+    { name: 'National Super Admin', context: 'Primary Role' },
+    { name: 'State Coordinator (Lagos)', context: 'Secondary Role' },
+]
+
+const RoleSwitcher = ({ activeRole, setActiveRole }: { activeRole: string; setActiveRole: (role: string) => void; }) => {
+    const currentRole = userRoles.find(r => r.name === activeRole);
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="h-12 w-full md:w-auto md:min-w-[240px] flex justify-between items-center gap-2 px-3">
+                    <div className="text-left flex-1">
+                        <p className="font-bold text-sm text-foreground truncate">{currentRole?.name}</p>
+                        <p className="text-xs text-muted-foreground">{currentRole?.context}</p>
+                    </div>
+                    <ChevronsUpDown className="h-4 w-4 text-muted-foreground" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[--radix-dropdown-menu-trigger-width]">
+                <DropdownMenuLabel>Switch Role Context</DropdownMenuLabel>
+                <DropdownMenuRadioGroup value={activeRole} onValueChange={setActiveRole}>
+                    {userRoles.map(role => (
+                        <DropdownMenuRadioItem key={role.name} value={role.name}>
+                            {role.name}
+                        </DropdownMenuRadioItem>
+                    ))}
+                </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
 export default function Header() {
   const pathname = usePathname();
   const pageTitle = navItems.find((item) => item.href === pathname)?.title || 'Dashboard';
@@ -37,6 +71,7 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchPopoverOpen, setIsSearchPopoverOpen] = useState(false);
   const router = useRouter();
+  const [activeRole, setActiveRole] = useState(userRoles[0].name);
 
 
   const filteredActivities = useMemo(() => {
@@ -62,8 +97,12 @@ export default function Header() {
       </div>
 
       <h1 className="hidden text-xl font-semibold md:block">{pageTitle}</h1>
+      
+      <div className="hidden md:flex ml-auto">
+        <RoleSwitcher activeRole={activeRole} setActiveRole={setActiveRole} />
+      </div>
 
-      <div className="flex w-full items-center gap-2 md:ml-auto md:w-auto">
+      <div className="flex w-full items-center gap-2 md:w-auto">
         <div className="flex items-center gap-2 text-sm text-green-500">
           <Wifi size={16} />
           <span className="hidden md:inline">Online</span>
