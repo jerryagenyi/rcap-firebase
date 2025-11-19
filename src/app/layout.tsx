@@ -5,7 +5,6 @@ import { Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import ClientDeveloperMenu from '@/components/layout/dev-menu-client';
 import { ThemeProvider } from '@/components/theme-provider';
-import { FirebaseClientProvider } from '@/firebase';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -31,11 +30,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <FirebaseClientProvider>
-            {children}
-            <Toaster />
-            <ClientDeveloperMenu />
-          </FirebaseClientProvider>
+          {children}
+          <Toaster />
+          <ClientDeveloperMenu />
         </ThemeProvider>
       </body>
     </html>
