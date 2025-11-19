@@ -37,6 +37,12 @@ import { mockOrganisations } from '@/lib/data';
 import type { Organisation } from '@/lib/types';
 import PaginationControls from '@/components/shared/pagination-controls';
 import Link from 'next/link';
+import { Textarea } from '@/components/ui/textarea';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const statusStyles: Record<Organisation['status'], string> = {
   Active: 'bg-green-500 text-white',
@@ -46,6 +52,7 @@ const statusStyles: Record<Organisation['status'], string> = {
 
 const LinkOrganisationDialog = ({ organisation }: { organisation: Organisation }) => {
     const availableParents = mockOrganisations.filter(org => org.level === 'Federal');
+    const [date, setDate] = useState<Date>();
     
     return (
         <DialogContent>
@@ -58,21 +65,22 @@ const LinkOrganisationDialog = ({ organisation }: { organisation: Organisation }
             <div className="py-4 space-y-4">
                  <div className="space-y-2">
                     <Label htmlFor="linkage-type">Linkage Type</Label>
-                    <Select defaultValue="parent">
+                    <Select defaultValue="direct">
                         <SelectTrigger id="linkage-type">
                             <SelectValue placeholder="Select linkage type" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="parent">Connect to Parent</SelectItem>
-                            <SelectItem value="merge" disabled>Merge with another</SelectItem>
+                            <SelectItem value="direct">Direct Oversight</SelectItem>
+                            <SelectItem value="partnership">Partnership</SelectItem>
+                            <SelectItem value="support">Support</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="target-org">Target Organisation</Label>
+                    <Label htmlFor="target-org">Parent Organisation</Label>
                     <Select>
                         <SelectTrigger id="target-org">
-                            <SelectValue placeholder="Select target organisation" />
+                            <SelectValue placeholder="Select parent organisation" />
                         </SelectTrigger>
                         <SelectContent>
                             {availableParents.map(parent => (
@@ -81,6 +89,35 @@ const LinkOrganisationDialog = ({ organisation }: { organisation: Organisation }
                         </SelectContent>
                     </Select>
                 </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="effective-date">Effective Date</Label>
+                     <Popover>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant={"outline"}
+                                className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !date && "text-muted-foreground"
+                                )}
+                                >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                            <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={setDate}
+                                initialFocus
+                            />
+                        </PopoverContent>
+                    </Popover>
+                </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="link-description">Description</Label>
+                    <Textarea id="link-description" placeholder="Describe the purpose of this linkage..." />
+                 </div>
             </div>
             <DialogFooter>
                 <DialogClose asChild>
