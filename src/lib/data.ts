@@ -1,5 +1,5 @@
 
-import type { NavItem, Activity, Notification, User, Organisation } from "@/lib/types";
+import type { NavItem, Activity, Notification, User, Organisation, Announcement } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -27,6 +27,7 @@ import {
   CheckCircle,
   Clock,
   Building,
+  Megaphone,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -54,6 +55,12 @@ export const navItems: NavItem[] = [
     title: "Organisations",
     href: "/dashboard/organisations",
     icon: Building,
+  },
+  {
+    title: "Announcements",
+    href: "/dashboard/announcements",
+    icon: Megaphone,
+    badge: 2
   },
   {
     title: 'Notifications',
@@ -762,7 +769,7 @@ export const mockOrganisations: Organisation[] = [
         members: 28,
         activities: 182,
         status: 'Active',
-        parent: null
+        parent: 'Federal MOH'
     },
      {
         id: 'ORG-003',
@@ -772,7 +779,7 @@ export const mockOrganisations: Organisation[] = [
         members: 35,
         activities: 218,
         status: 'Active',
-        parent: null
+        parent: 'Federal MOH'
     },
     {
         id: 'ORG-004',
@@ -782,16 +789,74 @@ export const mockOrganisations: Organisation[] = [
         members: 22,
         activities: 156,
         status: 'Pending',
-        parent: null
+        parent: 'Federal MOH'
     },
     {
         id: 'ORG-005',
         name: 'Ikeja LGA PHC',
-        category: 'Government',
+        category: 'LGA',
         level: 'LGA',
         members: 12,
         activities: 45,
         status: 'Active',
         parent: 'Lagos State MOH'
+    }
+];
+
+export const mockAnnouncements: Announcement[] = [
+    {
+        id: 'ANNC-001',
+        type: 'Platform Update',
+        title: 'New Feature: Advanced Reporting',
+        content: 'We have launched a new advanced reporting module. You can now generate more detailed analytics and visualizations for your activities. Check out the "Reports" page to explore the new features.',
+        author: 'RCAP Team',
+        organisation: 'RCAP Platform',
+        timestamp: '2025-12-10T10:00:00Z',
+        isRead: false,
+        priority: 'medium',
+    },
+    {
+        id: 'ANNC-002',
+        type: 'Federal Announcement',
+        title: 'National Health Policy Update 2025',
+        content: 'The Federal Ministry of Health has released an update to the National Health Policy. All state and LGA coordinators are required to review the document and ensure compliance with the new guidelines. The document is available in the resource center.',
+        author: 'Dr. Amina Yusuf',
+        organisation: 'Federal MOH',
+        timestamp: '2025-12-09T09:00:00Z',
+        isRead: false,
+        priority: 'high',
+    },
+    {
+        id: 'ANNC-003',
+        type: 'State Announcement',
+        title: 'Lagos State: Polio Vaccination Campaign',
+        content: 'Lagos State is launching a new polio vaccination campaign starting January 15th, 2026. All LGA field officers are to attend a mandatory briefing session next week. Details will be sent via email.',
+        author: 'Bolanle Adebayo',
+        organisation: 'Lagos State MOH',
+        timestamp: '2025-12-08T15:30:00Z',
+        isRead: true,
+        priority: 'high',
+    },
+    {
+        id: 'ANNC-004',
+        type: 'LGA Update',
+        title: 'Ikeja LGA: Weekly Report Submission Deadline',
+        content: 'This is a reminder that the deadline for weekly activity reports is Friday at 5:00 PM. Please ensure all your reports are submitted on time to avoid delays in data compilation.',
+        author: 'Ikeja LGA Admin',
+        organisation: 'Ikeja LGA PHC',
+        timestamp: '2025-12-07T11:00:00Z',
+        isRead: true,
+        priority: 'medium',
+    },
+    {
+        id: 'ANNC-005',
+        type: 'Platform Update',
+        title: 'Scheduled Maintenance: Dec 15th',
+        content: 'The RCAP platform will be undergoing scheduled maintenance on December 15th from 2:00 AM to 4:00 AM. The platform may be unavailable during this time. We apologize for any inconvenience.',
+        author: 'RCAP Team',
+        organisation: 'RCAP Platform',
+        timestamp: '2025-12-05T18:00:00Z',
+        isRead: true,
+        priority: 'low',
     }
 ];

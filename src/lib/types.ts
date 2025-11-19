@@ -67,3 +67,18 @@ export type Organisation = {
     status: 'Active' | 'Pending' | 'Suspended';
     parent: string | null;
 }
+
+export type AnnouncementType = 'Platform Update' | 'Federal Announcement' | 'State Announcement' | 'LGA Update';
+export type AnnouncementPriority = 'high' | 'medium' | 'low';
+
+export type Announcement = {
+  id: string;
+  type: AnnouncementType;
+  title: string;
+  content: string;
+  author: string;
+  organisation: string;
+  timestamp: string;
+  isRead: boolean;
+  priority: AnnouncementPriority;
+};
