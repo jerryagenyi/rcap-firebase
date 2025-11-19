@@ -161,7 +161,8 @@ const OrganisationBranding = () => {
 const AccessManagement = () => {
     const [isManaging, setIsManaging] = useState(false);
     const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
-    
+    const [openRoles, setOpenRoles] = useState<Record<string, boolean>>({});
+
     const userRoles = useMemo(() => {
         const grouped = mockTeamMembers.reduce((acc, member) => {
             if (!acc[member.role]) {
@@ -183,8 +184,25 @@ const AccessManagement = () => {
     };
 
     const toggleManageMode = () => {
-        setIsManaging(prev => !prev);
+        const nextIsManaging = !isManaging;
+        setIsManaging(nextIsManaging);
         setSelectedMembers([]); // Reset selection when toggling mode
+        
+        if (nextIsManaging) {
+            // Open all collapsible sections
+            const allOpen = userRoles.reduce((acc, role) => {
+                acc[role.name] = true;
+                return acc;
+            }, {} as Record<string, boolean>);
+            setOpenRoles(allOpen);
+        } else {
+            // Close all
+            setOpenRoles({});
+        }
+    };
+    
+    const handleOpenChange = (roleName: string, isOpen: boolean) => {
+        setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
     };
 
     return (
@@ -205,19 +223,23 @@ const AccessManagement = () => {
             </div>
         )}
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-2">
         {userRoles.map(role => (
-            <Collapsible key={role.name}>
+            <Collapsible 
+                key={role.name}
+                open={openRoles[role.name] || false}
+                onOpenChange={(isOpen) => handleOpenChange(role.name, isOpen)}
+            >
                 <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group border">
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="border-l border-r border-b rounded-b-lg p-4">
-                    <div className="space-y-2 divide-y">
+                <CollapsibleContent>
+                    <div className="divide-y border-l border-r border-b rounded-b-lg">
                         {role.members.map((member, index) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
-                                <div key={member.id} className="flex items-center gap-3 pt-2 first:pt-0">
+                                <div key={member.id} className="flex items-center gap-3 p-3">
                                     {isManaging && (
                                         <Checkbox 
                                             id={`member-${member.id}`} 
