@@ -7,7 +7,7 @@ import { mockNotifications } from "@/lib/data";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
 import type { Notification, NotificationType } from "@/lib/types";
-import { Check } from 'lucide-react';
+import { Check, Trash2 } from 'lucide-react';
 
 function NotificationCard({ notification }: { notification: Notification }) {
   return (
@@ -47,10 +47,16 @@ export default function NotificationsPage() {
             Manage your notifications and alerts.
           </p>
         </div>
-        <Button variant="outline">
-          <Check className="mr-2" />
-          Mark all as read
-        </Button>
+        <div className="flex items-center gap-2">
+            <Button variant="outline">
+                <Check className="mr-2" />
+                Mark all as read
+            </Button>
+             <Button variant="outline" size="icon">
+                <Trash2 />
+                <span className="sr-only">Clear all notifications</span>
+            </Button>
+        </div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
