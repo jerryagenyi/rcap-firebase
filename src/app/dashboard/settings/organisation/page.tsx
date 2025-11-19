@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -129,7 +129,7 @@ const OrganisationBranding = () => {
                            <Button variant={'outline'} className="w-auto justify-start text-left font-normal">
                                 <div className="flex items-center gap-2">
                                     <div className="h-6 w-6 rounded-md border" style={{ backgroundColor: primaryColor }} />
-                                    <span className="w-20 truncate font-mono text-xs">{primaryColor}</span>
+                                    <span className="w-28 truncate font-mono text-xs">{primaryColor}</span>
                                 </div>
                             </Button>
                         </PopoverTrigger>
@@ -164,10 +164,14 @@ const AccessManagement = () => {
         'Field Officers': mockTeamMembers.filter(m => m.role === 'Field Officer'),
     };
     const roleKeys = Object.keys(roles);
+    const allMemberIds = useMemo(() => Object.values(roles).flat().map(m => m.id), [roles]);
 
     const [openAccordions, setOpenAccordions] = useState<string[]>([]);
     const [isBulkMode, setIsBulkMode] = useState(false);
     const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+    
+    const isAllSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
+    const isSomeSelected = selectedMembers.length > 0 && selectedMembers.length < allMemberIds.length;
     
     const handleManageClick = () => {
         setIsBulkMode(true);
@@ -187,13 +191,32 @@ const AccessManagement = () => {
             setSelectedMembers(prev => prev.filter(id => id !== memberId));
         }
     };
+    
+    const handleSelectAll = (isChecked: boolean | 'indeterminate') => {
+        if (isChecked === true) {
+            setSelectedMembers(allMemberIds);
+        } else {
+            setSelectedMembers([]);
+        }
+    };
 
     return (
      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-            <div>
+        <CardHeader className="flex flex-row items-start justify-between">
+            <div className="flex-1 space-y-1.5">
                 <CardTitle>Access Management</CardTitle>
                 <CardDescription>Define roles and permissions for your team.</CardDescription>
+                {isBulkMode && (
+                    <div className="flex items-center space-x-2 pt-2">
+                        <Checkbox 
+                            id="select-all" 
+                            checked={isAllSelected || isSomeSelected}
+                            onCheckedChange={handleSelectAll}
+                            data-state={isSomeSelected ? 'indeterminate' : (isAllSelected ? 'checked' : 'unchecked')}
+                        />
+                        <Label htmlFor="select-all">Select All</Label>
+                    </div>
+                )}
             </div>
             {!isBulkMode ? (
                 <Button variant="outline" onClick={handleManageClick}>
@@ -423,3 +446,5 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
+
+    
