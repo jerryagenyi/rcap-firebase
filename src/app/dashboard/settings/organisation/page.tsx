@@ -189,11 +189,11 @@ const AccessManagement = () => {
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
                 <CollapsibleContent className="border-t p-4">
-                    <div className="space-y-3">
-                        {role.members.map(member => {
+                    <div className="space-y-4 divide-y">
+                        {role.members.map((member, index) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
-                                <div key={member.id} className="flex items-center gap-3 rounded-lg border p-3">
+                                <div key={member.id} className="flex items-center gap-3 pt-4 first:pt-0">
                                     <Avatar className="h-10 w-10">
                                         <AvatarImage src={avatar?.imageUrl} />
                                         <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
