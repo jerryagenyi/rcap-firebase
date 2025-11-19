@@ -89,3 +89,5 @@ export default function ActivitiesList({ data }: { data: Activity[] }) {
     </div>
   );
 }
+
+    
