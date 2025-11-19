@@ -57,7 +57,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2, Eye } from 'lucide-react';
+import { UploadCloud, Users, Palette, Building, ChevronRight, MoreHorizontal, User as UserIcon, Edit, Trash2, Eye, Separator } from 'lucide-react';
 import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -425,8 +425,10 @@ const SubOrganisations = () => {
 
 const DangerZone = () => {
     const [challengeInput, setChallengeInput] = useState('');
+    const [deleteChallengeInput, setDeleteChallengeInput] = useState('');
     const currentAdmins = mockTeamMembers.filter(m => m.role.includes('Admin') || m.role.includes('Coordinator'));
-    const isChallengeMet = challengeInput === 'TRANSFER';
+    const isTransferChallengeMet = challengeInput === 'TRANSFER';
+    const isDeleteChallengeMet = deleteChallengeInput === 'DELETE';
 
     return (
         <Card className="border-destructive/50">
@@ -477,10 +479,48 @@ const DangerZone = () => {
                         <AlertDialogFooter>
                             <AlertDialogCancel onClick={() => setChallengeInput('')}>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                                disabled={!isChallengeMet}
+                                disabled={!isTransferChallengeMet}
                                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                             >
                                 I understand, transfer ownership
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </CardContent>
+            <Separator className="bg-destructive/20" />
+            <CardContent className="flex items-center justify-between pt-6">
+                <div>
+                    <p className="font-semibold">Delete this Organisation</p>
+                    <p className="text-sm text-muted-foreground">Permanently delete this organisation and all its data.</p>
+                </div>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive">Delete Organisation</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Organisation</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action is irreversible. It will permanently delete the organisation, all associated users, activities, and reports.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <div className="space-y-2 my-4">
+                            <Label htmlFor="delete-challenge">To confirm, please type "DELETE" below:</Label>
+                            <Input 
+                                id="delete-challenge" 
+                                value={deleteChallengeInput}
+                                onChange={(e) => setDeleteChallengeInput(e.target.value)}
+                                placeholder="DELETE"
+                            />
+                        </div>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setDeleteChallengeInput('')}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                disabled={!isDeleteChallengeMet}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                                I understand, delete this organisation
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
@@ -512,5 +552,3 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
-
-    
