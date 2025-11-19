@@ -150,11 +150,11 @@ export default function Header() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
              <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log('Mark all as read')}>
                 <CheckCheck className="mr-2 h-4 w-4" />
                 <span>Mark all as read</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive focus:text-destructive">
+              <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => console.log('Clear all')}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 <span>Clear all</span>
               </DropdownMenuItem>
