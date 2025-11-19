@@ -21,7 +21,7 @@ export default function AuthLayout({
       </main>
 
       <footer className="absolute bottom-8 text-center text-xs text-muted-foreground">
-        <p>© 2025 Federal Ministry of Health • Powered by RCAP v1.0.0</p>
+        <p>© 2025 Federal Ministry of Health • RCAP v1.0.0</p>
       </footer>
     </div>
   );
