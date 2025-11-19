@@ -707,7 +707,7 @@ export const reportActivityTrendsMonth = [
 export const reportActivityTrendsYear = [
     { period: '2023', activities: '4080 activities', date: 'Year view', progress: 85 },
     { period: '2024', activities: '4416 activities', date: 'Year view', progress: 92 },
-    { period: '2025', activities: '3744 activities', date: 'Year view', progress: 78 },
+    { period: '2025', 'activities': '3744 activities', date: 'Year view', progress: 78 },
 ];
 
 
@@ -748,6 +748,7 @@ export const mockOrganisations: Organisation[] = [
         id: 'ORG-001',
         name: 'Federal MOH',
         level: 'Federal',
+        type: 'Government',
         members: 45,
         activities: 340,
         status: 'Active',
@@ -757,6 +758,7 @@ export const mockOrganisations: Organisation[] = [
         id: 'ORG-002',
         name: 'Lagos State MOH',
         level: 'State',
+        type: 'Government',
         members: 28,
         activities: 182,
         status: 'Active',
@@ -766,6 +768,7 @@ export const mockOrganisations: Organisation[] = [
         id: 'ORG-003',
         name: 'Kano State PHCDA',
         level: 'State',
+        type: 'Government',
         members: 35,
         activities: 218,
         status: 'Active',
@@ -775,6 +778,7 @@ export const mockOrganisations: Organisation[] = [
         id: 'ORG-004',
         name: 'Rivers State MOH',
         level: 'State',
+        type: 'Government',
         members: 22,
         activities: 156,
         status: 'Pending',
@@ -784,6 +788,7 @@ export const mockOrganisations: Organisation[] = [
         id: 'ORG-005',
         name: 'Ikeja LGA PHC',
         level: 'LGA',
+        type: 'LGA',
         members: 12,
         activities: 45,
         status: 'Active',

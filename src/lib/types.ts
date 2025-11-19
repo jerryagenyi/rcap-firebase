@@ -58,6 +58,7 @@ export type Organisation = {
     id: string;
     name: string;
     level: 'Federal' | 'State' | 'LGA';
+    type: 'Government' | 'NGO' | 'CSO' | 'LGA';
     members: number;
     activities: number;
     status: 'Active' | 'Pending' | 'Suspended';

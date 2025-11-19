@@ -152,6 +152,7 @@ export default function OrganisationsPage() {
           <TableHeader>
             <TableRow>
               <TableHead>Organisation</TableHead>
+              <TableHead>Type</TableHead>
               <TableHead>Level</TableHead>
               <TableHead>Members</TableHead>
               <TableHead>Activities</TableHead>
@@ -172,6 +173,9 @@ export default function OrganisationsPage() {
                     </div>
                     <span className="font-medium text-foreground">{org.name}</span>
                   </div>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="secondary">{org.type}</Badge>
                 </TableCell>
                 <TableCell>{org.level}</TableCell>
                 <TableCell>{org.members}</TableCell>
@@ -228,4 +232,3 @@ export default function OrganisationsPage() {
     </div>
   );
 }
-
