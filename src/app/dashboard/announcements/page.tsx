@@ -22,7 +22,7 @@ const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
 
     return (
         <Card 
-            className="cursor-pointer transition-all hover:border-primary/50 hover:shadow-md"
+            className="cursor-pointer transition-all hover:border-primary/50 hover:shadow-md flex flex-col"
             onClick={() => router.push(`/dashboard/announcements/${announcement.id}`)}
         >
             <CardHeader>
@@ -35,14 +35,14 @@ const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
                             </div>
                             {!announcement.isRead && <Badge variant="destructive">Unread</Badge>}
                         </div>
-                        <CardTitle className="text-xl hover:underline">{announcement.title}</CardTitle>
+                        <CardTitle className="text-xl hover:underline line-clamp-2 h-14">{announcement.title}</CardTitle>
                     </div>
                     <Button variant="ghost" size="icon" onClick={(e) => {e.stopPropagation(); router.push(`/dashboard/announcements/${announcement.id}`)}}>
                         <ExternalLink className="h-5 w-5 text-muted-foreground" />
                     </Button>
                 </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1">
                 <p className="text-sm text-muted-foreground line-clamp-2">{announcement.content}</p>
                 <p className="text-xs text-muted-foreground/80 mt-4">
                     {announcement.author} • {format(new Date(announcement.timestamp), 'PPP')}
