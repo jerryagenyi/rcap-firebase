@@ -63,7 +63,7 @@ const MessageItem = ({ message }: { message: { sender: { name: string; avatarId:
             )}
             <div className={cn("relative max-w-md rounded-lg p-4", isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
                  <Button variant="ghost" size="icon" className={cn(
-                    "absolute top-1 right-1 h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity",
+                    "absolute bottom-1 right-1 h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity",
                     isCurrentUser ? "text-primary-foreground/70 hover:bg-white/20 hover:text-primary-foreground" : "text-muted-foreground"
                  )}>
                     <Reply className="h-4 w-4" />
@@ -358,5 +358,7 @@ export default function MessagesPage() {
 }
 
 
+
+    
 
     
