@@ -138,6 +138,15 @@ const OrganisationBranding = () => {
 )};
 
 const AccessManagement = () => {
+    const roles = useMemo(() => {
+        const roleCounts = mockTeamMembers.reduce((acc, member) => {
+            acc[member.role] = (acc[member.role] || 0) + 1;
+            return acc;
+        }, {} as Record<string, number>);
+        
+        return Object.entries(roleCounts).map(([name, count]) => ({ name, count }));
+    }, []);
+
   return (
     <Card>
       <CardHeader>
@@ -146,30 +155,21 @@ const AccessManagement = () => {
           Define roles and permissions for your organisation's team members.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Alert>
-          <Info className="h-4 w-4" />
-          <AlertTitle>Looking to manage team members?</AlertTitle>
-          <AlertDescription>
-            All user and role management is now handled on the main{' '}
-            <strong>Team</strong> page for a more streamlined experience.
-            <ul className="mt-2 list-disc list-inside text-xs">
-              <li>
-                Use the <strong>Bulk Edit</strong> features on the Team page to
-                manage multiple users at once.
-              </li>
-              <li>
-                Click the menu on an individual user's card to edit their specific
-                role and permissions.
-              </li>
-            </ul>
-          </AlertDescription>
-        </Alert>
+      <CardContent className="space-y-4">
+        {roles.map(role => (
+            <div key={role.name} className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
+                <div>
+                    <h4 className="font-semibold">{role.name}</h4>
+                    <p className="text-sm text-muted-foreground">{role.count} member(s)</p>
+                </div>
+                <Button variant="outline" className="mt-2 sm:mt-0">Manage</Button>
+            </div>
+        ))}
       </CardContent>
-      <CardFooter className="border-t pt-6">
+       <CardFooter className="border-t pt-6">
         <Button asChild className="ml-auto">
           <Link href="/dashboard/team">
-            Go to Team Page <ArrowRight className="ml-2 h-4 w-4" />
+            View All Members <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
       </CardFooter>
