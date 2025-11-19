@@ -8,7 +8,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <circle cx="50" cy="50" r="50" fill="hsl(var(--primary))" />
-      <g stroke="hsl(var(--primary-foreground))" strokeWidth="6" strokeLinecap="round">
+      <g stroke="hsl(var(--primary-foreground))" strokeWidth="12" strokeLinecap="round">
         <line x1="25" y1="58" x2="75" y2="58" />
         <line x1="32" y1="70" x2="68" y2="70" />
       </g>
