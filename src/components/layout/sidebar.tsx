@@ -98,7 +98,7 @@ export default function AppSidebar() {
       <SidebarHeader className="h-16 items-center justify-start p-4">
         <div className="flex items-center gap-2 group-data-[collapsible=icon]:hidden">
           <Logo className="h-8 w-8 text-primary" />
-          <h1 className="text-xl font-bold text-foreground">HealthLink</h1>
+          <h1 className="text-xl font-bold text-foreground">RCAP</h1>
         </div>
         <div className="hidden items-center gap-2 group-data-[collapsible=icon]:flex">
           <Logo className="h-8 w-8" />
@@ -137,5 +137,3 @@ export default function AppSidebar() {
     </Sidebar>
   );
 }
-
-    
