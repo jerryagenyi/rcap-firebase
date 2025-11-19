@@ -229,11 +229,11 @@ const AccessManagement = () => {
             )}
         </CardHeader>
         <CardContent>
-             <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="w-full">
+             <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="w-full space-y-4">
                 {roleKeys.map((role) => {
                     const members = roles[role as keyof typeof roles];
                     return (
-                        <AccordionItem value={role} key={role}>
+                        <AccordionItem value={role} key={role} className="border-none">
                             <AccordionTrigger className="rounded-lg border p-4 text-base font-medium hover:no-underline [&[data-state=open]]:border-primary [&[data-state=open]]:bg-primary/5">
                                 <div className="flex items-center justify-between w-full">
                                     <p className="font-medium">{role}</p>
