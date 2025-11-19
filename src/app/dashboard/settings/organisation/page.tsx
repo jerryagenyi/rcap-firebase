@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -181,7 +180,6 @@ const AccessManagement = () => {
     
     const allOnPageSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
     const someSelected = selectedMembers.length > 0 && !allOnPageSelected;
-
 
     const handleSelectMember = (memberId: string) => {
         setSelectedMembers(prev => 
