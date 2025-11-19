@@ -347,8 +347,8 @@ const AccessManagement = () => {
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                   <div className="pl-6 ml-4">
-                        <div className="divide-y border-l">
+                   <div className="pl-6 ml-4 border-l">
+                        <div className="divide-y">
                             {role.members.map((member) => {
                                 const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                                 return (
