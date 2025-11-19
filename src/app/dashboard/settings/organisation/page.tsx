@@ -178,8 +178,10 @@ const AccessManagement = () => {
     
     const allUserRoleNames = [...new Set(mockTeamMembers.map(m => m.role))];
     const allMemberIds = useMemo(() => userRoles.flatMap(role => role.memberIds), [userRoles]);
+    
     const allSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
     const someSelected = selectedMembers.length > 0 && !allSelected;
+    const allOnPageSelected = selectedMembers.length > 0 && allMemberIds.every(id => selectedMembers.includes(id));
 
 
     const handleSelectMember = (memberId: string) => {
@@ -198,18 +200,6 @@ const AccessManagement = () => {
         }
     }
 
-    const toggleManageMode = () => {
-        const nextIsManaging = !isManaging;
-        setIsManaging(nextIsManaging);
-        setSelectedMembers([]);
-        
-        if (nextIsManaging) {
-            expandAll();
-        } else {
-            collapseAll();
-        }
-    };
-    
     const expandAll = () => {
         const allOpen = userRoles.reduce((acc, role) => {
             acc[role.name] = true;
@@ -222,6 +212,18 @@ const AccessManagement = () => {
         setOpenRoles({});
     };
 
+    const toggleManageMode = () => {
+        const nextIsManaging = !isManaging;
+        setIsManaging(nextIsManaging);
+        setSelectedMembers([]);
+        
+        if (nextIsManaging) {
+            expandAll();
+        } else {
+            collapseAll();
+        }
+    };
+    
     const hasOpenRoles = Object.values(openRoles).some(isOpen => isOpen);
     
     const handleOpenChange = (roleName: string, isOpen: boolean) => {
@@ -346,8 +348,8 @@ const AccessManagement = () => {
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                   <div className="pl-6 border-l ml-4">
-                        <div className="divide-y rounded-b-lg">
+                   <div className="pl-6 ml-4">
+                        <div className="divide-y rounded-b-lg border-l">
                             {role.members.map((member) => {
                                 const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                                 return (
