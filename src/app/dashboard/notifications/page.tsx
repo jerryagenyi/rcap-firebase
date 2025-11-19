@@ -52,10 +52,6 @@ export default function NotificationsPage() {
                 <Check className="mr-2" />
                 Mark all as read
             </Button>
-             <Button variant="outline" size="icon">
-                <Trash2 />
-                <span className="sr-only">Clear all notifications</span>
-            </Button>
         </div>
       </div>
 
