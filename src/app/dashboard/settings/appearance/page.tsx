@@ -19,30 +19,17 @@ const AppearanceSettings = () => (
     <CardHeader>
       <CardTitle>Appearance</CardTitle>
       <CardDescription>
-        Customize the look and feel of the application to your preference.
+        Customize the accessibility settings for the application.
       </CardDescription>
     </CardHeader>
     <CardContent className="space-y-8">
-      <div className="space-y-4">
-        <h3 className="text-lg font-medium text-foreground">Theme</h3>
-        <div className="flex items-start justify-between rounded-lg border p-4">
-          <div className="space-y-0.5">
-            <Label htmlFor="dark-mode" className="text-base">Dark Mode</Label>
-            <p className="text-sm text-muted-foreground">
-              Enable dark mode for a different visual experience.
-            </p>
-          </div>
-          <Switch id="dark-mode" />
-        </div>
-      </div>
-      <Separator />
       <div className="space-y-4">
         <h3 className="text-lg font-medium text-foreground">Accessibility</h3>
         <div className="flex items-start justify-between rounded-lg border p-4">
           <div className="space-y-0.5">
             <Label htmlFor="reduced-motion" className="text-base">Reduced Motion</Label>
             <p className="text-sm text-muted-foreground">
-              Reduce animations and motion effects.
+              Reduce animations and motion effects across the application.
             </p>
           </div>
           <Switch id="reduced-motion" />
@@ -50,7 +37,7 @@ const AppearanceSettings = () => (
       </div>
     </CardContent>
     <CardFooter className="border-t pt-6">
-      <Button variant="gradient" className="ml-auto">Save Appearance</Button>
+      <Button variant="gradient" className="ml-auto">Save Changes</Button>
     </CardFooter>
   </Card>
 );
