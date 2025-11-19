@@ -1,6 +1,7 @@
 
 'use client';
 
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -9,6 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -32,7 +44,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { UploadCloud, Users, Palette, Building, ChevronRight } from 'lucide-react';
-import { mockOrganisations } from '@/lib/data';
+import { mockOrganisations, mockTeamMembers } from '@/lib/data';
 
 const OrganisationProfile = () => {
     const currentOrg = mockOrganisations[0];
@@ -50,7 +62,7 @@ const OrganisationProfile = () => {
                 </div>
                  <div className="space-y-2">
                     <Label htmlFor="orgDescription">Description</Label>
-                    <Textarea id="orgDescription" placeholder="A short description of your organisation's mission." className="min-h-[100px]" />
+                    <Textarea id="orgDescription" placeholder="A short description of your organisation's mission." className="min-h-[100px]" defaultValue="Overseeing and coordinating national health policies and activities to ensure the well-being of all citizens. The Federal Ministry of Health is the central body for health in the nation."/>
                 </div>
             </CardContent>
             <CardFooter className="border-t pt-6">
@@ -173,6 +185,73 @@ const SubOrganisations = () => {
     );
 };
 
+const DangerZone = () => {
+    const [challengeInput, setChallengeInput] = useState('');
+    const currentAdmins = mockTeamMembers.filter(m => m.role.includes('Admin') || m.role.includes('Coordinator'));
+    const isChallengeMet = challengeInput === 'TRANSFER';
+
+    return (
+        <Card className="border-destructive/50">
+             <CardHeader>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription className="text-destructive/80">These actions have significant and permanent consequences.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+                <div>
+                    <p className="font-semibold">Transfer Ownership</p>
+                    <p className="text-sm text-muted-foreground">Transfer this organisation to another administrator.</p>
+                </div>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive">Transfer</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Transfer Organisation Ownership</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This is a critical action. You will lose all administrative privileges for this organisation.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <div className="space-y-4 my-4">
+                             <div className="space-y-2">
+                                <Label htmlFor="new-owner">Select New Owner</Label>
+                                <Select>
+                                    <SelectTrigger id="new-owner">
+                                        <SelectValue placeholder="Select an administrator" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {currentAdmins.map(admin => (
+                                            <SelectItem key={admin.id} value={admin.id}>{admin.name} ({admin.email})</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="transfer-challenge">To confirm, please type "TRANSFER" below:</Label>
+                                <Input 
+                                    id="transfer-challenge" 
+                                    value={challengeInput}
+                                    onChange={(e) => setChallengeInput(e.target.value)}
+                                    placeholder="TRANSFER"
+                                />
+                            </div>
+                        </div>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setChallengeInput('')}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                disabled={!isChallengeMet}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                                I understand, transfer ownership
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </CardContent>
+        </Card>
+    );
+};
+
 
 export default function OrganisationSettingsPage() {
   return (
@@ -190,6 +269,7 @@ export default function OrganisationSettingsPage() {
         <OrganisationBranding />
         <AccessManagement />
         <SubOrganisations />
+        <DangerZone />
       </div>
     </div>
   );
