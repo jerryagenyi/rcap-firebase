@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TestTube2, X } from 'lucide-react';
+import { TestTube2, X, Home, CreditCard } from 'lucide-react';
 import { navItems } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,9 +13,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { Separator } from '@/components/ui/separator';
 
 const DeveloperMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const publicPages = [
+    { href: '/', title: 'Landing Page', icon: Home },
+    { href: '/pricing', title: 'Pricing Page', icon: CreditCard },
+  ];
 
   return (
     <TooltipProvider>
@@ -29,7 +35,28 @@ const DeveloperMenu = () => {
               transition={{ duration: 0.2 }}
               className="w-56 rounded-lg border bg-card p-2 shadow-lg"
             >
-              <h3 className="px-2 py-1.5 text-sm font-semibold">View Switcher</h3>
+              <h3 className="px-2 py-1.5 text-sm font-semibold">Public Pages</h3>
+              <ul className="space-y-1">
+                {publicPages.map((item) => (
+                    <li key={item.href}>
+                        <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                        asChild
+                        >
+                        <Link href={item.href}>
+                            <item.icon className="mr-2 h-4 w-4" />
+                            {item.title}
+                        </Link>
+                        </Button>
+                    </li>
+                ))}
+              </ul>
+
+              <Separator className="my-2" />
+
+              <h3 className="px-2 py-1.5 text-sm font-semibold">Dashboard Views</h3>
               <ul className="space-y-1">
                 {navItems.map((item) => (
                   <li key={item.href}>
