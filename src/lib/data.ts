@@ -77,6 +77,11 @@ export const navItems: NavItem[] = [
             icon: UserCheck
         },
         {
+            title: "Organisation",
+            href: "/dashboard/settings/organisation",
+            icon: Building
+        },
+        {
             title: "Notifications",
             href: "/dashboard/settings/notifications-preferences",
             icon: Bell
