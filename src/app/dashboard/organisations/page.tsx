@@ -27,12 +27,23 @@ import {
   DialogTrigger,
   DialogClose
 } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
-import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building, Trash2, ChevronDown, FilterX } from 'lucide-react';
+import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building, Trash2, ChevronDown, FilterX, Link2Off } from 'lucide-react';
 import { mockOrganisations } from '@/lib/data';
 import type { Organisation, OrganisationCategory, OrganisationLevel } from '@/lib/types';
 import PaginationControls from '@/components/shared/pagination-controls';
@@ -339,6 +350,7 @@ export default function OrganisationsPage() {
                 <TableCell>{org.parent || 'N/A'}</TableCell>
                 <TableCell>
                    <Dialog>
+                    <AlertDialog>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -353,12 +365,21 @@ export default function OrganisationsPage() {
                              <DropdownMenuItem asChild>
                                 <Link href={`/dashboard/organisations/${org.id}/edit`}>Edit Organisation</Link>
                             </DropdownMenuItem>
-                             <DialogTrigger asChild>
-                                <DropdownMenuItem>
-                                    <LinkIcon className="mr-2 h-4 w-4" />
-                                    <span>Link to Parent</span>
-                                </DropdownMenuItem>
-                            </DialogTrigger>
+                            {!org.parent ? (
+                                <DialogTrigger asChild>
+                                    <DropdownMenuItem>
+                                        <LinkIcon className="mr-2 h-4 w-4" />
+                                        <span>Link to Parent</span>
+                                    </DropdownMenuItem>
+                                </DialogTrigger>
+                            ) : (
+                                <AlertDialogTrigger asChild>
+                                    <DropdownMenuItem>
+                                        <Link2Off className="mr-2 h-4 w-4" />
+                                        <span>Unlink from Parent</span>
+                                    </DropdownMenuItem>
+                                </AlertDialogTrigger>
+                            )}
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="text-destructive focus:text-destructive">
                                 Suspend
@@ -366,6 +387,21 @@ export default function OrganisationsPage() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                         <LinkOrganisationDialog organisation={org} />
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This will permanently unlink the <span className="font-bold text-foreground">{org.name}</span> organisation from its parent. This action cannot be undone.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                    Yes, unlink organisation
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                     </Dialog>
                 </TableCell>
               </TableRow>

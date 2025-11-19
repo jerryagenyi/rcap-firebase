@@ -352,78 +352,6 @@ const AccessManagement = () => {
     </Card>
 )};
 
-const SubOrganisations = () => {
-    const subOrgs = mockOrganisations.filter(org => org.parent);
-    
-    return (
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                    <CardTitle>Sub-Organisations</CardTitle>
-                    <CardDescription>Manage connected state and LGA-level organisations.</CardDescription>
-                </div>
-                <Button asChild variant="outline">
-                    <Link href="/dashboard/organisations">
-                        Link Organisation <ChevronRight className="ml-2" />
-                    </Link>
-                </Button>
-            </CardHeader>
-            <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Level</TableHead>
-                            <TableHead>Members</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {subOrgs.map(org => (
-                            <TableRow key={org.id}>
-                                <TableCell className="font-medium">{org.name}</TableCell>
-                                <TableCell>{org.level}</TableCell>
-                                <TableCell>{org.members}</TableCell>
-                                <TableCell><Badge className={cn(org.status === 'Active' ? 'bg-green-500' : 'bg-yellow-500', 'text-white')}>{org.status}</Badge></TableCell>
-                                <TableCell className="text-right">
-                                    <div className="flex justify-end gap-2">
-                                        <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                                            <Link href={`/dashboard/organisations/${org.id}`}>
-                                                <Eye className="h-4 w-4" />
-                                            </Link>
-                                        </Button>
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                        This will permanently unlink the <span className="font-bold text-foreground">{org.name}</span> organisation. This action cannot be undone.
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
-                                                        Yes, unlink organisation
-                                                    </AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
-    );
-};
 
 const DangerZone = () => {
     const [challengeInput, setChallengeInput] = useState('');
@@ -548,14 +476,8 @@ export default function OrganisationSettingsPage() {
         <OrganisationProfile />
         <OrganisationBranding />
         <AccessManagement />
-        <SubOrganisations />
         <DangerZone />
       </div>
     </div>
   );
 }
-
-    
-
-    
-
