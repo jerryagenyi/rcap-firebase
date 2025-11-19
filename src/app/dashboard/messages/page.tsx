@@ -61,23 +61,19 @@ const MessageItem = ({ message }: { message: { sender: { name: string; avatarId:
                     <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
                 </Avatar>
             )}
-             {!isCurrentUser && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className={cn("relative max-w-md rounded-lg p-4", isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
+                 <Button variant="ghost" size="icon" className={cn(
+                    "absolute top-1 right-1 h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity",
+                    isCurrentUser ? "text-primary-foreground/70 hover:bg-white/20 hover:text-primary-foreground" : "text-muted-foreground"
+                 )}>
                     <Reply className="h-4 w-4" />
                 </Button>
-             )}
-            <div className={cn("max-w-md rounded-lg p-4", isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
                 <p className="font-bold text-sm mb-1">{message.sender.name} {isCurrentUser && <span className="font-normal opacity-70">(You)</span>}</p>
                 <p>{message.content}</p>
                  <p className={cn("text-xs mt-2", isCurrentUser ? "text-primary-foreground/70" : "text-muted-foreground/70")}>
                     {format(new Date(message.timestamp), 'PPpp')}
                 </p>
             </div>
-            {isCurrentUser && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Reply className="h-4 w-4" />
-                </Button>
-             )}
             {isCurrentUser && (
                  <Avatar className="h-10 w-10">
                     <AvatarImage src={avatar?.imageUrl} />
