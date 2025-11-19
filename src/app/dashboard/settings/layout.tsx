@@ -66,26 +66,8 @@ export default function SettingsLayout({
   const pathname = usePathname();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
-      <nav className="md:col-span-1 sticky top-20">
-        <ul className="space-y-1">
-          {settingsNav.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.href}
-                className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-muted',
-                  pathname === item.href && 'bg-muted font-semibold text-primary'
-                )}
-              >
-                <item.icon className="h-5 w-5" />
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="md:col-span-3">{children}</div>
+    <div className="grid grid-cols-1 gap-8 items-start">
+      <div className="col-span-1">{children}</div>
     </div>
   );
 }
