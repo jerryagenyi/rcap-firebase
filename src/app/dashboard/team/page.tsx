@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { mockTeamMembers } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X, UploadCloud } from 'lucide-react';
+import { Search, UserPlus, MessageSquare, MoreVertical, Edit, User, Briefcase, Mail as MailIcon, Send, X, UploadCloud, Download } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -285,7 +285,13 @@ export default function TeamPage() {
                   </div>
                 </div>
                  <div className="space-y-2">
-                    <Label htmlFor="csv-upload">Upload a CSV</Label>
+                    <div className="flex justify-between items-center">
+                        <Label htmlFor="csv-upload">Upload a CSV</Label>
+                        <Button variant="link" className="h-auto p-0 text-xs">
+                           <Download className="mr-1.5 h-3 w-3" />
+                           Download CSV template
+                        </Button>
+                    </div>
                     <label htmlFor="csv-upload" className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted hover:bg-muted/80">
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                             <UploadCloud className="w-8 h-8 mb-3 text-muted-foreground" />
