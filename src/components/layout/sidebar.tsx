@@ -28,9 +28,13 @@ import {
 } from "@/components/ui/collapsible"
 
 const SidebarNavItem = ({ item, pathname }: { item: NavItem; pathname:string }) => {
-  const isActive = item.children 
-    ? pathname.startsWith(item.href) && !item.children.some(child => pathname.startsWith(child.href) && child.href.length > item.href.length)
-    : pathname === item.href || pathname.startsWith(`${item.href}/`);
+  const isDashboard = item.href === '/dashboard';
+  
+  const isActive = isDashboard
+    ? pathname === item.href
+    : (item.children 
+        ? pathname.startsWith(item.href) && !item.children.some(child => pathname.startsWith(child.href) && child.href.length > item.href.length)
+        : pathname === item.href || pathname.startsWith(`${item.href}/`));
     
   const isChildActive = item.children && item.children.some(child => pathname.startsWith(child.href));
 
