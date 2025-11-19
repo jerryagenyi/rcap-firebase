@@ -36,6 +36,7 @@ import { MoreHorizontal, PlusCircle, Search, Link as LinkIcon, Building } from '
 import { mockOrganisations } from '@/lib/data';
 import type { Organisation } from '@/lib/types';
 import PaginationControls from '@/components/shared/pagination-controls';
+import Link from 'next/link';
 
 const statusStyles: Record<Organisation['status'], string> = {
   Active: 'bg-green-500 text-white',
@@ -128,9 +129,11 @@ export default function OrganisationsPage() {
             Manage all organisations in the RCAP system.
           </p>
         </div>
-        <Button variant="gradient">
-          <PlusCircle />
-          Create Organisation
+        <Button asChild variant="gradient">
+            <Link href="/dashboard/organisations/create">
+                <PlusCircle />
+                Create Organisation
+            </Link>
         </Button>
       </div>
 
@@ -195,7 +198,9 @@ export default function OrganisationsPage() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                             <DropdownMenuItem>View Details</DropdownMenuItem>
-                            <DropdownMenuItem>Edit Organisation</DropdownMenuItem>
+                             <DropdownMenuItem asChild>
+                                <Link href={`/dashboard/organisations/${org.id}/edit`}>Edit Organisation</Link>
+                            </DropdownMenuItem>
                              <DialogTrigger asChild>
                                 <DropdownMenuItem>
                                     <LinkIcon className="mr-2 h-4 w-4" />
