@@ -44,7 +44,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   Collapsible,
   CollapsibleContent,
@@ -57,6 +56,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 
 const OrganisationProfile = () => {
     const currentOrg = mockOrganisations[0];
@@ -175,7 +175,8 @@ const AccessManagement = () => {
         
         return Object.entries(grouped).map(([name, members]) => ({ name, members, memberIds: members.map(m => m.id) }));
     }, []);
-
+    
+    const allUserRoleNames = [...new Set(mockTeamMembers.map(m => m.role))];
     const allMemberIds = useMemo(() => userRoles.flatMap(role => role.memberIds), [userRoles]);
     const allSelected = selectedMembers.length > 0 && selectedMembers.length === allMemberIds.length;
     const someSelected = selectedMembers.length > 0 && !allSelected;
@@ -247,6 +248,16 @@ const AccessManagement = () => {
                 </>
             ) : (
                 <div className="flex items-center gap-4">
+                    <Button variant="ghost" onClick={toggleManageMode}>Cancel</Button>
+                    <Button variant="gradient">Save Changes</Button>
+                </div>
+            )}
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {isManaging && (
+            <div className="flex items-center justify-between p-4 rounded-lg bg-muted border">
+                <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                         <Checkbox 
                             id="select-all-members"
@@ -255,15 +266,70 @@ const AccessManagement = () => {
                             aria-label="Select all members"
                             data-state={someSelected ? 'indeterminate' : (allSelected ? 'checked' : 'unchecked')}
                         />
-                        <Label htmlFor="select-all-members">Select all</Label>
+                        <Label htmlFor="select-all-members" className="font-semibold">
+                            {selectedMembers.length > 0 ? `${selectedMembers.length} selected` : "Select all"}
+                        </Label>
                     </div>
-                    <Button variant="ghost" onClick={toggleManageMode}>Cancel</Button>
-                    <Button variant="gradient">Save Changes</Button>
                 </div>
-            )}
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-2">
+                <div className="flex items-center gap-2">
+                     <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline" disabled={selectedMembers.length === 0}>
+                                <Edit className="mr-2 h-4 w-4" />
+                                Bulk Edit Role
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>Bulk Edit Role</DialogTitle>
+                                <DialogDescription>
+                                    Assign a new role to {selectedMembers.length} selected member(s). This will override their current roles.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="py-4">
+                                <Label htmlFor="bulk-role-select" className="mb-2 block">New Role</Label>
+                                <Select>
+                                    <SelectTrigger id="bulk-role-select">
+                                        <SelectValue placeholder="Select a new role" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {allUserRoleNames.map(role => (
+                                            <SelectItem key={role} value={role}>{role}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <DialogFooter>
+                                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                                <Button variant="gradient">Apply Changes</Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive" disabled={selectedMembers.length === 0}>
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Remove
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This will permanently remove {selectedMembers.length} member(s) from the organisation. This action cannot be undone.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                    Yes, remove members
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
+            </div>
+        )}
         {userRoles.map(role => (
             <Collapsible 
                 key={role.name}
@@ -278,7 +344,7 @@ const AccessManagement = () => {
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent>
-                   <div className="divide-y border-x border-b rounded-b-lg">
+                   <div className="divide-y border-b border-x rounded-b-lg">
                         {role.members.map((member) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
@@ -290,7 +356,7 @@ const AccessManagement = () => {
                                             onCheckedChange={() => handleSelectMember(member.id)}
                                         />
                                     )}
-                                    <Avatar className={cn("h-10 w-10", !isManaging && "ml-4")}>
+                                    <Avatar className={cn("h-10 w-10")}>
                                         <AvatarImage src={avatar?.imageUrl} />
                                         <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
                                     </Avatar>
