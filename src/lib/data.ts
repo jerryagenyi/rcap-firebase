@@ -1,4 +1,5 @@
 
+
 import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -34,6 +35,7 @@ import {
   GraduationCap,
   Network,
   FlaskConical,
+  Sitemap,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -107,6 +109,11 @@ export const navItems: NavItem[] = [
             title: "Organisation Settings",
             href: "/dashboard/settings/organisation",
             icon: Building
+        },
+        {
+            title: "Hierarchy",
+            href: "/dashboard/settings/hierarchy",
+            icon: Sitemap
         },
         {
             title: "Notification Preferences",
