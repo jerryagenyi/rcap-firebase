@@ -19,7 +19,7 @@ export default function LandingPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-24 sm:py-32 text-center">
+      <section className="py-20 sm:py-28 text-center">
         <div className="container">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
             Coordinate Health Activities,
@@ -40,7 +40,7 @@ export default function LandingPage() {
       </section>
 
       {/* App Screenshot */}
-      <section className="container">
+      <section className="container py-16">
            <Card className="p-4 shadow-2xl shadow-primary/10">
                <Image
                   src="https://picsum.photos/seed/dashboard-ss/1200/800"
@@ -54,7 +54,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 sm:py-32">
+      <section className="py-20 sm:py-28">
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold">A Single Source of Truth</h2>
