@@ -19,7 +19,7 @@ const DeveloperMenu = () => {
 
   return (
     <TooltipProvider>
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2">
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -27,7 +27,7 @@ const DeveloperMenu = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="mb-2 w-56 rounded-lg border bg-card p-2 shadow-lg"
+              className="w-56 rounded-lg border bg-card p-2 shadow-lg"
             >
               <h3 className="px-2 py-1.5 text-sm font-semibold">Dev Menu</h3>
               <ul className="space-y-1">
@@ -54,9 +54,9 @@ const DeveloperMenu = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              size="icon"
+              size="default"
               variant="default"
-              className="h-12 w-12 rounded-full shadow-lg"
+              className="h-12 w-auto rounded-full px-4 shadow-lg"
               onClick={() => setIsOpen(!isOpen)}
             >
               <AnimatePresence initial={false} mode="wait">
@@ -70,6 +70,7 @@ const DeveloperMenu = () => {
                   {isOpen ? <X /> : <TestTube2 />}
                 </motion.div>
               </AnimatePresence>
+              <span className="ml-2">{isOpen ? 'Close' : 'Dev Menu'}</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent side="left">
