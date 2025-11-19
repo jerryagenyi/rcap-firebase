@@ -1,3 +1,4 @@
+
 import { Logo } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -11,7 +12,7 @@ export default function PricingLayout({
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Logo className="h-8 w-8" />
             <span className="font-bold text-lg">HealthLink RCAP</span>
           </Link>

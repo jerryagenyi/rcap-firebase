@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Check, X, ShieldQuestion } from 'lucide-react';
@@ -93,7 +94,7 @@ export default function PricingPage() {
                         </CardContent>
                         <CardFooter>
                             <Button variant="secondary" className="w-full" size="lg" asChild>
-                                <Link href="#">Get Started</Link>
+                                <Link href="/login">Get Started</Link>
                             </Button>
                         </CardFooter>
                     </Card>

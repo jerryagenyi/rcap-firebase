@@ -114,8 +114,8 @@ export const navItems: NavItem[] = [
         },
         // Billing Section (under settings)
         {
-            title: "Pricing",
-            href: "/pricing",
+            title: "Billing",
+            href: "/dashboard/settings/billing",
             icon: DollarSign,
         }
     ]
