@@ -202,6 +202,8 @@ const AccessManagement = () => {
     };
     
     const handleOpenChange = (roleName: string, isOpen: boolean) => {
+        // Prevent closing when in manage mode
+        if (isManaging) return;
         setOpenRoles(prev => ({ ...prev, [roleName]: isOpen }));
     };
 
@@ -230,12 +232,12 @@ const AccessManagement = () => {
                 open={openRoles[role.name] || false}
                 onOpenChange={(isOpen) => handleOpenChange(role.name, isOpen)}
             >
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group border">
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-t-lg group border-x border-t data-[state=closed]:rounded-b-lg data-[state=closed]:border-b">
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
                      <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                    <div className="divide-y border-l border-r border-b rounded-b-lg">
+                    <div className="divide-y border-x border-b rounded-b-lg">
                         {role.members.map((member, index) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
