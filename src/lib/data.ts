@@ -78,6 +78,11 @@ export const navItems: NavItem[] = [
     icon: UserIcon,
   },
   {
+    title: "Help & Support",
+    href: "/dashboard/settings/help",
+    icon: HelpCircle
+  },
+  {
     title: "Settings",
     href: "/dashboard/settings",
     icon: Settings,
@@ -112,11 +117,6 @@ export const navItems: NavItem[] = [
             title: "Pricing",
             href: "/pricing",
             icon: DollarSign,
-        },
-        {
-            title: "Help & Support",
-            href: "/dashboard/settings/help",
-            icon: HelpCircle
         }
     ]
   },
@@ -870,3 +870,5 @@ export const mockAnnouncements: Announcement[] = [
         priority: 'low',
     }
 ];
+
+    

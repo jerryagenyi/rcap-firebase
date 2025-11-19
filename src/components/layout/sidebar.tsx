@@ -17,7 +17,7 @@ import { navItems } from '@/lib/data';
 import { usePathname } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, ChevronDown } from 'lucide-react';
+import { LogOut, ChevronDown, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import type { NavItem } from '@/lib/types';
@@ -137,3 +137,5 @@ export default function AppSidebar() {
     </Sidebar>
   );
 }
+
+    
