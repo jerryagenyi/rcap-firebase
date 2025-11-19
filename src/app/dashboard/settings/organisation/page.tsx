@@ -231,14 +231,17 @@ const AccessManagement = () => {
             >
                 <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-muted/50 rounded-lg group border data-[state=open]:rounded-b-none">
                      <h4 className="font-semibold text-lg">{role.name} <span className="text-sm text-muted-foreground font-normal">({role.members.length} members)</span></h4>
-                     <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180" />
+                     <ChevronDown className="h-5 w-5 transition-transform group-data-[state=open]:-rotate-180" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="border-l ml-6 pl-6">
-                    <div className="divide-y rounded-b-lg">
+                <CollapsibleContent className="px-4 pb-2 border-x border-b rounded-b-lg">
+                    <div className="pl-6 border-l">
                         {role.members.map((member, index) => {
                             const avatar = PlaceHolderImages.find(p => p.id === member.avatarId);
                             return (
-                                <div key={member.id} className="flex items-center gap-3 p-3">
+                                <div key={member.id} className={cn(
+                                    "flex items-center gap-3 py-3",
+                                    index !== 0 && "border-t"
+                                )}>
                                     {isManaging && (
                                         <Checkbox 
                                             id={`member-${member.id}`} 
@@ -410,5 +413,3 @@ export default function OrganisationSettingsPage() {
     </div>
   );
 }
-
-    
