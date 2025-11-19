@@ -9,7 +9,7 @@ import {
   Database,
   HelpCircle,
   CreditCard,
-  Sitemap
+  Network,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -29,7 +29,7 @@ const settingsNav = [
   {
     name: 'Hierarchy',
     href: '/dashboard/settings/hierarchy',
-    icon: Sitemap,
+    icon: Network,
   },
   {
     name: 'Notifications',

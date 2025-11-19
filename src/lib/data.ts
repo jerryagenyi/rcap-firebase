@@ -35,7 +35,6 @@ import {
   GraduationCap,
   Network,
   FlaskConical,
-  Sitemap,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -113,7 +112,7 @@ export const navItems: NavItem[] = [
         {
             title: "Hierarchy",
             href: "/dashboard/settings/hierarchy",
-            icon: Sitemap
+            icon: Network
         },
         {
             title: "Notification Preferences",
