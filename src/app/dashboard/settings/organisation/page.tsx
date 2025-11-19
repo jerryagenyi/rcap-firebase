@@ -111,9 +111,11 @@ const OrganisationBranding = () => {
                 <div className="flex items-center gap-4">
                      <Popover>
                         <PopoverTrigger asChild>
-                            <Button variant="outline" className="h-10 w-24 justify-start">
-                                <div className="h-6 w-6 rounded-md border mr-2" style={{ backgroundColor: primaryColor }} />
-                                {primaryColor}
+                            <Button variant="outline" className="h-10 w-auto justify-start pr-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-6 w-6 rounded-md border" style={{ backgroundColor: primaryColor }} />
+                                    <span className="font-mono text-xs">{primaryColor}</span>
+                                </div>
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-2">
