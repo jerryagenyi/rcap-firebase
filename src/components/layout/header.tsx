@@ -1,5 +1,6 @@
+
 'use client';
-import { Bell, Search, Wifi, MessageSquare, CheckCheck, Trash2, ChevronDown, ChevronsUpDown } from 'lucide-react';
+import { Bell, Search, Wifi, MessageSquare, CheckCheck, Trash2, ChevronDown, ChevronsUpDown, Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -32,6 +33,10 @@ const userRoles = [
     { name: 'National Super Admin', context: 'Primary Role' },
     { name: 'State Coordinator (Lagos)', context: 'Secondary Role' },
 ]
+
+const languages = [
+  'English', 'French', 'Portuguese', 'Arabic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo'
+];
 
 const RoleSwitcher = ({ activeRole, setActiveRole }: { activeRole: string; setActiveRole: (role: string) => void; }) => {
     const currentRole = userRoles.find(r => r.name === activeRole);
@@ -146,6 +151,21 @@ export default function Header() {
         </Popover>
 
         <ThemeToggle />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full">
+              <Languages className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Select Language</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {languages.map(lang => (
+              <DropdownMenuItem key={lang}>{lang}</DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Button variant="ghost" size="icon" className="relative rounded-full h-10 w-10">
           <MessageSquare className="h-5 w-5" />
