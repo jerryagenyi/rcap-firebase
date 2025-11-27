@@ -48,24 +48,37 @@ To get started with development, take a look at the main dashboard page located 
 
 This project is equipped with a CI/CD pipeline using GitHub Actions to build and deploy a Docker image to a production environment managed by [Dokploy](https://dokploy.com/).
 
-### Setup Instructions
+### Firebase Environment Variables
 
-1.  **Generate Secrets**: You need to create the following secrets in your GitHub repository under `Settings > Secrets and variables > Actions`:
+For the deployed application to connect to your Firebase project (Firestore, Auth, etc.), you **must** add your Firebase configuration as environment variables in your Dokploy service settings. Create the following variables in Dokploy:
 
-    *   `GHCR_PAT`: A GitHub Personal Access Token (PAT) with `write:packages` scope.
-        *   **How to create**: Go to `GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens`.
-        *   Create a new token, give it a name (e.g., "RCAP Deploy"), and select your repository.
-        *   Under `Permissions > Repository permissions`, find "Packages" and grant it "Read and Write" access.
-        *   Generate the token and copy it.
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
 
-    *   `DOKPLOY_WEBHOOK_URL`: The webhook URL provided by your Dokploy service.
-        *   **How to get**: In Dokploy, go to your service's `Deployments` tab and copy the "Webhook URL".
+### GitHub Secrets Setup
 
-    *   `DOKPLOY_TOKEN`: The secret token associated with your Dokploy webhook.
-        *   **How to get**: This is the "Secret Token" displayed right below the webhook URL in Dokploy.
+**Yes, you absolutely need these secrets.** They are required to securely automate your deployment. You must create the following secrets in your GitHub repository by navigating to **`Settings > Secrets and variables > Actions`** and clicking **`New repository secret`** for each one.
 
-2.  **Update Placeholders**: Before the first deployment, you must replace the placeholder in `docker-compose.yml`:
-    *   `<owner>`: Replace this with your GitHub username or organization name (e.g., `ghcr.io/jerryagenyi/rcap-firebase:latest`).
+*   `GHCR_PAT`: A GitHub Personal Access Token (PAT) with `write:packages` scope. This is required to allow GitHub Actions to push the Docker image to the GitHub Container Registry.
+    *   **How to create**: Go to your `GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens`.
+    *   Create a new token, give it a name (e.g., "RCAP Deploy"), and select your repository.
+    *   Under `Permissions > Repository permissions`, find "Packages" and grant it "Read and Write" access.
+    *   Generate the token and copy it into the GitHub secret.
+
+*   `DOKPLOY_WEBHOOK_URL`: The webhook URL provided by your Dokploy service. This is how GitHub Actions tells Dokploy that a new image is ready to be deployed.
+    *   **How to get**: In Dokploy, go to your service's `Deployments` tab and copy the "Webhook URL".
+
+*   `DOKPLOY_TOKEN`: The secret token associated with your Dokploy webhook. This secures the webhook, ensuring only GitHub Actions can trigger a deployment.
+    *   **How to get**: This is the "Secret Token" displayed right below the webhook URL in Dokploy.
+
+### Update Placeholders
+
+Before the first deployment, you must replace the placeholder in `docker-compose.yml`:
+*   `<owner>`: Replace this with your GitHub username or organization name (e.g., `ghcr.io/jerryagenyi/rcap-firebase:latest`).
 
 ### Docker Hub (Alternative)
 
