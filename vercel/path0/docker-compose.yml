@@ -4,7 +4,7 @@
 services:
   app:
     # Replace <owner> with your GitHub username or organization name.
-    image: ghcr.io/<owner>/rcap-firebase:latest
+    image: ghcr.io/<owner>/ccip-firebase:latest
     restart: unless-stopped
     ports:
       - "3000:3000"

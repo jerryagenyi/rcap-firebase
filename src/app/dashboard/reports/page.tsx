@@ -26,7 +26,7 @@ export default function ReportsPage() {
 
         // Title
         doc.setFontSize(22);
-        doc.text("RCAP Analytics Report", 14, 20);
+        doc.text("CCIP Analytics Report", 14, 20);
         doc.setFontSize(12);
         doc.setTextColor(150);
         doc.text(`Report generated on: ${new Date().toLocaleDateString()}`, 14, 28);
@@ -70,7 +70,7 @@ export default function ReportsPage() {
             }
         });
 
-        doc.save("RCAP-Report.pdf");
+        doc.save("CCIP-Report.pdf");
     }
 
   return (

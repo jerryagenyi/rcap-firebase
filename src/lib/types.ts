@@ -1,5 +1,6 @@
 
 
+
 import type { LucideIcon } from "lucide-react";
 
 export type NavItem = {
@@ -23,6 +24,19 @@ export type Activity = {
   lastModified: string;
   description: string;
   type: string;
+  // New Semiotic Fields
+  targetContext?: {
+    region: string;
+    language: string;
+    culture: string;
+  };
+  plannedMessage?: {
+    content: string;
+    channels: string[];
+    messengers: string[];
+  };
+  semioticRiskScore?: number;
+  semioticAssessment?: SemioticAssessment | null;
 };
 
 export type User = {

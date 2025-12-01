@@ -12,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'HealthLink RCAP',
-  description: 'Risk Communication Activity Platform',
+  title: 'CCIP',
+  description: 'Crisis Communication Intelligence Platform',
 };
 
 export default function RootLayout({

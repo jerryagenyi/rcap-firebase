@@ -203,7 +203,7 @@ const TeamMemberCard = ({ member, isSelected, onSelect }: { member: UserType, is
                       <AlertDialogHeader>
                         <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone. This will permanently remove {member.name} from the team and revoke their access to the RCAP platform.
+                          This action cannot be undone. This will permanently remove {member.name} from the team and revoke their access to the CCIP platform.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>

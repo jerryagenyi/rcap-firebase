@@ -56,7 +56,7 @@ const AccountSettings = () => {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="email">Email Address</Label>
-                        <Input id="email" type="email" defaultValue="admin@rcap.gov" />
+                        <Input id="email" type="email" defaultValue="admin@ccip.gov" />
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="phone">Phone Number</Label>
@@ -120,7 +120,7 @@ const DangerZone = () => {
             <CardContent className="flex items-center justify-between">
                 <div>
                     <p className="font-semibold">Delete Your Account</p>
-                    <p className="text-sm text-muted-foreground">Permanently delete all your data from the RCAP platform.</p>
+                    <p className="text-sm text-muted-foreground">Permanently delete all your data from the CCIP platform.</p>
                 </div>
                 <AlertDialog>
                     <AlertDialogTrigger asChild>

@@ -12,11 +12,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 const documentationSections = [
     {
-        title: "1. Introduction to RCAP",
+        title: "1. Introduction to CCIP",
         items: [
-            { question: "What is RCAP?", answer: "An overview of the Risk Communication Activity Platform, its purpose, and target audience (Government, NGOs, CSOs)." },
+            { question: "What is CCIP?", answer: "An overview of the Crisis Communication Intelligence Platform, its purpose, and target audience (Government, NGOs, CSOs)." },
             { question: "Key Terminology", answer: "Definitions of core concepts like Activities, Organisations, Roles, and Hierarchies." },
-            { question: "Platform Goals", answer: "What RCAP aims to achieve for public health coordination." }
+            { question: "Platform Goals", answer: "What CCIP aims to achieve for public health coordination." }
         ]
     },
     {
@@ -72,7 +72,7 @@ export default function HelpSettingsPage() {
           Help & Documentation
         </h1>
         <p className="text-muted-foreground">
-          Find answers and detailed guides for using the RCAP platform.
+          Find answers and detailed guides for using the CCIP platform.
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export default function HelpSettingsPage() {
           <CardHeader>
               <CardTitle>Platform Knowledge Base</CardTitle>
               <CardDescription>
-                  A comprehensive guide to understanding and using all features of RCAP.
+                  A comprehensive guide to understanding and using all features of CCIP.
               </CardDescription>
           </CardHeader>
           <CardContent>

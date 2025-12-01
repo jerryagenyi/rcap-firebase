@@ -17,7 +17,7 @@ export default function PublicHeader() {
       <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Logo className="h-10 w-10" />
-          <span className="text-2xl font-bold">RCAP</span>
+          <span className="text-2xl font-bold">CCIP</span>
         </Link>
         
         {/* Desktop Navigation */}
@@ -46,7 +46,7 @@ export default function PublicHeader() {
                     <div className="p-6">
                         <Link href="/" className="flex items-center gap-3 mb-8">
                             <Logo className="h-10 w-10" />
-                            <span className="text-2xl font-bold">RCAP</span>
+                            <span className="text-2xl font-bold">CCIP</span>
                         </Link>
                         <nav className="flex flex-col gap-4">
                             {navLinks.map((link) => (

@@ -147,7 +147,7 @@ export default function ProfilePage() {
                   <Input
                     id="email"
                     type="email"
-                    defaultValue="admin@rcap.gov"
+                    defaultValue="admin@ccip.gov"
                   />
                 </div>
                 <div className="space-y-2">
@@ -164,7 +164,7 @@ export default function ProfilePage() {
                     id="bio"
                     placeholder="Tell us a little about yourself."
                     className="min-h-[100px]"
-                    defaultValue="National Coordinator for the RCAP project, overseeing federal-level activities and ensuring smooth operation across all states."
+                    defaultValue="National Coordinator for the CCIP project, overseeing federal-level activities and ensuring smooth operation across all states."
                   />
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default function ProfilePage() {
             <CardHeader>
               <CardTitle>Role &amp; Permissions</CardTitle>
               <CardDescription>
-                Your current role within the RCAP system.
+                Your current role within the CCIP system.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

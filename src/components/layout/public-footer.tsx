@@ -7,7 +7,7 @@ export default function PublicFooter() {
         <footer className="border-t">
             <div className="container flex flex-col items-center justify-between gap-4 py-8 sm:flex-row">
                 <p className="text-sm text-muted-foreground">
-                    © 2025 HealthLink RCAP • A New Way to Coordinate Public Health
+                    © 2025 CCIP • Predictive Intelligence for Culturally-Resonant Crisis Communication
                 </p>
                 <div className="flex gap-2">
                     <Button variant="link" size="sm" asChild>

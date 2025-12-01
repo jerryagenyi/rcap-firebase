@@ -1,8 +1,8 @@
-# RCAP Prototype: Detailed Feature Documentation
+# CCIP Prototype: Detailed Feature Documentation
 
 ## 1. Introduction
 
-The **Risk Communication Activity Platform (RCAP)** is a comprehensive web application designed to be the central nervous system for public health organisations. It addresses the critical challenge of coordinating, tracking, and analyzing health-related activities across complex hierarchical structures, from national ministries down to local community officers.
+The **Crisis Communication Intelligence Platform (CCIP)** is a comprehensive web application designed to be the central nervous system for public health organisations. It addresses the critical challenge of coordinating, tracking, and analyzing health-related activities across complex hierarchical structures, from national ministries down to local community officers.
 
 **Purpose**: To replace fragmented systems (spreadsheets, emails, paper forms) with a single, data-driven platform that enhances efficiency, provides real-time insights, and improves the effectiveness of public health interventions.
 
@@ -49,7 +49,7 @@ The Dashboard is the dynamic entry point for every user, providing an immediate,
 
 ### 3.2. Activity Management
 
-This is the core operational hub of RCAP, where all health activities are planned, tracked, and managed.
+This is the core operational hub of CCIP, where all health activities are planned, tracked, and managed.
 
 - **Purpose**: To provide a standardized, transparent lifecycle for every public health activity, from draft to completion.
 - **Functionality**:
@@ -148,10 +148,10 @@ A comprehensive, multi-page section for managing user and organizational prefere
 
 ## 4. Future / Conceptual Features
 
-The prototype includes placeholder pages for planned features to illustrate the long-term vision of RCAP.
+The prototype includes placeholder pages for planned features to illustrate the long-term vision of CCIP.
 
 - **AI Planning**: A module to analyze implementation plans and automatically suggest KPIs.
 - **Resource Management**: A hub for scheduling personnel, equipment, and tracking budgets.
 - **Training & Development**: A center for creating, managing, and tracking training courses and certifications.
-- **Integrations & APIs**: A future hub for connecting RCAP with external systems like DHIS2.
+- **Integrations & APIs**: A future hub for connecting CCIP with external systems like DHIS2.
 - **Research Lab**: An advanced analytics environment for epidemiologists to conduct custom research.

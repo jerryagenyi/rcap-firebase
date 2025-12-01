@@ -223,7 +223,7 @@ export default function OrganisationsPage() {
             Organisations
           </h1>
           <p className="text-muted-foreground">
-            Manage all organisations in the RCAP system.
+            Manage all organisations in the CCIP system.
           </p>
         </div>
         <Button asChild variant="gradient">

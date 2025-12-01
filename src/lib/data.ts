@@ -1,6 +1,7 @@
 
 
 
+
 import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation, SemioticPattern } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -46,7 +47,7 @@ export const navItems: NavItem[] = [
     icon: LayoutDashboard,
   },
   {
-    title: "Activities",
+    title: "Campaigns",
     href: "/dashboard/activities",
     icon: ClipboardList,
   },
@@ -374,7 +375,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-001',
         name: 'Dr. Amina Yusuf',
-        email: 'amina.yusuf@rcap.gov',
+        email: 'amina.yusuf@ccip.gov',
         avatarId: 'user1',
         role: 'Super Admin',
         team: 'Federal MOH',
@@ -383,7 +384,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-002',
         name: 'Bolanle Adebayo',
-        email: 'bolanle.adebayo@rcap.gov',
+        email: 'bolanle.adebayo@ccip.gov',
         avatarId: 'user2',
         role: 'State Coordinator',
         team: 'Lagos State MOH',
@@ -392,7 +393,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-003',
         name: 'Chinedu Okoro',
-        email: 'chinedu.okoro@rcap.gov',
+        email: 'chinedu.okoro@ccip.gov',
         avatarId: 'user3',
         role: 'Field Officer',
         team: 'Ikeja LGA PHC',
@@ -401,7 +402,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-004',
         name: 'Fatima Bello',
-        email: 'fatima.bello@rcap.gov',
+        email: 'fatima.bello@ccip.gov',
         avatarId: 'user4',
         role: 'Data Analyst',
         team: 'Federal MOH',
@@ -410,7 +411,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-005',
         name: 'Musa Ibrahim',
-        email: 'musa.ibrahim@rcap.gov',
+        email: 'musa.ibrahim@ccip.gov',
         avatarId: 'user5',
         role: 'State Coordinator',
         team: 'Kano State PHCDA',
@@ -419,7 +420,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-006',
         name: 'Ngozi Eze',
-        email: 'ngozi.eze@rcap.gov',
+        email: 'ngozi.eze@ccip.gov',
         avatarId: 'user6',
         role: 'Program Manager',
         team: 'HealthForAll Foundation',
@@ -428,7 +429,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-007',
         name: 'David Akpan',
-        email: 'david.akpan@rcap.gov',
+        email: 'david.akpan@ccip.gov',
         avatarId: 'user7',
         role: 'Director',
         team: 'Community Action for Health',
@@ -437,7 +438,7 @@ export const mockTeamMembers: User[] = [
     {
         id: 'USR-008',
         name: 'Blessing Nwosu',
-        email: 'blessing.nwosu@rcap.gov',
+        email: 'blessing.nwosu@ccip.gov',
         avatarId: 'user8',
         role: 'Field Officer',
         team: 'Ikeja LGA PHC',
@@ -507,7 +508,7 @@ export const mockActivities: Activity[] = [
         location: "Abuja FCT, Municipal Area Council",
         dateCreated: "2025-09-01",
         lastModified: "2025-09-10",
-        description: "Training state officials on using the RCAP platform for data entry and analysis.",
+        description: "Training state officials on using the CCIP platform for data entry and analysis.",
         type: "Training Workshop",
     },
     {
@@ -676,7 +677,7 @@ export const mockNotifications: Notification[] = [
     id: "NOTIF-004",
     type: "System",
     title: "System Update",
-    description: "RCAP has been updated to version 1.1.0.",
+    description: "CCIP has been updated to version 1.1.0.",
     timestamp: "2025-12-09T18:00:00Z",
     isRead: true,
     icon: Info,
@@ -753,8 +754,8 @@ export const mockAnnouncements: Announcement[] = [
         type: 'Platform Update',
         title: 'New Feature: Advanced Reporting',
         content: 'We have launched a new advanced reporting module. You can now generate more detailed analytics and visualizations for your activities. Check out the "Reports" page to explore the new features.',
-        author: 'RCAP Team',
-        organisation: 'RCAP Platform',
+        author: 'CCIP Team',
+        organisation: 'CCIP Platform',
         timestamp: '2025-12-10T10:00:00Z',
         isRead: false,
         priority: 'medium',
@@ -796,9 +797,9 @@ export const mockAnnouncements: Announcement[] = [
         id: 'ANNC-005',
         type: 'Platform Update',
         title: 'Scheduled Maintenance: Dec 15th',
-        content: 'The RCAP platform will be undergoing scheduled maintenance on December 15th from 2:00 AM to 4:00 AM. The platform may be unavailable during this time. We apologize for any inconvenience.',
-        author: 'RCAP Team',
-        organisation: 'RCAP Platform',
+        content: 'The CCIP platform will be undergoing scheduled maintenance on December 15th from 2:00 AM to 4:00 AM. The platform may be unavailable during this time. We apologize for any inconvenience.',
+        author: 'CCIP Team',
+        organisation: 'CCIP Platform',
         timestamp: '2025-12-05T18:00:00Z',
         isRead: true,
         priority: 'low',

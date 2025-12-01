@@ -1,12 +1,12 @@
-# HealthLink RCAP - Risk Communication Activity Platform
+# CCIP - Crisis Communication Intelligence Platform
 
-This is a Next.js starter project for **HealthLink RCAP**, a platform designed to streamline the management and coordination of public health activities. It serves as a central hub for various organizational levels, from federal ministries to local field officers, to plan, execute, and report on health-related initiatives.
+This is a Next.js starter project for **CCIP**, a platform designed to streamline the management and coordination of public health activities. It serves as a central hub for various organizational levels, from federal ministries to local field officers, to plan, execute, and report on health-related initiatives.
 
 The platform is built with a modern tech stack including Next.js, React, ShadCN, and Tailwind CSS, providing a responsive and intuitive user experience.
 
 ## Target Audience
 
-While initially designed for government health bodies, RCAP is flexible enough to be adopted by:
+While initially designed for government health bodies, CCIP is flexible enough to be adopted by:
 
 - **Non-Profit Organisations (NPOs)**: For managing community health programs, grant-funded projects, and volunteer activities.
 - **Civil Society Organisations (CSOs)**: To coordinate grassroots campaigns, awareness drives, and local health initiatives. The platform's structure allows a small CSO to start a movement and later link up with larger organizations for broader impact.
@@ -65,7 +65,7 @@ For the deployed application to connect to your Firebase project (Firestore, Aut
 
 *   `GHCR_PAT`: A GitHub Personal Access Token (PAT) with `write:packages` scope. This is required to allow GitHub Actions to push the Docker image to the GitHub Container Registry.
     *   **How to create**: Go to your `GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens`.
-    *   Create a new token, give it a name (e.g., "RCAP Deploy"), and select your repository.
+    *   Create a new token, give it a name (e.g., "CCIP Deploy"), and select your repository.
     *   Under `Permissions > Repository permissions`, find "Packages" and grant it "Read and Write" access.
     *   Generate the token and copy it into the GitHub secret.
 
@@ -78,7 +78,7 @@ For the deployed application to connect to your Firebase project (Firestore, Aut
 ### Update Placeholders
 
 Before the first deployment, you must replace the placeholder in `docker-compose.yml`:
-*   `<owner>`: Replace this with your GitHub username or organization name (e.g., `ghcr.io/jerryagenyi/rcap-firebase:latest`).
+*   `<owner>`: Replace this with your GitHub username or organization name (e.g., `ghcr.io/jerryagenyi/ccip-firebase:latest`).
 
 ### Docker Hub (Alternative)
 
@@ -87,7 +87,7 @@ If you prefer to use Docker Hub instead of GHCR:
 1.  **Update `.github/workflows/deploy.yml`**:
     *   Comment out the `REGISTRY` and `IMAGE_NAME` variables under the `GHCR CONFIGURATION` section.
     *   Uncomment the variables under the `DOCKER HUB CONFIGURATION` section.
-    *   In the "Log in" step, comment out the `GHCR_PAT` line and uncomment the `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` lines.
+    *   In the "Log in" step, comment out the `GHCR_PAT` line and uncomment the `DOKPLOY_USERNAME` and `DOKPLOY_TOKEN` lines.
 
 2.  **Create Docker Hub Secrets**: Create these secrets in your GitHub repo instead of `GHCR_PAT`:
     *   `DOCKERHUB_USERNAME`: Your Docker Hub username.
