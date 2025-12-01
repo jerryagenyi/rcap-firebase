@@ -41,7 +41,7 @@ export default function ActivityFilters() {
                         </Select>
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="type">Activity Type</Label>
+                        <Label htmlFor="type">Campaign Type</Label>
                         <Select>
                             <SelectTrigger id="type" className="h-12">
                                 <SelectValue placeholder="All Types" />

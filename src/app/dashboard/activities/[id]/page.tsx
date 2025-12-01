@@ -45,11 +45,11 @@ export default function ActivityDetailsPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <Button variant="outline" onClick={() => router.back()}>
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Activities
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Campaigns
         </Button>
         <Link href={`/dashboard/activities/${id}/edit`}>
           <Button variant="gradient">
-            <Edit className="mr-2 h-4 w-4" /> Edit Activity
+            <Edit className="mr-2 h-4 w-4" /> Edit Campaign
           </Button>
         </Link>
       </div>
@@ -60,7 +60,7 @@ export default function ActivityDetailsPage() {
             <div>
               <CardTitle className="text-3xl">{title}</CardTitle>
               <CardDescription>
-                Activity ID: {id}
+                Campaign ID: {id}
               </CardDescription>
             </div>
             <Badge className={`${statusStyles[status]} rounded-lg px-4 py-2`}>{status}</Badge>
@@ -71,7 +71,7 @@ export default function ActivityDetailsPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-primary" />
-                <h4 className="text-lg font-semibold">Activity Details</h4>
+                <h4 className="text-lg font-semibold">Campaign Details</h4>
             </div>
             <dl className="space-y-3 pl-7">
               <ReviewItem label="Organization" value={organization || 'Not provided'} />

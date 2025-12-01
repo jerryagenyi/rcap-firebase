@@ -1,6 +1,5 @@
 
 
-
 import type { LucideIcon } from "lucide-react";
 
 export type NavItem = {
@@ -24,19 +23,32 @@ export type Activity = {
   lastModified: string;
   description: string;
   type: string;
-  // New Semiotic Fields
-  targetContext?: {
+  // Semiotic & Reporting Fields
+  targetContext: {
     region: string;
     language: string;
     culture: string;
   };
-  plannedMessage?: {
+  plannedMessage: {
     content: string;
     channels: string[];
     messengers: string[];
   };
   semioticRiskScore?: number;
   semioticAssessment?: SemioticAssessment | null;
+  communicationEffectiveness?: {
+    understandingScore: number;
+    complianceRate: number;
+    barriersEncountered: string[];
+    messageResonance: "high" | "medium" | "low";
+    culturalAlignment: number;
+  };
+  semioticValidation?: {
+    predictedFailuresValidated: boolean[];
+    recommendationsUsed: string[];
+    actualOutcome: "success" | "partial" | "failure";
+  };
+  humanReviewCompleted?: boolean;
 };
 
 export type User = {
@@ -115,28 +127,50 @@ export type Conversation = {
 };
 
 export type SemioticPattern = {
-    patternId: string;
-    patternType: string;
-    context: {
-        region: string;
-        language: string;
-        culture: string;
-    };
-    failedElement: string;
-    recommendation: string;
-    riskScore: number;
-    confidence: number;
+  patternId: string;
+  patternType: string;
+  context: {
+    region: string;
+    language: string;
+    culture: string;
+  };
+  failedElement: string;
+  recommendation: string;
+  riskScore: number;
+  confidence: number;
 };
 
 export type SemioticAssessment = {
-    predictedFailures: {
-        patternId: string;
-        failedElement: string;
-    }[];
-    recommendations: {
-        recommendation: string;
-        patternId: string;
-    }[];
-    assessedAt: Date;
-    riskScore: number;
+  riskScore: number;
+  confidence: number;
+  predictedFailures: {
+    element: string;
+    issue: string;
+    probability: number;
+    patternId: string;
+  }[];
+  recommendations: {
+    priority: "High" | "Medium" | "Low";
+    suggestion: string;
+    expectedImprovement: number;
+  }[];
+  assessedAt: Date;
+};
+
+export type FieldReport = {
+    activityId: string;
+    reportDate: string;
+    submittedBy: string;
+    communicationEffectiveness: {
+        understandingScore: number;
+        complianceRate: number;
+        barriersEncountered: string[];
+        messageResonance: "high" | "medium" | "low";
+        culturalAlignment: number;
+    };
+    semioticValidation: {
+        predictedFailuresValidated: boolean[];
+        recommendationsUsed: string[];
+        actualOutcome: "success" | "partial" | "failure";
+    };
 };

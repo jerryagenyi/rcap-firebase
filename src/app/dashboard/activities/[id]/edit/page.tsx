@@ -27,7 +27,7 @@ export default function EditActivityPage() {
         </Button>
         <div>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            Edit Activity
+            Edit Campaign
             </h1>
             <p className="text-muted-foreground">
             Update the details for: {activity.title}

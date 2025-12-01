@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -6,13 +7,58 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, FileText, Users } from 'lucide-react';
+import { PlusCircle, FileText, Users, BrainCircuit, ShieldAlert, Badge } from 'lucide-react';
 import MetricCard from '@/components/dashboard/metric-card';
-import { federalDashboardMetrics } from '@/lib/data';
+import { federalDashboardMetrics, mockActivities } from '@/lib/data';
 import PerformanceCharts from '@/components/dashboard/performance-charts';
 import MapCard from '@/components/dashboard/map-card';
 import EmergencyCenter from '@/components/dashboard/emergency-center';
 import RecentActivities from '@/components/dashboard/recent-activities';
+import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
+
+const SemioticRiskOverview = () => {
+    const highRiskActivities = mockActivities.filter(a => (a.semioticRiskScore || 0) > 70).slice(0,3);
+
+    return (
+        <Card>
+            <CardHeader>
+                <div className="flex items-center gap-2">
+                    <BrainCircuit className="h-6 w-6 text-primary" />
+                    <CardTitle>Semiotic Risk Overview</CardTitle>
+                </div>
+                <CardDescription>Campaigns with high communication risk.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                {highRiskActivities.length > 0 ? (
+                    <ul className="space-y-4">
+                        {highRiskActivities.map(activity => (
+                             <li key={activity.id} className="flex items-center gap-4">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-destructive/10 text-destructive font-bold">
+                                    {activity.semioticRiskScore}
+                                </div>
+                                <div className="flex-1">
+                                    <Link href={`/dashboard/activities/${activity.id}`} className="font-semibold text-foreground hover:underline truncate">{activity.title}</Link>
+                                    <p className="text-sm text-muted-foreground">{activity.organization}</p>
+                                </div>
+                                <Badge variant="destructive">High Risk</Badge>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <div className="text-center text-muted-foreground p-4">
+                        <CheckCircle className="mx-auto h-8 w-8 text-green-500" />
+                        <p className="mt-2 font-medium">No high-risk campaigns detected.</p>
+                    </div>
+                )}
+                 <div className="text-sm text-muted-foreground mt-4 pt-4 border-t">
+                    <p>Pattern Database Size: <span className="font-semibold text-foreground">12 Active Patterns</span></p>
+                    <p>Last Assessed: <span className="font-semibold text-foreground">{formatDistanceToNow(new Date(), { addSuffix: true })}</span></p>
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
 
 export default function NationalDashboard() {
   return (
@@ -21,7 +67,7 @@ export default function NationalDashboard() {
         <div className="flex gap-4">
           <Button variant="gradient">
             <PlusCircle />
-            Create Activity
+            Create Campaign
           </Button>
           <Button variant="outline">
             <FileText />
@@ -49,7 +95,8 @@ export default function NationalDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+         <SemioticRiskOverview />
          <EmergencyCenter />
          <RecentActivities />
       </div>

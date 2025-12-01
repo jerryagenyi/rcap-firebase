@@ -42,11 +42,11 @@ export default function ReportsPage() {
         // Activity Trends
         doc.autoTable({
             startY: 62,
-            head: [['Period', 'Activities']],
+            head: [['Period', 'Campaigns']],
             body: reportActivityTrendsMonth.map(item => [item.period, item.activities]),
             didDrawPage: (data: any) => {
               doc.setFontSize(18);
-              doc.text("Monthly Activity Trends", 14, data.cursor.y - 10);
+              doc.text("Monthly Campaign Trends", 14, data.cursor.y - 10);
             }
         });
 
@@ -56,13 +56,13 @@ export default function ReportsPage() {
             body: reportActivityTypes.map(item => [item.name, item.count]),
             didDrawPage: (data: any) => {
               doc.setFontSize(18);
-              doc.text("Activity Type Distribution", 14, data.cursor.y - 10);
+              doc.text("Campaign Type Distribution", 14, data.cursor.y - 10);
             }
         });
 
         // Geographic Distribution
         doc.autoTable({
-            head: [['Location', 'Activity Count']],
+            head: [['Location', 'Campaign Count']],
             body: reportGeographicDistribution.map(item => [item.name, item.count]),
             didDrawPage: (data: any) => {
               doc.setFontSize(18);
@@ -81,7 +81,7 @@ export default function ReportsPage() {
             Reports & Analytics
           </h1>
           <p className="text-muted-foreground">
-            Data-driven insights for your activities.
+            Data-driven insights for your campaigns.
           </p>
         </div>
         <Button variant="gradient" onClick={handleExport}>

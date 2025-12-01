@@ -31,7 +31,7 @@
         },
         "Activity": {
             "title": "Activity",
-            "description": "Represents a health-related activity.",
+            "description": "Represents a health-related activity or campaign.",
             "type": "object",
             "properties": {
                 "title": { "type": "string" },
@@ -42,7 +42,7 @@
                 "lastModified": { "type": "string", "format": "date-time" },
                 "description": { "type": "string" },
                 "type": { "type": "string" },
-                "targetContext": { 
+                "targetContext": {
                     "type": "object",
                     "properties": {
                         "region": { "type": "string" },
@@ -59,14 +59,36 @@
                     }
                 },
                 "semioticRiskScore": { "type": "number" },
-                "semioticAssessment": { 
+                "semioticAssessment": {
                     "type": "object",
                     "properties": {
+                        "assessedAt": { "type": "string", "format": "date-time" },
+                        "riskScore": { "type": "number" },
+                        "confidence": { "type": "number" },
                         "predictedFailures": { "type": "array", "items": { "type": "object" } },
                         "recommendations": { "type": "array", "items": { "type": "object" } },
-                        "assessedAt": { "type": "string", "format": "date-time" }
+                        "appliedRecommendations": { "type": "array", "items": { "type": "string" } }
                     }
-                }
+                },
+                 "communicationEffectiveness": {
+                    "type": "object",
+                    "properties": {
+                        "understandingScore": { "type": "number" },
+                        "complianceRate": { "type": "number" },
+                        "barriersEncountered": { "type": "array", "items": { "type": "string" } },
+                        "messageResonance": { "type": "string", "enum": ["high", "medium", "low"] },
+                        "culturalAlignment": { "type": "number" }
+                    }
+                },
+                "semioticValidation": {
+                    "type": "object",
+                    "properties": {
+                        "predictedFailuresValidated": { "type": "array", "items": { "type": "boolean" } },
+                        "recommendationsUsed": { "type": "array", "items": { "type": "string" } },
+                        "actualOutcome": { "type": "string", "enum": ["success", "partial", "failure"] }
+                    }
+                },
+                 "humanReviewCompleted": { "type": "boolean" }
             },
             "required": ["title", "status", "organization", "dateCreated"]
         },
@@ -106,6 +128,35 @@
                 "confidence": { "type": "number" }
             },
             "required": ["patternId", "patternType", "context", "failedElement", "recommendation", "riskScore"]
+        },
+        "FieldReport": {
+            "title": "Field Report",
+            "description": "Represents a report from the field on communication effectiveness.",
+            "type": "object",
+            "properties": {
+                 "activityId": { "type": "string" },
+                 "reportDate": { "type": "string", "format": "date-time" },
+                 "submittedBy": { "type": "string" },
+                 "communicationEffectiveness": {
+                    "type": "object",
+                    "properties": {
+                        "understandingScore": { "type": "number" },
+                        "complianceRate": { "type": "number" },
+                        "barriersEncountered": { "type": "array", "items": { "type": "string" } },
+                        "messageResonance": { "type": "string", "enum": ["high", "medium", "low"] },
+                        "culturalAlignment": { "type": "number" }
+                    }
+                },
+                "semioticValidation": {
+                    "type": "object",
+                    "properties": {
+                        "predictedFailuresValidated": { "type": "array", "items": { "type": "boolean" } },
+                        "recommendationsUsed": { "type": "array", "items": { "type": "string" } },
+                        "actualOutcome": { "type": "string", "enum": ["success", "partial", "failure"] }
+                    }
+                }
+            },
+            "required": ["activityId", "reportDate", "submittedBy"]
         }
     },
     "auth": {
@@ -118,7 +169,7 @@
         },
         "/activities": {
             "schema": { "$ref": "#/entities/Activity" },
-            "description": "Collection of all activities."
+            "description": "Collection of all activities (campaigns)."
         },
         "/organisations": {
             "schema": { "$ref": "#/entities/Organisation" },
@@ -127,6 +178,10 @@
         "/semiotic_patterns": {
             "schema": { "$ref": "#/entities/SemioticPattern" },
             "description": "Collection of known semiotic risk patterns."
+        },
+        "/field_reports": {
+            "schema": { "$ref": "#/entities/FieldReport" },
+            "description": "Collection of field reports on communication effectiveness."
         }
     }
 }

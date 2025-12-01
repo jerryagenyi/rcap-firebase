@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -12,9 +13,9 @@ export default function DashboardPage() {
   const getGreeting = () => {
     switch(role) {
       case 'federal':
-        return { title: 'National Overview', description: 'Welcome back, here\'s a look at the nation\'s health activities.'};
+        return { title: 'National Overview', description: 'Welcome back, here\'s a look at the nation\'s health campaigns.'};
       case 'state':
-        return { title: 'State Overview (Lagos)', description: 'Welcome back, here\'s a look at your state\'s health activities.'};
+        return { title: 'State Overview (Lagos)', description: 'Welcome back, here\'s a look at your state\'s health campaigns.'};
       case 'lga':
         return { title: 'LGA Dashboard (Ikeja)', description: 'Welcome back, here are your tasks for today.'};
       default:

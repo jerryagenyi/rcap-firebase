@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight, Send, FileText, MapPin, Paperclip, CheckCircle, CalendarIcon, UploadCloud, File, X, Loader2, MessageCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Send, FileText, MapPin, Paperclip, CheckCircle, CalendarIcon, UploadCloud, File, X, Loader2, MessageCircle, AlertCircle } from 'lucide-react';
 import { mockActivities, mockSemioticPatterns } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
@@ -21,6 +21,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import type { Activity, SemioticAssessment } from '@/lib/types';
 import SemioticAssessmentDisplay from './semiotic-assessment-display';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const formSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters.'),
@@ -38,6 +40,7 @@ const formSchema = z.object({
   targetContextLanguage: z.string().optional(),
   targetContextCulture: z.string().optional(),
   targetMessengers: z.array(z.string()).optional(),
+  humanReviewCompleted: z.boolean().default(false),
 }).refine(data => data.endDate >= data.startDate, {
   message: "End date cannot be before start date.",
   path: ["endDate"],
@@ -65,10 +68,10 @@ const statesAndLgas: Record<string, string[]> = {
 };
 const states = Object.keys(statesAndLgas);
 const activityTypes = [...new Set(mockActivities.map(a => a.type))];
-const regions = ['Nigeria', 'UK'];
+const regions = ['Nigeria', 'UK', 'Germany'];
 const languages = ['English', 'Hausa', 'Yoruba', 'Igbo', 'Pidgin'];
-const cultures = ['General Audience', 'Collectivist', 'High Power Distance', 'Youth'];
-const messengers = ['Doctor', 'Government Official', 'Community Leader', 'Celebrity', 'Community Volunteer'];
+const cultures = ['General Audience', 'Collectivist', 'High Power Distance', 'Youth', 'Northern Nigeria, Muslim-majority'];
+const messengers = ['Government Official', 'Community Leader', 'Religious Leader', 'Healthcare Worker', 'Celebrity', 'Community Volunteer'];
 
 
 export function ActivityForm({ mode, activity }: ActivityFormProps) {
@@ -95,6 +98,7 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
       targetContextLanguage: 'English',
       targetContextCulture: 'General Audience',
       targetMessengers: [],
+      humanReviewCompleted: false,
     },
   });
 
@@ -152,18 +156,35 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
     if (matchingPatterns.length > 0) {
         const totalRisk = matchingPatterns.reduce((sum, p) => sum + p.riskScore, 0);
         const avgRisk = Math.round(totalRisk / matchingPatterns.length);
+        const totalConfidence = matchingPatterns.reduce((sum, p) => sum + p.confidence, 0);
+        const avgConfidence = totalConfidence / matchingPatterns.length;
 
         setAssessmentResult({
             riskScore: avgRisk,
-            predictedFailures: matchingPatterns.map(p => ({ patternId: p.patternId, failedElement: p.failedElement })),
-            recommendations: matchingPatterns.map(p => ({ patternId: p.patternId, recommendation: p.recommendation })),
+            confidence: avgConfidence,
+            predictedFailures: matchingPatterns.map(p => ({ 
+                element: p.failedElement,
+                issue: 'Potential cultural mismatch or framing failure.',
+                probability: p.confidence,
+                patternId: p.patternId
+             })),
+            recommendations: matchingPatterns.map(p => ({
+                priority: p.riskScore > 75 ? 'High' : (p.riskScore > 50 ? 'Medium' : 'Low'),
+                suggestion: p.recommendation,
+                expectedImprovement: Math.round(p.riskScore * 0.4)
+            })),
             assessedAt: new Date(),
         });
     } else {
         setAssessmentResult({
-            riskScore: 0,
+            riskScore: 5,
+            confidence: 0.98,
             predictedFailures: [],
-            recommendations: [{ patternId: 'N/A', recommendation: 'No obvious high-risk patterns detected based on current rules. Ensure message is clear, concise, and culturally appropriate.' }],
+            recommendations: [{ 
+                priority: 'Low',
+                suggestion: 'No obvious high-risk patterns detected based on current rules. Ensure message is clear, concise, and reviewed by a local expert.',
+                expectedImprovement: 0
+            }],
             assessedAt: new Date(),
         });
     }
@@ -192,13 +213,13 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
         <CardContent>
           <div className="flex flex-col items-center justify-center p-16 text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
-            <h2 className="text-2xl font-bold">Activity {mode === 'create' ? 'Submitted' : 'Updated'}!</h2>
+            <h2 className="text-2xl font-bold">Campaign {mode === 'create' ? 'Submitted' : 'Updated'}!</h2>
             <p className="text-muted-foreground mt-2">
-              The activity has been successfully {mode === 'create' ? 'created and submitted' : 'updated'}.
+              The campaign has been successfully {mode === 'create' ? 'created and submitted' : 'updated'}.
             </p>
             <div className="mt-8 flex gap-4">
-              <Button variant="outline" onClick={() => router.push('/dashboard/activities/create')}>Create Another Activity</Button>
-              <Button variant="gradient" onClick={() => router.push('/dashboard/activities')}>View All Activities</Button>
+              <Button variant="outline" onClick={() => router.push('/dashboard/activities/create')}>Create Another Campaign</Button>
+              <Button variant="gradient" onClick={() => router.push('/dashboard/activities')}>View All Campaigns</Button>
             </div>
           </div>
         </CardContent>
@@ -213,23 +234,23 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
           <CardHeader>
             <div className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-primary" />
-                <CardTitle>Activity Details</CardTitle>
+                <CardTitle>Campaign Details</CardTitle>
             </div>
-            <CardDescription>Provide the core information about the activity.</CardDescription>
+            <CardDescription>Provide the core information about the campaign.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <FormField control={form.control} name="title" render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Activity Title</FormLabel>
+                  <FormLabel>Campaign Title</FormLabel>
                   <FormControl><Input placeholder="e.g., Statewide Vaccination Drive" {...field} /></FormControl>
                   <FormMessage />
                 </FormItem>
             )} />
             <FormField control={form.control} name="type" render={({ field }) => (
               <FormItem>
-                <FormLabel>Activity Type</FormLabel>
+                <FormLabel>Campaign Type</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl><SelectTrigger><SelectValue placeholder="Select an activity type" /></SelectTrigger></FormControl>
+                  <FormControl><SelectTrigger><SelectValue placeholder="Select a campaign type" /></SelectTrigger></FormControl>
                   <SelectContent>{activityTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}</SelectContent>
                 </Select>
                 <FormMessage />
@@ -251,7 +272,7 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
                 <MapPin className="h-5 w-5 text-primary" />
                 <CardTitle>Logistics</CardTitle>
             </div>
-            <CardDescription>Specify the location and duration of the activity.</CardDescription>
+            <CardDescription>Specify the location and duration of the campaign.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -320,7 +341,7 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
                     <MessageCircle className="h-5 w-5 text-primary" />
                     <CardTitle>Communication Strategy &amp; Semiotic Analysis</CardTitle>
                 </div>
-                <CardDescription>Define your message and assess its potential risk.</CardDescription>
+                <CardDescription>Define your message and assess its potential risk before deployment.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                  <FormField control={form.control} name="plannedMessage" render={({ field }) => (
@@ -364,7 +385,7 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
                         </FormItem>
                     )} />
                 </div>
-                 <Button type="button" onClick={handleAssessRisk} disabled={isAssessing} className="w-full md:w-auto">
+                 <Button type="button" onClick={handleAssessRisk} disabled={isAssessing} className="w-full md:w-auto" size="lg">
                     {isAssessing ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Assessing...</> : 'Assess Semiotic Risk'}
                 </Button>
                 
@@ -416,25 +437,61 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
           </CardContent>
         </Card>
 
-        <div className="flex justify-end gap-4">
-            <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSubmitting}>Cancel</Button>
-            <Button type="button" variant="secondary" disabled={isSubmitting}>Save as Draft</Button>
-            <Button type="submit" variant="gradient" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                <>
-                  {mode === 'create' ? 'Submit for Approval' : 'Save Changes'} <Send className="ml-2" />
-                </>
-              )}
-            </Button>
-        </div>
+        <Card>
+            <CardHeader>
+                <CardTitle>Submission &amp; Review</CardTitle>
+                <CardDescription>Final checks before submitting your campaign for approval.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>EU AI Act Compliance</AlertTitle>
+                    <AlertDescription>
+                        AI-powered assessments are for informational purposes. Human review and approval are required before deployment.
+                    </AlertDescription>
+                </Alert>
+                <FormField
+                    control={form.control}
+                    name="humanReviewCompleted"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 mt-6">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                                <FormLabel>
+                                    Confirm Human Review
+                                </FormLabel>
+                                <FormDescription>
+                                    I confirm that this communication strategy and its AI assessment have been reviewed by a human expert.
+                                </FormDescription>
+                                <FormMessage />
+                            </div>
+                        </FormItem>
+                    )}
+                />
+            </CardContent>
+             <CardFooter className="flex justify-end gap-4 border-t pt-6">
+                <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSubmitting}>Cancel</Button>
+                <Button type="button" variant="secondary" disabled={isSubmitting}>Save as Draft</Button>
+                <Button type="submit" variant="gradient" disabled={isSubmitting}>
+                {isSubmitting ? (
+                    <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                    </>
+                ) : (
+                    <>
+                    {mode === 'create' ? 'Submit for Approval' : 'Save Changes'} <Send className="ml-2" />
+                    </>
+                )}
+                </Button>
+            </CardFooter>
+        </Card>
       </form>
     </Form>
   );
 }
-
-    

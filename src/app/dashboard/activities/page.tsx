@@ -77,16 +77,16 @@ export default function ActivitiesPage() {
       <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            Activity Management
+            Campaign Management
           </h1>
           <p className="text-muted-foreground">
-            {filteredActivities.length} activities
+            {filteredActivities.length} campaigns
           </p>
         </div>
         <Button asChild variant="gradient">
           <Link href="/dashboard/activities/create">
             <PlusCircle />
-            Create
+            Create Campaign
           </Link>
         </Button>
       </div>
@@ -95,7 +95,7 @@ export default function ActivitiesPage() {
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="Search activities, organizations, locations..."
+            placeholder="Search campaigns, organizations, locations..."
             className="h-12 pl-12 w-full"
             value={searchQuery}
             onChange={(e) => {
@@ -113,9 +113,9 @@ export default function ActivitiesPage() {
             </SheetTrigger>
             <SheetContent className="w-full sm:max-w-md p-0">
                 <SheetHeader className="p-6 pb-0">
-                    <SheetTitle>Filter Activities</SheetTitle>
+                    <SheetTitle>Filter Campaigns</SheetTitle>
                     <SheetDescription>
-                        Refine your activity list using the filters below.
+                        Refine your campaign list using the filters below.
                     </SheetDescription>
                 </SheetHeader>
                 <ActivityFilters />
@@ -157,12 +157,12 @@ export default function ActivitiesPage() {
         <Card className="flex items-center justify-center p-16 col-span-full border-dashed">
             <div className="text-center">
                 <ClipboardList className="mx-auto h-12 w-12 text-muted-foreground" />
-                <h3 className="mt-4 text-lg font-semibold">No activities found</h3>
-                <p className="text-muted-foreground mt-1">Try adjusting your search or filters, or create a new activity.</p>
+                <h3 className="mt-4 text-lg font-semibold">No campaigns found</h3>
+                <p className="text-muted-foreground mt-1">Try adjusting your search or filters, or create a new campaign.</p>
                 <Button asChild variant="gradient" className="mt-6">
                     <Link href="/dashboard/activities/create">
                         <PlusCircle className="mr-2" />
-                        Create Activity
+                        Create Campaign
                     </Link>
                 </Button>
             </div>
@@ -180,7 +180,7 @@ export default function ActivitiesPage() {
             setCurrentPage(1);
         }}
         totalItems={filteredActivities.length}
-        itemName="activities"
+        itemName="campaigns"
        />
     </div>
   );

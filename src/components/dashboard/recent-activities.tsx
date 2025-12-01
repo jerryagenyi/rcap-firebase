@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { mockActivities } from "@/lib/data";
@@ -21,8 +22,8 @@ export default function RecentActivities() {
         <Card>
             <CardHeader className="flex flex-row items-center justify-between">
                 <div>
-                    <CardTitle>Recent Activities</CardTitle>
-                    <CardDescription>A summary of the latest activities.</CardDescription>
+                    <CardTitle>Recent Campaigns</CardTitle>
+                    <CardDescription>A summary of the latest campaigns.</CardDescription>
                 </div>
                 <Button variant="outline" size="sm" asChild>
                     <Link href="/dashboard/activities">

@@ -13,7 +13,7 @@ export default function ActivityTypeDistribution() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Activity Type Distribution</CardTitle>
+                <CardTitle>Campaign Type Distribution</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">

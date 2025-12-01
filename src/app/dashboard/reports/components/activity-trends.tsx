@@ -46,7 +46,7 @@ export default function ActivityTrends() {
     return (
         <Card>
             <CardHeader className="flex-row items-center justify-between">
-                <CardTitle>Activity Trends</CardTitle>
+                <CardTitle>Campaign Trends</CardTitle>
                  <Tabs defaultValue="week" className="w-auto">
                     <TabsList>
                         <TabsTrigger value="week">Week</TabsTrigger>

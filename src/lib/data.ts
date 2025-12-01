@@ -1,7 +1,4 @@
 
-
-
-
 import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation, SemioticPattern } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -171,7 +168,7 @@ export const futureNavItems: NavItem[] = [
 
 export const federalDashboardMetrics = [
   {
-    title: "Total Activities",
+    title: "Total Campaigns",
     value: "1,247",
     trend: "+12% this month",
     icon: ClipboardList,
@@ -205,7 +202,7 @@ export const federalDashboardMetrics = [
 
 export const stateDashboardMetrics = [
   {
-    title: "State Activities",
+    title: "State Campaigns",
     value: "182",
     trend: "+8% this month",
     icon: ClipboardList,
@@ -239,7 +236,7 @@ export const stateDashboardMetrics = [
 
 export const lgaDashboardMetrics = [
   {
-    title: "My Assigned Activities",
+    title: "My Assigned Campaigns",
     value: "8",
     trend: "3 starting this week",
     icon: ClipboardList,
@@ -477,6 +474,9 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-06-30",
         description: "Development and oversight of the national strategy for COVID-19 vaccine distribution and administration across all states.",
         type: "Policy & Strategy",
+        semioticRiskScore: 15,
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-002",
@@ -488,6 +488,9 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-11-06",
         description: "A national-level workshop to train state coordinators on the latest cholera prevention and control protocols.",
         type: "Training Workshop",
+        semioticRiskScore: 25,
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-010",
@@ -499,6 +502,9 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-12-01",
         description: "A public seminar to raise awareness about preventing NCDs like diabetes and hypertension.",
         type: "Health Education",
+        semioticRiskScore: 85,
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
      {
         id: "ACT-011",
@@ -510,6 +516,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-09-10",
         description: "Training state officials on using the CCIP platform for data entry and analysis.",
         type: "Training Workshop",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-016",
@@ -521,6 +529,9 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-12-20",
         description: "Internal review of the existing national health policy to identify gaps and areas for improvement.",
         type: "Policy Review",
+        semioticRiskScore: 72,
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
 
     // Lagos State MOH Activities (3)
@@ -534,6 +545,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-12-01",
         description: "Third phase of the statewide COVID-19 vaccination drive, targeting remaining unvaccinated populations.",
         type: "Vaccination Campaign",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
      {
         id: "ACT-007",
@@ -545,6 +558,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-08-30",
         description: "A month-long campaign in primary schools across Epe to promote effective handwashing techniques.",
         type: "Health Education",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-012",
@@ -556,6 +571,9 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-12-15",
         description: "A workshop focused on improving maternal and child health outcomes at the primary care level.",
         type: "Training Workshop",
+        semioticRiskScore: 45,
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
 
     // Ikeja LGA PHC Activities (2)
@@ -569,6 +587,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-11-19",
         description: "Health education and free health screenings conducted at the main market.",
         type: "Outreach",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-I02",
@@ -580,6 +600,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-11-25",
         description: "Home visits to follow up on children who missed their routine immunization schedules.",
         type: "Immunization",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     
     // HealthForAll Foundation (NGO) Activities (3)
@@ -593,6 +615,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-10-12",
         description: "Distribution of nutritional supplements and health education in camps for internally displaced persons.",
         type: "Nutrition",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-HFA02",
@@ -604,6 +628,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-09-30",
         description: "A 3-month project involving ITN distribution and community sensitization on malaria prevention.",
         type: "Outreach",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-HFA03",
@@ -615,6 +641,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-11-20",
         description: "Proposal for a mobile clinic to provide basic healthcare services to remote villages in Gezawa LGA.",
         type: "Outreach",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
 
     // Community Action for Health (CSO) Activities (2)
@@ -628,6 +656,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-09-06",
         description: "Facilitated discussions with community leaders to address concerns and misinformation about vaccines.",
         type: "Advocacy",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
     {
         id: "ACT-CAH02",
@@ -639,6 +669,8 @@ export const mockActivities: Activity[] = [
         lastModified: "2025-11-05",
         description: "Volunteers testing community water sources for contaminants and reporting findings to the state MOH.",
         type: "Surveillance",
+        targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
+        plannedMessage: { content: '', channels: [], messengers: [] },
     },
 ];
 
@@ -646,8 +678,8 @@ export const mockNotifications: Notification[] = [
   {
     id: "NOTIF-001",
     type: "Approval",
-    title: "Activity Approved",
-    description: "Your activity 'Cholera Prevention Training Workshop' has been approved.",
+    title: "Campaign Approved",
+    description: "Your campaign 'Cholera Prevention Training Workshop' has been approved.",
     timestamp: "2025-12-11T10:00:00Z",
     isRead: false,
     icon: FileCheck2,
@@ -696,23 +728,23 @@ export const mockNotifications: Notification[] = [
 ];
 
 export const reportActivityTrendsWeek = [
-    { period: 'Week 1', activities: '85 activities', date: 'Jan 1-7', progress: 85 },
-    { period: 'Week 2', activities: '92 activities', date: 'Jan 8-14', progress: 92 },
-    { period: 'Week 3', activities: '78 activities', date: 'Jan 15-21', progress: 78 },
-    { period: 'Week 4', activities: '95 activities', date: 'Jan 22-28', progress: 95 },
+    { period: 'Week 1', activities: '85 campaigns', date: 'Jan 1-7', progress: 85 },
+    { period: 'Week 2', activities: '92 campaigns', date: 'Jan 8-14', progress: 92 },
+    { period: 'Week 3', activities: '78 campaigns', date: 'Jan 15-21', progress: 78 },
+    { period: 'Week 4', activities: '95 campaigns', date: 'Jan 22-28', progress: 95 },
 ];
 
 export const reportActivityTrendsMonth = [
-    { period: 'January', activities: '340 activities', date: 'Month view', progress: 85 },
-    { period: 'February', activities: '368 activities', date: 'Month view', progress: 92 },
-    { period: 'March', activities: '312 activities', date: 'Month view', progress: 78 },
-    { period: 'April', activities: '380 activities', date: 'Month view', progress: 95 },
+    { period: 'January', activities: '340 campaigns', date: 'Month view', progress: 85 },
+    { period: 'February', activities: '368 campaigns', date: 'Month view', progress: 92 },
+    { period: 'March', activities: '312 campaigns', date: 'Month view', progress: 78 },
+    { period: 'April', activities: '380 campaigns', date: 'Month view', progress: 95 },
 ];
 
 export const reportActivityTrendsYear = [
-    { period: '2023', activities: '4080 activities', date: 'Year view', progress: 85 },
-    { period: '2024', activities: '4416 activities', date: 'Year view', progress: 92 },
-    { period: '2025', 'activities': '3744 activities', date: 'Year view', progress: 78 },
+    { period: '2023', activities: '4080 campaigns', date: 'Year view', progress: 85 },
+    { period: '2024', activities: '4416 campaigns', date: 'Year view', progress: 92 },
+    { period: '2025', 'activities': '3744 campaigns', date: 'Year view', progress: 78 },
 ];
 
 
@@ -745,7 +777,7 @@ export const reportGeographicDistribution = [
 export const reportTemplates = [
     { id: 'weekly-summary', name: 'Weekly Summary', description: 'A snapshot of the week\'s performance.', icon: Calendar },
     { id: 'monthly-report', name: 'Monthly Report', description: 'A comprehensive monthly review.', icon: FileText },
-    { id: 'performance-analysis', name: 'Performance Analysis', description: 'Deep-dive into activity trends.', icon: TrendingUp },
+    { id: 'performance-analysis', name: 'Performance Analysis', description: 'Deep-dive into campaign trends.', icon: TrendingUp },
 ];
 
 export const mockAnnouncements: Announcement[] = [
@@ -753,7 +785,7 @@ export const mockAnnouncements: Announcement[] = [
         id: 'ANNC-001',
         type: 'Platform Update',
         title: 'New Feature: Advanced Reporting',
-        content: 'We have launched a new advanced reporting module. You can now generate more detailed analytics and visualizations for your activities. Check out the "Reports" page to explore the new features.',
+        content: 'We have launched a new advanced reporting module. You can now generate more detailed analytics and visualizations for your campaigns. Check out the "Reports" page to explore the new features.',
         author: 'CCIP Team',
         organisation: 'CCIP Platform',
         timestamp: '2025-12-10T10:00:00Z',
@@ -786,7 +818,7 @@ export const mockAnnouncements: Announcement[] = [
         id: 'ANNC-004',
         type: 'LGA Update',
         title: 'Ikeja LGA: Weekly Report Submission Deadline',
-        content: 'This is a reminder that the deadline for weekly activity reports is Friday at 5:00 PM. Please ensure all your reports are submitted on time to avoid delays in data compilation.',
+        content: 'This is a reminder that the deadline for weekly campaign reports is Friday at 5:00 PM. Please ensure all your reports are submitted on time to avoid delays in data compilation.',
         author: 'Ikeja LGA Admin',
         organisation: 'Ikeja LGA PHC',
         timestamp: '2025-12-07T11:00:00Z',
@@ -863,7 +895,7 @@ export const mockConversations: Conversation[] = [
              {
                 id: 'MSG-003-1',
                 sender: { name: 'Fatima Bello', avatarId: 'user4' },
-                content: 'Hi all, a reminder that the Q4 reports are due next Friday. Please ensure all activity data is up to date.',
+                content: 'Hi all, a reminder that the Q4 reports are due next Friday. Please ensure all campaign data is up to date.',
                 timestamp: '2025-12-10T11:20:00Z',
             },
         ],
@@ -871,44 +903,43 @@ export const mockConversations: Conversation[] = [
 ];
 
 export const mockSemioticPatterns: SemioticPattern[] = [
-  {
-    patternId: 'IF-042',
-    patternType: 'framing_failure',
-    context: {
-      region: 'Nigeria',
-      language: 'English',
-      culture: 'Collectivist',
+    {
+        patternId: 'IF-042',
+        patternType: 'framing_failure',
+        context: {
+            region: 'Nigeria',
+            language: 'English',
+            culture: 'Collectivist',
+        },
+        failedElement: 'protect yourself',
+        recommendation: 'Reframe as "protect your family" or "protect your community" to align with collectivist values.',
+        riskScore: 65,
+        confidence: 0.85,
     },
-    failedElement: 'protect yourself',
-    recommendation: 'Reframe as "protect your family" or "protect your community" to align with collectivist values.',
-    riskScore: 65,
-    confidence: 0.85,
-  },
-  {
-    patternId: 'TT-011',
-    patternType: 'technical_terminology_failure',
-    context: {
-      region: 'Any',
-      language: 'Any',
-      culture: 'General Audience',
+    {
+        patternId: 'TT-011',
+        patternType: 'technical_terminology_failure',
+        context: {
+            region: 'Any',
+            language: 'Any',
+            culture: 'General Audience',
+        },
+        failedElement: 'viral shedding',
+        recommendation: 'Replace with simpler, more accessible language like "when you can pass the virus to others".',
+        riskScore: 40,
+        confidence: 0.95,
     },
-    failedElement: 'viral shedding',
-    recommendation: 'Replace with simpler, more accessible language like "when you can pass the virus to others".',
-    riskScore: 40,
-    confidence: 0.95,
-  },
-  {
-    patternId: 'AM-003',
-    patternType: 'authority_mismatch',
-    context: {
-      region: 'Nigeria',
-      language: 'Any',
-      culture: 'High Power Distance',
+    {
+        patternId: 'AM-003',
+        patternType: 'authority_mismatch',
+        context: {
+            region: 'Nigeria',
+            language: 'Any',
+            culture: 'High Power Distance',
+        },
+        failedElement: 'community volunteer',
+        recommendation: 'For critical health directives, the primary messenger should be a recognized authority figure like a doctor or government health official. Use volunteers for support and logistics.',
+        riskScore: 80,
+        confidence: 0.90,
     },
-    failedElement: 'community volunteer',
-    recommendation: 'For critical health directives, the primary messenger should be a recognized authority figure like a doctor or government health official. Use volunteers for support and logistics.',
-    riskScore: 80,
-    confidence: 0.90,
-  },
 ];
-    

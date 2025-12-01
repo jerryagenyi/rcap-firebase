@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, XAxis, YAxis } from "recharts"
@@ -22,7 +23,7 @@ export default function PerformanceCharts() {
     <Card className="h-full">
       <CardHeader>
         <CardTitle>Performance Trends</CardTitle>
-        <CardDescription>An overview of activity creation and completion over time.</CardDescription>
+        <CardDescription>An overview of campaign creation and completion over time.</CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="overview">
