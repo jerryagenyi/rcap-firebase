@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, ListFilter, Search, Trash2 } from "lucide-react";
+import { PlusCircle, ListFilter, Search, Trash2, ClipboardList } from "lucide-react";
 import { mockActivities } from "@/lib/data";
 import ActivitiesList from "./components/activities-data-table";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 
 export default function ActivitiesPage() {
@@ -143,14 +144,31 @@ export default function ActivitiesPage() {
           </div>
         </div>
       )}
+      
+      {paginatedActivities.length > 0 ? (
+        <ActivitiesList 
+          data={paginatedActivities}
+          selectedActivities={selectedActivities}
+          onSelectActivity={handleSelectActivity}
+          onSelectAll={handleSelectAll}
+          allOnPageSelected={allOnPageSelected}
+        />
+      ) : (
+        <Card className="flex items-center justify-center p-16 col-span-full border-dashed">
+            <div className="text-center">
+                <ClipboardList className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-semibold">No activities found</h3>
+                <p className="text-muted-foreground mt-1">Try adjusting your search or filters, or create a new activity.</p>
+                <Button asChild variant="gradient" className="mt-6">
+                    <Link href="/dashboard/activities/create">
+                        <PlusCircle className="mr-2" />
+                        Create Activity
+                    </Link>
+                </Button>
+            </div>
+        </Card>
+      )}
 
-      <ActivitiesList 
-        data={paginatedActivities}
-        selectedActivities={selectedActivities}
-        onSelectActivity={handleSelectActivity}
-        onSelectAll={handleSelectAll}
-        allOnPageSelected={allOnPageSelected}
-      />
 
        <PaginationControls
         currentPage={currentPage}

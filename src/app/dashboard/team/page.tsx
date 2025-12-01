@@ -430,32 +430,48 @@ export default function TeamPage() {
                 </div>
             </div>
         )}
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {paginatedMembers.map((member) => (
-          <TeamMemberCard 
-            key={member.id} 
-            member={member} 
-            isSelected={selectedMembers.includes(member.id)}
-            onSelect={handleSelectMember}
-          />
-        ))}
-      </div>
-      
-      <PaginationControls
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-        itemsPerPage={itemsPerPage}
-        onItemsPerPageChange={(value) => {
-            setItemsPerPage(Number(value));
-            setCurrentPage(1);
-        }}
-        totalItems={filteredMembers.length}
-        itemName="members"
-        itemsPerPageOptions={[8, 12, 16]}
-       />
-
+      {paginatedMembers.length > 0 ? (
+        <>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {paginatedMembers.map((member) => (
+                <TeamMemberCard 
+                    key={member.id} 
+                    member={member} 
+                    isSelected={selectedMembers.includes(member.id)}
+                    onSelect={handleSelectMember}
+                />
+                ))}
+            </div>
+            
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                onItemsPerPageChange={(value) => {
+                    setItemsPerPage(Number(value));
+                    setCurrentPage(1);
+                }}
+                totalItems={filteredMembers.length}
+                itemName="members"
+                itemsPerPageOptions={[8, 12, 16]}
+            />
+        </>
+      ) : (
+        <Card className="flex items-center justify-center p-16 col-span-full border-dashed">
+            <div className="text-center">
+                <Users className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-semibold">No team members found</h3>
+                <p className="text-muted-foreground mt-1">Try adjusting your search, or invite a new member.</p>
+                <Button asChild variant="gradient" className="mt-6">
+                    <Link href="/dashboard/team">
+                        <UserPlus className="mr-2" />
+                        Invite Member
+                    </Link>
+                </Button>
+            </div>
+        </Card>
+      )}
     </div>
   );
 }

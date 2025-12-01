@@ -55,6 +55,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Card } from '@/components/ui/card';
 
 
 const statusStyles: Record<Organisation['status'], string> = {
@@ -298,136 +299,146 @@ export default function OrganisationsPage() {
             </div>
         )}
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[50px]">
-                <Checkbox 
-                    onCheckedChange={handleSelectAll}
-                    checked={allOnPageSelected || someOnPageSelected}
-                    data-state={someOnPageSelected ? 'indeterminate' : (allOnPageSelected ? 'checked' : 'unchecked')}
-                />
-              </TableHead>
-              <TableHead>Organisation</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Level</TableHead>
-              <TableHead>Members</TableHead>
-              <TableHead>Activities</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Parent Organisation</TableHead>
-              <TableHead>
-                <span className="sr-only">Actions</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paginatedOrganisations.map((org) => (
-              <TableRow key={org.id} data-state={selectedOrgs.includes(org.id) ? 'selected' : ''}>
-                <TableCell>
-                    <Checkbox
-                        checked={selectedOrgs.includes(org.id)}
-                        onCheckedChange={(checked) => handleSelectOrg(org.id, !!checked)}
-                    />
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-muted rounded-md">
-                        <Building className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <Link href={`/dashboard/organisations/${org.id}`} className="font-medium text-foreground hover:underline">{org.name}</Link>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="secondary">{org.category}</Badge>
-                </TableCell>
-                <TableCell>{org.level}</TableCell>
-                <TableCell>{org.members}</TableCell>
-                <TableCell>{org.activities}</TableCell>
-                <TableCell>
-                  <Badge className={statusStyles[org.status]}>{org.status}</Badge>
-                </TableCell>
-                <TableCell>{org.parent || 'N/A'}</TableCell>
-                <TableCell>
-                   <Dialog>
-                    <AlertDialog>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
-                                <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                                <Link href={`/dashboard/organisations/${org.id}`}>View Details</Link>
-                            </DropdownMenuItem>
-                             <DropdownMenuItem asChild>
-                                <Link href={`/dashboard/organisations/${org.id}/edit`}>Edit Organisation</Link>
-                            </DropdownMenuItem>
-                            {!org.parent ? (
-                                <DialogTrigger asChild>
-                                    <DropdownMenuItem>
-                                        <LinkIcon className="mr-2 h-4 w-4" />
-                                        <span>Link to Parent</span>
+        {paginatedOrganisations.length > 0 ? (
+          <>
+            <div className="rounded-lg border">
+                <Table>
+                <TableHeader>
+                    <TableRow>
+                    <TableHead className="w-[50px]">
+                        <Checkbox 
+                            onCheckedChange={handleSelectAll}
+                            checked={allOnPageSelected || someOnPageSelected}
+                            data-state={someOnPageSelected ? 'indeterminate' : (allOnPageSelected ? 'checked' : 'unchecked')}
+                        />
+                    </TableHead>
+                    <TableHead>Organisation</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Level</TableHead>
+                    <TableHead>Members</TableHead>
+                    <TableHead>Activities</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Parent Organisation</TableHead>
+                    <TableHead>
+                        <span className="sr-only">Actions</span>
+                    </TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {paginatedOrganisations.map((org) => (
+                    <TableRow key={org.id} data-state={selectedOrgs.includes(org.id) ? 'selected' : ''}>
+                        <TableCell>
+                            <Checkbox
+                                checked={selectedOrgs.includes(org.id)}
+                                onCheckedChange={(checked) => handleSelectOrg(org.id, !!checked)}
+                            />
+                        </TableCell>
+                        <TableCell>
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-muted rounded-md">
+                                <Building className="h-5 w-5 text-muted-foreground" />
+                            </div>
+                            <Link href={`/dashboard/organisations/${org.id}`} className="font-medium text-foreground hover:underline">{org.name}</Link>
+                        </div>
+                        </TableCell>
+                        <TableCell>
+                        <Badge variant="secondary">{org.category}</Badge>
+                        </TableCell>
+                        <TableCell>{org.level}</TableCell>
+                        <TableCell>{org.members}</TableCell>
+                        <TableCell>{org.activities}</TableCell>
+                        <TableCell>
+                        <Badge className={statusStyles[org.status]}>{org.status}</Badge>
+                        </TableCell>
+                        <TableCell>{org.parent || 'N/A'}</TableCell>
+                        <TableCell>
+                        <Dialog>
+                            <AlertDialog>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" className="h-8 w-8 p-0">
+                                        <span className="sr-only">Open menu</span>
+                                        <MoreHorizontal className="h-4 w-4" />
+                                    </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                    <DropdownMenuItem asChild>
+                                        <Link href={`/dashboard/organisations/${org.id}`}>View Details</Link>
                                     </DropdownMenuItem>
-                                </DialogTrigger>
-                            ) : (
-                                <AlertDialogTrigger asChild>
-                                    <DropdownMenuItem>
-                                        <Link2Off className="mr-2 h-4 w-4" />
-                                        <span>Unlink from Parent</span>
+                                    <DropdownMenuItem asChild>
+                                        <Link href={`/dashboard/organisations/${org.id}/edit`}>Edit Organisation</Link>
                                     </DropdownMenuItem>
-                                </AlertDialogTrigger>
-                            )}
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                Suspend
-                            </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                        <LinkOrganisationDialog organisation={org} />
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This will permanently unlink the <span className="font-bold text-foreground">{org.name}</span> organisation from its parent. This action cannot be undone.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
-                                    Yes, unlink organisation
-                                </AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                    </Dialog>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-
-      {paginatedOrganisations.length > 0 ? (
-        <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            itemsPerPage={itemsPerPage}
-            onItemsPerPageChange={(value) => {
-                setItemsPerPage(Number(value));
-                setCurrentPage(1);
-            }}
-            totalItems={filteredOrganisations.length}
-            itemName="organisations"
-        />
-        ) : (
-        <div className="text-center p-8 border rounded-lg">
-            <h3 className="font-semibold">No organisations found</h3>
-            <p className="text-sm text-muted-foreground">Try adjusting your search or filters.</p>
-        </div>
+                                    {!org.parent ? (
+                                        <DialogTrigger asChild>
+                                            <DropdownMenuItem>
+                                                <LinkIcon className="mr-2 h-4 w-4" />
+                                                <span>Link to Parent</span>
+                                            </DropdownMenuItem>
+                                        </DialogTrigger>
+                                    ) : (
+                                        <AlertDialogTrigger asChild>
+                                            <DropdownMenuItem>
+                                                <Link2Off className="mr-2 h-4 w-4" />
+                                                <span>Unlink from Parent</span>
+                                            </DropdownMenuItem>
+                                        </AlertDialogTrigger>
+                                    )}
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                        Suspend
+                                    </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                <LinkOrganisationDialog organisation={org} />
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This will permanently unlink the <span className="font-bold text-foreground">{org.name}</span> organisation from its parent. This action cannot be undone.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+                                            Yes, unlink organisation
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                            </Dialog>
+                        </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+            </div>
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                onItemsPerPageChange={(value) => {
+                    setItemsPerPage(Number(value));
+                    setCurrentPage(1);
+                }}
+                totalItems={filteredOrganisations.length}
+                itemName="organisations"
+            />
+          </>
+      ) : (
+        <Card className="flex items-center justify-center p-16 col-span-full border-dashed">
+            <div className="text-center">
+                <Building className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-semibold">No organisations found</h3>
+                <p className="text-muted-foreground mt-1">Try adjusting your search or filters, or add a new organisation.</p>
+                <Button asChild variant="gradient" className="mt-6">
+                    <Link href="/dashboard/organisations/create">
+                        <PlusCircle className="mr-2" />
+                        Add Organisation
+                    </Link>
+                </Button>
+            </div>
+        </Card>
       )}
     </div>
   );

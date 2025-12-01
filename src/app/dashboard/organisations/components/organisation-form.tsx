@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CheckCircle, Building, Link2, Send } from 'lucide-react';
+import { CheckCircle, Building, Link2, Send, Loader2 } from 'lucide-react';
 import { mockOrganisations } from '@/lib/data';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -47,6 +47,7 @@ const levels: OrganisationLevel[] = ['Federal', 'State', 'LGA'];
 export function OrganisationForm({ mode, organisation }: OrganisationFormProps) {
     const router = useRouter();
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -67,8 +68,12 @@ export function OrganisationForm({ mode, organisation }: OrganisationFormProps) 
     });
 
     const onSubmit = (data: z.infer<typeof formSchema>) => {
+        setIsSubmitting(true);
         console.log("Submitting form data:", data);
-        setIsSubmitted(true);
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setIsSubmitted(true);
+        }, 1500);
     };
 
     if (isSubmitted) {
@@ -169,9 +174,18 @@ export function OrganisationForm({ mode, organisation }: OrganisationFormProps) 
 
 
         <div className="flex justify-end gap-4">
-            <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
-            <Button type="submit" variant="gradient">
-              {mode === 'create' ? 'Create Organisation' : 'Save Changes'} <Send className="ml-2" />
+            <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSubmitting}>Cancel</Button>
+            <Button type="submit" variant="gradient" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  {mode === 'create' ? 'Create Organisation' : 'Save Changes'} <Send className="ml-2" />
+                </>
+              )}
             </Button>
         </div>
       </form>

@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Search, ExternalLink } from 'lucide-react';
+import { Search, ExternalLink, Megaphone } from 'lucide-react';
 import { mockAnnouncements } from '@/lib/data';
 import type { Announcement, AnnouncementType } from '@/lib/types';
 import { announcementStyles } from '@/lib/config';
@@ -64,7 +64,7 @@ export default function AnnouncementsPage() {
 
         // Filter by tab
         if (activeTab !== 'all') {
-            announcements = announcements.filter(a => a.type.toLowerCase().replace(' ', '-') === activeTab);
+            announcements = announcements.filter(a => a.type.toLowerCase().replace(/ /g, '-') === activeTab);
         }
 
         // Filter by search query
@@ -84,7 +84,7 @@ export default function AnnouncementsPage() {
                 }
             }
             if (sortOrder === 'priority') {
-                const priorityOrder = { high: 0, medium: 1, low: 2 };
+                const priorityOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
                 return priorityOrder[a.priority] - priorityOrder[b.priority];
             }
             // Default to newest first
@@ -123,7 +123,7 @@ export default function AnnouncementsPage() {
                 <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                     <TabsList className="grid w-full grid-cols-2 h-auto md:w-auto md:grid-cols-5">
                         {tabs.map(tab => (
-                             <TabsTrigger key={tab.value} value={tab.value.toLowerCase().replace(' ', '-')}>{tab.label}</TabsTrigger>
+                             <TabsTrigger key={tab.value} value={tab.value.toLowerCase().replace(/ /g, '-')}>{tab.label}</TabsTrigger>
                         ))}
                     </TabsList>
                     <div className="flex gap-4 w-full md:w-auto">
@@ -149,7 +149,7 @@ export default function AnnouncementsPage() {
                     </div>
                 </div>
 
-                <TabsContent value={activeTab.toLowerCase().replace(' ', '-')} className="mt-8">
+                <TabsContent value={activeTab.toLowerCase().replace(/ /g, '-')} className="mt-8">
                     {paginatedAnnouncements.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {paginatedAnnouncements.map(announcement => (
@@ -157,10 +157,11 @@ export default function AnnouncementsPage() {
                             ))}
                         </div>
                     ) : (
-                        <Card className="flex items-center justify-center p-16 col-span-full">
+                        <Card className="flex items-center justify-center p-16 col-span-full border-dashed">
                             <div className="text-center">
-                                <p className="text-lg font-semibold">No announcements found</p>
-                                <p className="text-muted-foreground">Try adjusting your search or filters.</p>
+                                <Megaphone className="mx-auto h-12 w-12 text-muted-foreground" />
+                                <h3 className="mt-4 text-lg font-semibold">No announcements found</h3>
+                                <p className="text-muted-foreground mt-1">Try adjusting your search or filters.</p>
                             </div>
                         </Card>
                     )}
