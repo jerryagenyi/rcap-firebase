@@ -41,7 +41,32 @@
                 "dateCreated": { "type": "string", "format": "date-time" },
                 "lastModified": { "type": "string", "format": "date-time" },
                 "description": { "type": "string" },
-                "type": { "type": "string" }
+                "type": { "type": "string" },
+                "targetContext": { 
+                    "type": "object",
+                    "properties": {
+                        "region": { "type": "string" },
+                        "language": { "type": "string" },
+                        "culture": { "type": "string" }
+                    }
+                },
+                "plannedMessage": {
+                    "type": "object",
+                    "properties": {
+                        "content": { "type": "string" },
+                        "channels": { "type": "array", "items": { "type": "string" } },
+                        "messengers": { "type": "array", "items": { "type": "string" } }
+                    }
+                },
+                "semioticRiskScore": { "type": "number" },
+                "semioticAssessment": { 
+                    "type": "object",
+                    "properties": {
+                        "predictedFailures": { "type": "array", "items": { "type": "object" } },
+                        "recommendations": { "type": "array", "items": { "type": "object" } },
+                        "assessedAt": { "type": "string", "format": "date-time" }
+                    }
+                }
             },
             "required": ["title", "status", "organization", "dateCreated"]
         },
@@ -59,6 +84,28 @@
                 "parent": { "type": ["string", "null"] }
             },
             "required": ["name", "level", "type", "status"]
+        },
+        "SemioticPattern": {
+            "title": "Semiotic Pattern",
+            "description": "Represents a known semiotic pattern that can indicate risk in communication.",
+            "type": "object",
+            "properties": {
+                "patternId": { "type": "string" },
+                "patternType": { "type": "string" },
+                "context": {
+                    "type": "object",
+                    "properties": {
+                        "region": { "type": "string" },
+                        "language": { "type": "string" },
+                        "culture": { "type": "string" }
+                    }
+                },
+                "failedElement": { "type": "string" },
+                "recommendation": { "type": "string" },
+                "riskScore": { "type": "number" },
+                "confidence": { "type": "number" }
+            },
+            "required": ["patternId", "patternType", "context", "failedElement", "recommendation", "riskScore"]
         }
     },
     "auth": {
@@ -76,6 +123,10 @@
         "/organisations": {
             "schema": { "$ref": "#/entities/Organisation" },
             "description": "Collection of all organisations."
+        },
+        "/semiotic_patterns": {
+            "schema": { "$ref": "#/entities/SemioticPattern" },
+            "description": "Collection of known semiotic risk patterns."
         }
     }
 }

@@ -10,8 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight, Send, FileText, MapPin, Paperclip, CheckCircle, CalendarIcon, UploadCloud, File, X, Loader2 } from 'lucide-react';
-import { mockActivities } from '@/lib/data';
+import { ArrowLeft, ArrowRight, Send, FileText, MapPin, Paperclip, CheckCircle, CalendarIcon, UploadCloud, File, X, Loader2, MessageCircle } from 'lucide-react';
+import { mockActivities, mockSemioticPatterns } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
@@ -19,7 +19,8 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import type { Activity } from '@/lib/types';
+import type { Activity, SemioticAssessment } from '@/lib/types';
+import SemioticAssessmentDisplay from './semiotic-assessment-display';
 
 const formSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters.'),
@@ -31,6 +32,12 @@ const formSchema = z.object({
   startDate: z.date({ required_error: 'A start date is required.' }),
   endDate: z.date({ required_error: 'An end date is required.' }),
   attachments: z.array(z.instanceof(File)).optional(),
+  // New Semiotic Fields
+  plannedMessage: z.string().optional(),
+  targetContextRegion: z.string().optional(),
+  targetContextLanguage: z.string().optional(),
+  targetContextCulture: z.string().optional(),
+  targetMessengers: z.array(z.string()).optional(),
 }).refine(data => data.endDate >= data.startDate, {
   message: "End date cannot be before start date.",
   path: ["endDate"],
@@ -54,16 +61,22 @@ const statesAndLgas: Record<string, string[]> = {
     "Lagos": ["Agege", "Alimosho", "Ifako-Ijaiye", "Ikeja", "Kosofe", "Mushin", "Oshodi-Isolo", "Shomolu", "Apapa", "Eti-Osa", "Lagos Island", "Lagos Mainland", "Surulere", "Ojo", "Ajeromi-Ifelodun", "Amuwo-Odofin", "Badagry", "Ikorodu", "Ibeju-Lekki", "Epe"],
     "Kano": ["Dala", "Fagge", "Gwale", "Kano Municipal", "Tarauni", "Nassarawa", "Kumbotso", "Ungogo", "Dawakin Tofa", "Tofa", "Rimin Gado", "Bagwai", "Gezawa", "Gabasawa", "Minjibir", "Dambatta", "Makoda", "Kunchi", "Bichi", "Tsanyawa", "Shanono", "Gwarzo", "Karaye", "Rogo", "Kabo", "Bunkure", "Kibiya", "Rano", "Tudun Wada", "Doguwa", "Madobi", "Kura", "Garun Mallam", "Bebeji", "Kiru", "Sumaila", "Garko", "Takai", "Albasu", "Gaya", "Wudil", "Warawa", "Ajingi"],
     "Rivers": ["Port Harcourt", "Obio-Akpor", "Okrika", "Ogu/Bolo", "Eleme", "Tai", "Gokana", "Khana", "Oyigbo", "Opobo/Nkoro", "Andoni", "Bonny", "Degema", "Asari-Toru", "Akuku-Toru", "Abua/Odual", "Ahoada West", "Ahoada East", "Ogba/Egbema/Ndoni", "Emuoha", "Ikwerre", "Etche", "Omuma"],
-    "Oyo": ["Ibadan North", "Ibadan North-East", "Ibadan North-West", "Ibadan South-East", "Ibadan South-West", "Akinyele", "Egbeda", "Lagelu", "Ona Ara", "Oluyole", "Ido"],
+    "Borno": ["Maiduguri", "Jere"],
 };
 const states = Object.keys(statesAndLgas);
 const activityTypes = [...new Set(mockActivities.map(a => a.type))];
+const regions = ['Nigeria', 'UK'];
+const languages = ['English', 'Hausa', 'Yoruba', 'Igbo', 'Pidgin'];
+const cultures = ['General Audience', 'Collectivist', 'High Power Distance', 'Youth'];
+const messengers = ['Doctor', 'Government Official', 'Community Leader', 'Celebrity', 'Community Volunteer'];
 
 
 export function ActivityForm({ mode, activity }: ActivityFormProps) {
     const router = useRouter();
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isAssessing, setIsAssessing] = useState(false);
+    const [assessmentResult, setAssessmentResult] = useState<SemioticAssessment | null>(null);
 
     const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -77,12 +90,17 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
       startDate: activity?.dateCreated ? new Date(activity.dateCreated) : undefined,
       endDate: activity?.lastModified ? new Date(activity.lastModified) : undefined,
       attachments: [],
+      plannedMessage: '',
+      targetContextRegion: 'Nigeria',
+      targetContextLanguage: 'English',
+      targetContextCulture: 'General Audience',
+      targetMessengers: [],
     },
   });
 
   const [uploadedFiles, setUploadedFiles] = useState<FileUpload[]>([]);
   const selectedState = form.watch('state');
-
+  
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const newUploads: FileUpload[] = files.map(file => ({
@@ -106,11 +124,62 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
   const removeFile = (id: string) => {
     setUploadedFiles(prev => prev.filter(a => a.id !== id));
   };
+  
+  const handleAssessRisk = async () => {
+    setIsAssessing(true);
+    setAssessmentResult(null);
+
+    const formData = form.getValues();
+    const message = formData.plannedMessage || "";
+    const context = {
+        region: formData.targetContextRegion || 'Any',
+        language: formData.targetContextLanguage || 'Any',
+        culture: formData.targetContextCulture || 'Any'
+    };
+    
+    // Simulate API call and logic
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    const matchingPatterns = mockSemioticPatterns.filter(p => {
+        const messageContainsElement = message.toLowerCase().includes(p.failedElement.toLowerCase());
+        const contextMatches = 
+            (p.context.region === 'Any' || p.context.region === context.region) &&
+            (p.context.language === 'Any' || p.context.language === context.language) &&
+            (p.context.culture === 'General Audience' || p.context.culture === context.culture);
+        return messageContainsElement && contextMatches;
+    });
+
+    if (matchingPatterns.length > 0) {
+        const totalRisk = matchingPatterns.reduce((sum, p) => sum + p.riskScore, 0);
+        const avgRisk = Math.round(totalRisk / matchingPatterns.length);
+
+        setAssessmentResult({
+            riskScore: avgRisk,
+            predictedFailures: matchingPatterns.map(p => ({ patternId: p.patternId, failedElement: p.failedElement })),
+            recommendations: matchingPatterns.map(p => ({ patternId: p.patternId, recommendation: p.recommendation })),
+            assessedAt: new Date(),
+        });
+    } else {
+        setAssessmentResult({
+            riskScore: 0,
+            predictedFailures: [],
+            recommendations: [{ patternId: 'N/A', recommendation: 'No obvious high-risk patterns detected based on current rules. Ensure message is clear, concise, and culturally appropriate.' }],
+            assessedAt: new Date(),
+        });
+    }
+
+    setIsAssessing(false);
+  };
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
-    console.log("Submitting form data:", data);
-    // Simulate network request
+    // Combine semiotic assessment data if available
+    const finalData = {
+        ...data,
+        semioticAssessment: assessmentResult
+    };
+    console.log("Submitting form data:", finalData);
+    
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -243,6 +312,65 @@ export function ActivityForm({ mode, activity }: ActivityFormProps) {
               )} />
             </div>
           </CardContent>
+        </Card>
+        
+        <Card>
+            <CardHeader>
+                <div className="flex items-center gap-2">
+                    <MessageCircle className="h-5 w-5 text-primary" />
+                    <CardTitle>Communication Strategy &amp; Semiotic Analysis</CardTitle>
+                </div>
+                <CardDescription>Define your message and assess its potential risk.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                 <FormField control={form.control} name="plannedMessage" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Planned Message Content</FormLabel>
+                        <FormControl><Textarea placeholder="Enter the exact message you plan to disseminate..." className="min-h-[150px]" {...field} /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                     <FormField control={form.control} name="targetContextRegion" render={({ field }) => (
+                        <FormItem><FormLabel>Target Region</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl><SelectTrigger><SelectValue placeholder="Select region" /></SelectTrigger></FormControl>
+                                <SelectContent>{regions.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
+                            </Select><FormMessage />
+                        </FormItem>
+                    )} />
+                     <FormField control={form.control} name="targetContextLanguage" render={({ field }) => (
+                        <FormItem><FormLabel>Target Language</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl><SelectTrigger><SelectValue placeholder="Select language" /></SelectTrigger></FormControl>
+                                <SelectContent>{languages.map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
+                            </Select><FormMessage />
+                        </FormItem>
+                    )} />
+                     <FormField control={form.control} name="targetContextCulture" render={({ field }) => (
+                        <FormItem><FormLabel>Target Culture</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl><SelectTrigger><SelectValue placeholder="Select culture" /></SelectTrigger></FormControl>
+                                <SelectContent>{cultures.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                            </Select><FormMessage />
+                        </FormItem>
+                    )} />
+                      <FormField control={form.control} name="targetMessengers" render={({ field }) => (
+                        <FormItem><FormLabel>Primary Messenger</FormLabel>
+                             <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl><SelectTrigger><SelectValue placeholder="Select messenger" /></SelectTrigger></FormControl>
+                                <SelectContent>{messengers.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
+                            </Select><FormMessage />
+                        </FormItem>
+                    )} />
+                </div>
+                 <Button type="button" onClick={handleAssessRisk} disabled={isAssessing} className="w-full md:w-auto">
+                    {isAssessing ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Assessing...</> : 'Assess Semiotic Risk'}
+                </Button>
+                
+                <SemioticAssessmentDisplay result={assessmentResult} isLoading={isAssessing} />
+
+            </CardContent>
         </Card>
 
         <Card>

@@ -99,3 +99,30 @@ export type Conversation = {
     isRead: boolean;
     lastMessageTimestamp: string;
 };
+
+export type SemioticPattern = {
+    patternId: string;
+    patternType: string;
+    context: {
+        region: string;
+        language: string;
+        culture: string;
+    };
+    failedElement: string;
+    recommendation: string;
+    riskScore: number;
+    confidence: number;
+};
+
+export type SemioticAssessment = {
+    predictedFailures: {
+        patternId: string;
+        failedElement: string;
+    }[];
+    recommendations: {
+        recommendation: string;
+        patternId: string;
+    }[];
+    assessedAt: Date;
+    riskScore: number;
+};

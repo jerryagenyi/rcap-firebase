@@ -1,6 +1,7 @@
 
 
-import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation } from "@/lib/types";
+
+import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation, SemioticPattern } from "@/lib/types";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -867,6 +868,46 @@ export const mockConversations: Conversation[] = [
         ],
     },
 ];
-    
 
+export const mockSemioticPatterns: SemioticPattern[] = [
+  {
+    patternId: 'IF-042',
+    patternType: 'framing_failure',
+    context: {
+      region: 'Nigeria',
+      language: 'English',
+      culture: 'Collectivist',
+    },
+    failedElement: 'protect yourself',
+    recommendation: 'Reframe as "protect your family" or "protect your community" to align with collectivist values.',
+    riskScore: 65,
+    confidence: 0.85,
+  },
+  {
+    patternId: 'TT-011',
+    patternType: 'technical_terminology_failure',
+    context: {
+      region: 'Any',
+      language: 'Any',
+      culture: 'General Audience',
+    },
+    failedElement: 'viral shedding',
+    recommendation: 'Replace with simpler, more accessible language like "when you can pass the virus to others".',
+    riskScore: 40,
+    confidence: 0.95,
+  },
+  {
+    patternId: 'AM-003',
+    patternType: 'authority_mismatch',
+    context: {
+      region: 'Nigeria',
+      language: 'Any',
+      culture: 'High Power Distance',
+    },
+    failedElement: 'community volunteer',
+    recommendation: 'For critical health directives, the primary messenger should be a recognized authority figure like a doctor or government health official. Use volunteers for support and logistics.',
+    riskScore: 80,
+    confidence: 0.90,
+  },
+];
     
