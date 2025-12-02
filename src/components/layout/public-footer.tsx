@@ -6,7 +6,7 @@ const footerSections = [
     {
         title: 'Product',
         links: [
-            { label: 'Home', href: '/' },
+            { label: 'Home', href: '/#home' },
             { label: 'Features', href: '/#features' },
             { label: 'Pricing', href: '/#pricing' },
             { label: 'Contact', href: '/#contact' },
@@ -35,7 +35,7 @@ export default function PublicFooter() {
             <div className="container mx-auto py-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8">
                     <div className="col-span-1 md:col-span-4 lg:col-span-2 space-y-4">
-                        <Link href="/" className="flex items-center gap-3">
+                        <Link href="/#home" className="flex items-center gap-3">
                             <Logo className="h-10 w-10" />
                             <span className="text-2xl font-bold">CCIP</span>
                         </Link>

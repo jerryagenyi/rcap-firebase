@@ -18,7 +18,7 @@ export default function PublicHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-28 items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/#home" className="flex items-center gap-3">
           <Logo className="h-10 w-10" />
           <span className="text-2xl font-bold">CCIP</span>
         </Link>
@@ -57,7 +57,7 @@ export default function PublicHeader() {
                         <SheetDescription className="sr-only">
                             Navigate to different sections of the website.
                         </SheetDescription>
-                        <Link href="/" className="flex items-center gap-3">
+                        <Link href="/#home" className="flex items-center gap-3">
                             <Logo className="h-10 w-10" />
                             <span className="text-2xl font-bold">CCIP</span>
                         </Link>
