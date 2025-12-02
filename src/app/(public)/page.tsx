@@ -117,7 +117,7 @@ export default function LandingPage() {
             
             {/* Pricing Section */}
             <section id="pricing" className="py-20 sm:py-28 bg-muted/40">
-                <div className="container">
+                <div className="container p-6">
                     <div className="text-center mb-16">
                         <h1 className="text-5xl font-bold tracking-tight">Choose Your Plan</h1>
                         <p className="mt-4 text-xl text-muted-foreground">Start for free, and scale with AI-powered features as you grow.</p>
