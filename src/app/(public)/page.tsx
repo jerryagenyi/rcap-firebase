@@ -180,7 +180,7 @@ export default function LandingPage() {
                         </Card>
                     </div>
 
-                    <div className="mt-20">
+                    <div className="mt-20 max-w-5xl mx-auto">
                         <h2 className="text-4xl font-bold text-center mb-12">Feature Comparison</h2>
                         <div className="overflow-x-auto rounded-lg border">
                             <table className="w-full">
