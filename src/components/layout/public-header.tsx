@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/icons';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 
 const navLinks = [
@@ -51,12 +51,18 @@ export default function PublicHeader() {
                         <span className="sr-only">Open menu</span>
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[300px]">
-                    <div className="p-6">
-                        <Link href="/" className="flex items-center gap-3 mb-8">
+                <SheetContent side="right" className="w-[300px] p-0">
+                    <SheetHeader className="p-6">
+                        <SheetTitle className="sr-only">Main Menu</SheetTitle>
+                        <SheetDescription className="sr-only">
+                            Navigate to different sections of the website.
+                        </SheetDescription>
+                        <Link href="/" className="flex items-center gap-3">
                             <Logo className="h-10 w-10" />
                             <span className="text-2xl font-bold">CCIP</span>
                         </Link>
+                    </SheetHeader>
+                    <div className="p-6 pt-0">
                         <nav className="flex flex-col gap-4">
                             {navLinks.map((link) => (
                                 <SheetClose asChild key={link.href}>
