@@ -1,4 +1,5 @@
 
+
 'use client';
 import {
   Sidebar,
@@ -15,10 +16,10 @@ import {
   SidebarGroupLabel,
 } from '@/components/ui/sidebar';
 import { Logo } from '@/components/icons';
-import { navItems, futureNavItems, mockTeamMembers } from '@/lib/data';
+import { navItems, futureNavItems, mockTeamMembers, publicNavItems } from '@/lib/data';
 import { usePathname } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { Building, LogOut, ChevronDown, HelpCircle, Sparkles } from 'lucide-react';
+import { Building, LogOut, ChevronDown, HelpCircle, Sparkles, Globe } from 'lucide-react';
 import type { NavItem } from '@/lib/types';
 import React from 'react';
 import {
@@ -124,6 +125,25 @@ export default function AppSidebar() {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
+        <SidebarSeparator className="my-4" />
+         <Collapsible>
+          <CollapsibleTrigger className="w-full">
+            <SidebarGroupLabel className="flex items-center gap-2 w-full">
+                <Globe className="h-5 w-5 text-primary" /> 
+                <span className="flex-1 text-left">Public & Auth Pages</span>
+                <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:-rotate-180" />
+            </SidebarGroupLabel>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <SidebarMenu className="mt-2">
+                {publicNavItems.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                        <SidebarNavItem item={item} pathname={pathname} />
+                    </SidebarMenuItem>
+                ))}
+            </SidebarMenu>
+          </CollapsibleContent>
+        </Collapsible>
         <SidebarSeparator className="my-4" />
         <Collapsible>
           <CollapsibleTrigger className="w-full">

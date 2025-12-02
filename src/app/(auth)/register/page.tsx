@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState } from 'react';
@@ -36,12 +37,11 @@ const accountSetupSchema = z.object({
 });
 
 const verificationSchema = z.object({
-  idUpload: z.any().refine(val => val.length > 0, 'ID upload is required.'),
+  idUpload: z.any().refine(val => val && val.length > 0, 'ID upload is required.'),
   terms: z.boolean().refine(val => val === true, 'You must accept the terms and conditions.'),
 });
 
 const allSchemas = [personalInfoSchema, organisationSchema, accountSetupSchema, verificationSchema];
-const combinedSchema = personalInfoSchema.merge(organisationSchema).merge(accountSetupSchema).merge(verificationSchema);
 
 
 export default function RegisterPage() {
@@ -54,7 +54,7 @@ export default function RegisterPage() {
     mode: 'onChange',
   });
 
-  const { trigger, handleSubmit } = methods;
+  const { trigger, handleSubmit, formState } = methods;
 
   const nextStep = async () => {
     const isValid = await trigger();
@@ -62,6 +62,7 @@ export default function RegisterPage() {
       if (currentStep < 3) {
         setCurrentStep(step => step + 1);
       } else {
+        // This is the final step, trigger form submission
         handleSubmit(onSubmit)();
       }
     }
@@ -74,8 +75,11 @@ export default function RegisterPage() {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
-    setIsSubmitted(true);
+    console.log("Registration Data:", data);
+    // Simulate API call for submission
+    setTimeout(() => {
+        setIsSubmitted(true);
+    }, 1000);
   };
   
   const steps = [
@@ -107,7 +111,7 @@ export default function RegisterPage() {
   return (
     <Card className="w-full max-w-2xl">
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={e => e.preventDefault()}>
                 <StepIndicator currentStep={currentStep} />
                 <CardContent className="p-8">
                     <AnimatePresence mode="wait">

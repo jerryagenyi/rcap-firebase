@@ -1,4 +1,5 @@
 
+
 import type { NavItem, Activity, Notification, User, Organisation, Announcement, Conversation, SemioticPattern } from "@/lib/types";
 import {
   LayoutDashboard,
@@ -35,20 +36,34 @@ import {
   Network,
   FlaskConical,
   Home,
+  LogIn,
+  UserPlus as UserPlusIcon
 } from "lucide-react";
 
+export const publicNavItems: NavItem[] = [
+    {
+        title: "Landing Page",
+        href: "/",
+        icon: Home,
+    },
+    {
+        title: "Pricing",
+        href: "/pricing",
+        icon: DollarSign,
+    },
+    {
+        title: "Login",
+        href: "/login",
+        icon: LogIn,
+    },
+    {
+        title: "Register",
+        href: "/register",
+        icon: UserPlusIcon,
+    }
+];
+
 export const navItems: NavItem[] = [
-  // Public Pages (for prototype access)
-  {
-    title: "Landing Page",
-    href: "/",
-    icon: Home,
-  },
-  {
-    title: "Pricing",
-    href: "/pricing",
-    icon: DollarSign,
-  },
   // Main Section
   {
     title: "Dashboard",
