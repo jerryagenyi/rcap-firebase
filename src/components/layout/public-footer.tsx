@@ -39,9 +39,10 @@ export default function PublicFooter() {
                             <Logo className="h-10 w-10" />
                             <span className="text-2xl font-bold">CCIP</span>
                         </Link>
-                        <p className="text-muted-foreground text-sm max-w-xs">
-                            Predictive Intelligence for Culturally-Resonant Crisis Communication.
-                        </p>
+                        <div className="text-muted-foreground text-sm max-w-xs">
+                            <p className="font-semibold text-foreground">Crisis Communication Intelligence Platform</p>
+                            <p>Predictive Intelligence for Culturally-Resonant Crisis Communication.</p>
+                        </div>
                     </div>
 
                     {footerSections.map(section => (
