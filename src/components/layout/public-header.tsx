@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -7,7 +8,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu } from 'lucide-react';
 
 const navLinks = [
-    { href: '/pricing', label: 'Pricing' },
+    { href: '/#features', label: 'Features' },
+    { href: '/#pricing', label: 'Pricing' },
+    { href: '/#contact', label: 'Contact' },
     { href: '/login', label: 'Sign In' },
 ];
 
@@ -23,13 +26,19 @@ export default function PublicHeader() {
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-2 md:flex">
           <Button variant="ghost" asChild>
-            <Link href="/pricing">Pricing</Link>
+            <Link href="/#features">Features</Link>
+          </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/#pricing">Pricing</Link>
+          </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/#contact">Contact</Link>
           </Button>
           <Button variant="ghost" asChild>
             <Link href="/login">Sign In</Link>
           </Button>
           <Button variant="gradient" asChild size="lg">
-            <Link href="#">Contact Sales</Link>
+            <Link href="/register">Get Started</Link>
           </Button>
         </nav>
 
@@ -57,7 +66,7 @@ export default function PublicHeader() {
                                 </SheetClose>
                             ))}
                              <Button variant="gradient" asChild size="lg" className="mt-4">
-                                <Link href="#">Contact Sales</Link>
+                                <Link href="/register">Get Started</Link>
                             </Button>
                         </nav>
                     </div>

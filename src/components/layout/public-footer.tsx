@@ -1,21 +1,68 @@
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/icons';
+
+const footerSections = [
+    {
+        title: 'Product',
+        links: [
+            { label: 'Home', href: '/' },
+            { label: 'Features', href: '/#features' },
+            { label: 'Pricing', href: '/#pricing' },
+            { label: 'Contact', href: '/#contact' },
+        ],
+    },
+    {
+        title: 'Application',
+        links: [
+            { label: 'Dashboard', href: '/dashboard' },
+            { label: 'Sign In', href: '/login' },
+            { label: 'Register', href: '/register' },
+        ],
+    },
+    {
+        title: 'Legal',
+        links: [
+            { label: 'Terms of Service', href: '#' },
+            { label: 'Privacy Policy', href: '#' },
+        ],
+    },
+];
 
 export default function PublicFooter() {
     return (
-        <footer className="border-t">
-            <div className="container flex flex-col items-center justify-between gap-4 py-8 sm:flex-row">
-                <p className="text-sm text-muted-foreground">
-                    © 2025 CCIP • Predictive Intelligence for Culturally-Resonant Crisis Communication
-                </p>
-                <div className="flex gap-2">
-                    <Button variant="link" size="sm" asChild>
-                        <Link href="#">Terms of Service</Link>
-                    </Button>
-                     <Button variant="link" size="sm" asChild>
-                        <Link href="#">Privacy Policy</Link>
-                    </Button>
+        <footer className="border-t bg-muted/40">
+            <div className="container py-12">
+                <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8">
+                    <div className="col-span-1 md:col-span-4 lg:col-span-2 space-y-4">
+                        <Link href="/" className="flex items-center gap-3">
+                            <Logo className="h-10 w-10" />
+                            <span className="text-2xl font-bold">CCIP</span>
+                        </Link>
+                        <p className="text-muted-foreground text-sm max-w-xs">
+                            Predictive Intelligence for Culturally-Resonant Crisis Communication.
+                        </p>
+                    </div>
+
+                    {footerSections.map(section => (
+                        <div key={section.title} className="space-y-4">
+                            <h4 className="font-semibold text-foreground">{section.title}</h4>
+                            <ul className="space-y-2">
+                                {section.links.map(link => (
+                                    <li key={link.label}>
+                                        <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary hover:underline">
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="py-6 border-t">
+                <div className="container text-center text-sm text-muted-foreground">
+                    © {new Date().getFullYear()} CCIP. All rights reserved.
                 </div>
             </div>
       </footer>

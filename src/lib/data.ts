@@ -48,7 +48,7 @@ export const publicNavItems: NavItem[] = [
     },
     {
         title: "Pricing",
-        href: "/pricing",
+        href: "/#pricing",
         icon: DollarSign,
     },
     {
