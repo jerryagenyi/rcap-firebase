@@ -23,8 +23,8 @@ export function StepIndicator({ currentStep }: { currentStep: number }) {
                   </div>
                   <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary">
                     <step.icon className="h-5 w-5 text-primary-foreground" aria-hidden="true" />
+                    <span className="absolute top-full pt-2 text-xs text-primary font-semibold whitespace-nowrap">{step.name}</span>
                   </div>
-                  <span className="absolute -bottom-6 text-center w-full text-xs text-primary font-semibold">{step.name}</span>
                 </>
               ) : stepIdx === currentStep ? (
                 <>
@@ -36,8 +36,8 @@ export function StepIndicator({ currentStep }: { currentStep: number }) {
                     aria-current="step"
                   >
                     <step.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                     <span className="absolute top-full pt-2 text-xs text-primary font-semibold whitespace-nowrap">{step.name}</span>
                   </div>
-                   <span className="absolute -bottom-6 text-center w-full text-xs text-primary font-semibold">{step.name}</span>
                 </>
               ) : (
                 <>
@@ -46,8 +46,8 @@ export function StepIndicator({ currentStep }: { currentStep: number }) {
                   </div>
                   <div className="group relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-border bg-background">
                     <step.icon className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+                     <span className="absolute top-full pt-2 text-xs text-muted-foreground whitespace-nowrap">{step.name}</span>
                   </div>
-                   <span className="absolute -bottom-6 text-center w-full text-xs text-muted-foreground">{step.name}</span>
                 </>
               )}
             </li>
