@@ -1,4 +1,5 @@
 import { Logo } from "@/components/icons";
+import PublicFooter from "@/components/layout/public-footer";
 
 export default function AuthLayout({
   children,
@@ -6,8 +7,8 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <header className="absolute top-8 text-center">
+    <div className="flex min-h-screen flex-col bg-background">
+      <header className="absolute top-8 left-0 right-0 text-center">
         <div className="flex items-center justify-center gap-2">
             <Logo className="h-16 w-16" />
         </div>
@@ -16,13 +17,11 @@ export default function AuthLayout({
         <p className="text-xs text-muted-foreground">Crisis Communication Intelligence Platform</p>
       </header>
 
-      <main className="flex w-full flex-1 items-center justify-center">
+      <main className="flex w-full flex-1 items-center justify-center px-4">
         {children}
       </main>
 
-      <footer className="absolute bottom-8 text-center text-xs text-muted-foreground">
-        <p>© 2025 Federal Ministry of Health • CCIP v1.0.0</p>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
