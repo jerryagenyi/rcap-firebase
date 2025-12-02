@@ -299,6 +299,12 @@ export const performanceChartData = [
     { date: 'Apr', created: 65, completed: 55 },
     { date: 'May', created: 80, completed: 70 },
     { date: 'Jun', created: 75, completed: 68 },
+    { date: 'Jul', created: 90, completed: 82 },
+    { date: 'Aug', created: 85, completed: 78 },
+    { date: 'Sep', created: 100, completed: 90 },
+    { date: 'Oct', created: 95, completed: 85 },
+    { date: 'Nov', created: 110, completed: 100 },
+    { date: 'Dec', created: 120, completed: 115 },
 ];
 
 export const activityTypeChartData = [
@@ -992,3 +998,5 @@ export const mockSemioticPatterns: SemioticPattern[] = [
         confidence: 0.90,
     },
 ];
+
+    

@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, XAxis, YAxis } from "recharts"
@@ -47,8 +48,8 @@ export default function PerformanceCharts() {
                   content={<ChartTooltipContent />}
                 />
                 <Legend content={<ChartLegendContent />} />
-                <Bar dataKey="created" fill="var(--color-created)" radius={4} />
-                <Bar dataKey="completed" fill="var(--color-completed)" radius={4} />
+                <Bar dataKey="created" fill="var(--color-created)" radius={4} barSize={20} />
+                <Bar dataKey="completed" fill="var(--color-completed)" radius={4} barSize={20} />
               </BarChart>
             </ChartContainer>
           </TabsContent>
@@ -66,3 +67,5 @@ export default function PerformanceCharts() {
     </Card>
   )
 }
+
+    
