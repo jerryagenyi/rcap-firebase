@@ -34,9 +34,21 @@ import {
   GraduationCap,
   Network,
   FlaskConical,
+  Home,
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
+  // Public Pages (for prototype access)
+  {
+    title: "Landing Page",
+    href: "/",
+    icon: Home,
+  },
+  {
+    title: "Pricing",
+    href: "/pricing",
+    icon: DollarSign,
+  },
   // Main Section
   {
     title: "Dashboard",
@@ -477,6 +489,8 @@ export const mockActivities: Activity[] = [
         semioticRiskScore: 15,
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 8, complianceRate: 92, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 9 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-002",
@@ -491,6 +505,8 @@ export const mockActivities: Activity[] = [
         semioticRiskScore: 25,
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 7, complianceRate: 85, barriersEncountered: [], messageResonance: 'medium', culturalAlignment: 8 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-010",
@@ -505,6 +521,7 @@ export const mockActivities: Activity[] = [
         semioticRiskScore: 85,
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 6, complianceRate: 70, barriersEncountered: ['low attendance'], messageResonance: 'medium', culturalAlignment: 7 },
     },
      {
         id: "ACT-011",
@@ -518,6 +535,8 @@ export const mockActivities: Activity[] = [
         type: "Training Workshop",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 9, complianceRate: 98, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 9 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-016",
@@ -547,6 +566,8 @@ export const mockActivities: Activity[] = [
         type: "Vaccination Campaign",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 8, complianceRate: 88, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 8 },
+        humanReviewCompleted: true,
     },
      {
         id: "ACT-007",
@@ -560,6 +581,8 @@ export const mockActivities: Activity[] = [
         type: "Health Education",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 9, complianceRate: 95, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 9 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-012",
@@ -589,6 +612,7 @@ export const mockActivities: Activity[] = [
         type: "Outreach",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 7, complianceRate: 75, barriersEncountered: ['market noise'], messageResonance: 'medium', culturalAlignment: 7 },
     },
     {
         id: "ACT-I02",
@@ -602,6 +626,8 @@ export const mockActivities: Activity[] = [
         type: "Immunization",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 9, complianceRate: 90, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 9 },
+        humanReviewCompleted: true,
     },
     
     // HealthForAll Foundation (NGO) Activities (3)
@@ -617,6 +643,8 @@ export const mockActivities: Activity[] = [
         type: "Nutrition",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 8, complianceRate: 85, barriersEncountered: ['logistics'], messageResonance: 'high', culturalAlignment: 8 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-HFA02",
@@ -630,6 +658,8 @@ export const mockActivities: Activity[] = [
         type: "Outreach",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 9, complianceRate: 92, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 9 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-HFA03",
@@ -658,6 +688,8 @@ export const mockActivities: Activity[] = [
         type: "Advocacy",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 8, complianceRate: 80, barriersEncountered: ['trust issues'], messageResonance: 'medium', culturalAlignment: 7 },
+        humanReviewCompleted: true,
     },
     {
         id: "ACT-CAH02",
@@ -671,6 +703,8 @@ export const mockActivities: Activity[] = [
         type: "Surveillance",
         targetContext: { region: 'Nigeria', language: 'English', culture: 'General Audience' },
         plannedMessage: { content: '', channels: [], messengers: [] },
+        communicationEffectiveness: { understandingScore: 9, complianceRate: 95, barriersEncountered: [], messageResonance: 'high', culturalAlignment: 9 },
+        humanReviewCompleted: true,
     },
 ];
 
