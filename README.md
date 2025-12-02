@@ -42,7 +42,13 @@ The platform supports a role-based access control (RBAC) system to ensure users 
 
 ## Getting Started
 
-To get started with development, take a look at the main dashboard page located at `src/app/dashboard/page.tsx`.
+To get started with development, you will need to provide your Firebase project credentials.
+
+1.  **Create a `.env` file** in the root of the project.
+2.  Copy the contents of `.env.example` into `.env`.
+3.  **Populate the `.env` file** with your actual Firebase project configuration values. You can find these in your Firebase project settings in the Firebase console.
+
+Once your environment variables are set up, take a look at the main dashboard page located at `src/app/dashboard/page.tsx`.
 
 ## Production Deployment (CI/CD)
 
@@ -101,3 +107,4 @@ If you prefer to use Docker Hub instead of GHCR:
 *   **Image Not Found / Pull Error**:
     *   **GHCR**: Verify that your repository is public or that your `GHCR_PAT` has the correct `read:packages` permissions for private repositories.
     *   **Docker Hub**: Ensure your repository is public or that your deployment server is logged into Docker Hub with credentials that can access the private repository.
+*   **Firebase Connection Error**: Ensure all `NEXT_PUBLIC_FIREBASE_*` environment variables are correctly set in your local `.env` file for development and in your Dokploy service settings for production. Missing or invalid keys will cause the app to fail.
