@@ -17,7 +17,7 @@ const navLinks = [
 export default function PublicHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-24 items-center justify-between">
+      <div className="container flex h-28 items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-3">
           <Logo className="h-10 w-10" />
           <span className="text-2xl font-bold">CCIP</span>
@@ -52,7 +52,7 @@ export default function PublicHeader() {
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] p-0">
-                    <SheetHeader className="p-6">
+                    <SheetHeader className="p-6 border-b">
                         <SheetTitle className="sr-only">Main Menu</SheetTitle>
                         <SheetDescription className="sr-only">
                             Navigate to different sections of the website.
@@ -63,7 +63,7 @@ export default function PublicHeader() {
                         </Link>
                     </SheetHeader>
                     <div className="p-6 pt-0">
-                        <nav className="flex flex-col gap-4">
+                        <nav className="flex flex-col gap-4 pt-6">
                             {navLinks.map((link) => (
                                 <SheetClose asChild key={link.href}>
                                     <Link href={link.href} className="text-lg font-medium text-foreground hover:text-primary">
