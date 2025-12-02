@@ -72,7 +72,7 @@ export default function LandingPage() {
     return (
         <div className="flex flex-col">
             {/* Hero Section */}
-            <section id="home" className="relative py-24 sm:py-40 text-center bg-gradient-to-b from-background to-muted/50">
+            <section id="home" className="relative py-24 px-6 sm:py-40 text-center bg-gradient-to-b from-background to-muted/50">
                  <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat [mask-image:linear-gradient(to_bottom,white_5%,transparent_50%)]"></div>
                 <div className="container relative">
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tighter">
