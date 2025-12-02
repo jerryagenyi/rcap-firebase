@@ -34,11 +34,11 @@ export default function RecentActivities() {
             <CardContent>
                 <ul className="space-y-4">
                     {recent.map(activity => (
-                        <li key={activity.id} className="flex items-center gap-4">
+                        <li key={activity.id} className="flex items-center gap-4 overflow-hidden">
                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-secondary-foreground font-semibold">
                                 {activity.location.substring(0,2).toUpperCase()}
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 overflow-hidden">
                                 <p className="font-semibold text-foreground truncate">{activity.title}</p>
                                 <p className="text-sm text-muted-foreground">{activity.organization}</p>
                             </div>
