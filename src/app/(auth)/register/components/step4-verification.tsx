@@ -13,7 +13,7 @@ export default function Step4Verification() {
   return (
     <div className="space-y-6">
         <div className="text-center">
-            <h2 className="text-2xl font-bold">Verification</h2>
+            <h2>Verification</h2>
             <p className="text-muted-foreground">Just a few final steps to verify your identity.</p>
         </div>
 

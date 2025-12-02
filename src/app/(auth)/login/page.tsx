@@ -60,9 +60,9 @@ export default function LoginPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold text-foreground">
+        <h2 className="text-2xl font-bold text-foreground">
           Welcome Back
-        </CardTitle>
+        </h2>
       </CardHeader>
       <CardContent>
         <Form {...form}>

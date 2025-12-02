@@ -29,7 +29,7 @@ export default function Step2Organisation() {
   return (
     <div className="space-y-6">
        <div className="text-center">
-            <h2 className="text-2xl font-bold">Select Your Organisation</h2>
+            <h2>Select Your Organisation</h2>
             <p className="text-muted-foreground">Find and select the organisation you belong to.</p>
       </div>
 

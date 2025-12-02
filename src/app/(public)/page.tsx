@@ -98,7 +98,7 @@ export default function LandingPage() {
             <section id="features" className="py-24 sm:py-32">
                 <div className="container">
                     <div className="text-center">
-                        <h2 className="text-4xl font-bold">A New Level of Coordination</h2>
+                        <h2>A New Level of Coordination</h2>
                         <p className="mt-4 text-lg text-muted-foreground">From national strategy to community outreach, CCIP unifies every layer of your organisation.</p>
                     </div>
                     <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -106,7 +106,7 @@ export default function LandingPage() {
                             <Card key={feature.name} className="p-2">
                                 <CardContent className="p-6">
                                     <feature.icon className="h-8 w-8 text-primary mb-4" />
-                                    <h3 className="text-xl font-bold mb-2">{feature.name}</h3>
+                                    <h3>{feature.name}</h3>
                                     <p className="text-muted-foreground">{feature.description}</p>
                                 </CardContent>
                             </Card>
@@ -128,7 +128,7 @@ export default function LandingPage() {
                         <Card className="flex flex-col">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <CardTitle className="text-3xl">Free</CardTitle>
+                                    <h3 className="text-3xl">Free</h3>
                                     <Badge variant="outline">For New Networks</Badge>
                                 </div>
                                 <CardDescription>For small teams and organizations getting started.</CardDescription>
@@ -155,7 +155,7 @@ export default function LandingPage() {
                         <Card className="flex flex-col border-2 border-primary shadow-2xl shadow-primary/10">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <CardTitle className="text-3xl text-primary">Premium</CardTitle>
+                                    <h3 className="text-3xl text-primary">Premium</h3>
                                     <Badge variant="gradient">Best Value</Badge>
                                 </div>
                                 <CardDescription>For large organizations needing advanced analytics and AI.</CardDescription>
@@ -227,7 +227,7 @@ export default function LandingPage() {
 
                     <div className="mt-20 max-w-4xl mx-auto">
                         <div className="text-center mb-12">
-                            <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
+                            <h2>Frequently Asked Questions</h2>
                             <p className="mt-4 text-lg text-muted-foreground">Find answers to common questions about our plans.</p>
                         </div>
                         <Accordion type="single" collapsible className="w-full">
@@ -248,7 +248,7 @@ export default function LandingPage() {
             <section id="contact" className="py-24 sm:py-32">
                 <div className="container max-w-4xl mx-auto">
                     <div className="text-center">
-                        <h2 className="text-4xl font-bold">Contact Us</h2>
+                        <h2>Contact Us</h2>
                         <p className="mt-4 text-lg text-muted-foreground">
                             Have questions or want to request a demo? We'd love to hear from you.
                         </p>

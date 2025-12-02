@@ -10,7 +10,7 @@ export default function Step1PersonalInfo() {
   return (
     <div className="space-y-6">
        <div className="text-center">
-            <h2 className="text-2xl font-bold">Personal Information</h2>
+            <h2>Personal Information</h2>
             <p className="text-muted-foreground">Let's start with the basics.</p>
         </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

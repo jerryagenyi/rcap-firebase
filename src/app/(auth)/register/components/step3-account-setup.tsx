@@ -15,7 +15,7 @@ export default function Step3AccountSetup() {
   return (
     <div className="space-y-6">
        <div className="text-center">
-            <h2 className="text-2xl font-bold">Set Up Your Password</h2>
+            <h2>Set Up Your Password</h2>
             <p className="text-muted-foreground">Choose a strong password to secure your account.</p>
         </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
