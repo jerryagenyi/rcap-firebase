@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockNotifications } from "@/lib/data";
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import type { Notification, NotificationType } from "@/lib/types";
 import { Check, Trash2 } from 'lucide-react';
@@ -20,7 +20,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
         <h3 className="text-lg font-bold text-foreground">{notification.title}</h3>
         <p className="mt-1 text-muted-foreground">{notification.description}</p>
         <p className="mt-2 text-xs text-muted-foreground/70">
-          {formatDistanceToNow(new Date(notification.timestamp), { addSuffix: true })}
+          {format(new Date(notification.timestamp), 'PPP p')}
         </p>
       </div>
     </Card>

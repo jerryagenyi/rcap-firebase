@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, FileText, Users, BrainCircuit, ShieldAlert, Badge } from 'lucide-react';
+import { PlusCircle, FileText, Users, BrainCircuit, CheckCircle } from 'lucide-react';
 import MetricCard from '@/components/dashboard/metric-card';
 import { federalDashboardMetrics, mockActivities } from '@/lib/data';
 import PerformanceCharts from '@/components/dashboard/performance-charts';
@@ -15,7 +15,8 @@ import MapCard from '@/components/dashboard/map-card';
 import EmergencyCenter from '@/components/dashboard/emergency-center';
 import RecentActivities from '@/components/dashboard/recent-activities';
 import Link from 'next/link';
-import { formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
 
 const SemioticRiskOverview = () => {
     const highRiskActivities = mockActivities.filter(a => (a.semioticRiskScore || 0) > 70).slice(0,3);
@@ -53,7 +54,7 @@ const SemioticRiskOverview = () => {
                 )}
                  <div className="text-sm text-muted-foreground mt-4 pt-4 border-t">
                     <p>Pattern Database Size: <span className="font-semibold text-foreground">12 Active Patterns</span></p>
-                    <p>Last Assessed: <span className="font-semibold text-foreground">{formatDistanceToNow(new Date(), { addSuffix: true })}</span></p>
+                    <p>Last Assessed: <span className="font-semibold text-foreground">{format(new Date(), 'PPP')}</span></p>
                 </div>
             </CardContent>
         </Card>

@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { format, formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import { Search, PenSquare, Send, Reply, Forward, Paperclip, Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Conversation, Message } from '@/lib/types';
@@ -39,7 +39,7 @@ const ConversationListItem = ({ conversation, onSelect, isActive }: { conversati
             <div className="flex-1 overflow-hidden">
                 <div className="flex items-baseline justify-between">
                     <p className={cn("font-semibold truncate", !conversation.isRead && "text-foreground")}>{conversation.subject}</p>
-                    <p className="text-xs text-muted-foreground shrink-0">{formatDistanceToNow(new Date(conversation.lastMessageTimestamp), { addSuffix: true })}</p>
+                    <p className="text-xs text-muted-foreground shrink-0">{format(new Date(conversation.lastMessageTimestamp), 'p')}</p>
                 </div>
                 <p className="text-sm text-muted-foreground truncate">{sender.name}: {lastMessage.content}</p>
             </div>

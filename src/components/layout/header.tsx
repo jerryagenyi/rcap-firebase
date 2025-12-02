@@ -21,7 +21,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
@@ -207,7 +207,7 @@ export default function Header() {
                       {notif.description}
                     </p>
                      <p className="text-xs text-muted-foreground/70 mt-1">
-                      {formatDistanceToNow(new Date(notif.timestamp), { addSuffix: true })}
+                      {format(new Date(notif.timestamp), 'PPP p')}
                     </p>
                   </div>
                    {!notif.isRead && <div className="h-2 w-2 rounded-full bg-primary mt-2" />}
