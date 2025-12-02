@@ -35,11 +35,11 @@ const SemioticRiskOverview = () => {
                     <ul className="space-y-4">
                         {highRiskActivities.map(activity => (
                              <li key={activity.id} className="flex items-center gap-4">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-destructive/10 text-destructive font-bold">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-destructive/10 text-destructive font-bold shrink-0">
                                     {activity.semioticRiskScore}
                                 </div>
-                                <div className="flex-1">
-                                    <Link href={`/dashboard/activities/${activity.id}`} className="font-semibold text-foreground hover:underline truncate">{activity.title}</Link>
+                                <div className="flex-1 min-w-0">
+                                    <Link href={`/dashboard/activities/${activity.id}`} className="font-semibold text-foreground hover:underline truncate block">{activity.title}</Link>
                                     <p className="text-sm text-muted-foreground">{activity.organization}</p>
                                 </div>
                                 <Badge variant="destructive">High Risk</Badge>
