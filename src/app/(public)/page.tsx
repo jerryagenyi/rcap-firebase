@@ -79,7 +79,7 @@ export default function LandingPage() {
                         Predictive Intelligence for Crisis Communication
                     </h1>
                     <p className="mt-6 mx-auto max-w-2xl text-lg text-muted-foreground">
-                        CCIP predicts where health messages will fail before deployment, enabling culturally-intelligent communication that saves lives.
+                        Move from reactive to predictive communication. With CCIP, you gain foresight into risks and a panoramic view of your crisis outreach, ensuring culturally‑intelligent communication that protects communities.
                     </p>
                     <div className="mt-10 flex justify-center gap-4">
                         <Button asChild size="lg" variant="gradient">
