@@ -13,7 +13,7 @@ export function StepIndicator({ currentStep }: { currentStep: number }) {
   return (
     <div className="border-b p-6">
       <nav aria-label="Progress">
-        <ol role="list" className="flex items-center">
+        <ol role="list" className="flex items-center justify-center">
           {steps.map((step, stepIdx) => (
             <li key={step.name} className={cn('relative', stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : '')}>
               {stepIdx < currentStep ? (
