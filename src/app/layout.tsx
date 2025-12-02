@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn('font-body antialiased', inter.variable)}>
+      <body className={cn('font-body antialiased', inter.variable)} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
