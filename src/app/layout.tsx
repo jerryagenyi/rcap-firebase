@@ -3,7 +3,6 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import ClientDeveloperMenu from '@/components/layout/dev-menu-client';
 import { ThemeProvider } from '@/components/theme-provider';
 
 const inter = Inter({ 
@@ -32,7 +31,6 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
-          <ClientDeveloperMenu />
         </ThemeProvider>
       </body>
     </html>
