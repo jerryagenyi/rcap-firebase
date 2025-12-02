@@ -32,7 +32,7 @@ const footerSections = [
 export default function PublicFooter() {
     return (
         <footer className="border-t bg-muted/40">
-            <div className="container py-16">
+            <div className="container mx-auto py-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8">
                     <div className="col-span-1 md:col-span-4 lg:col-span-2 space-y-4">
                         <Link href="/" className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export default function PublicFooter() {
                 </div>
             </div>
             <div className="py-8 border-t">
-                <div className="container text-center text-sm text-muted-foreground">
+                <div className="container mx-auto text-center text-sm text-muted-foreground">
                     © {new Date().getFullYear()} CCIP. All rights reserved.
                 </div>
             </div>
