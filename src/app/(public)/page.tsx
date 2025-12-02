@@ -72,7 +72,7 @@ export default function LandingPage() {
     return (
         <div className="flex flex-col">
             {/* Hero Section */}
-            <section id="home" className="relative py-20 sm:py-32 text-center bg-gradient-to-b from-background to-muted/50">
+            <section id="home" className="relative py-24 sm:py-40 text-center bg-gradient-to-b from-background to-muted/50">
                  <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat [mask-image:linear-gradient(to_bottom,white_5%,transparent_50%)]"></div>
                 <div className="container relative">
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tighter">
@@ -95,7 +95,7 @@ export default function LandingPage() {
             </section>
 
             {/* Feature Showcase */}
-            <section id="features" className="py-20 sm:py-28">
+            <section id="features" className="py-24 sm:py-32">
                 <div className="container">
                     <div className="text-center">
                         <h2 className="text-4xl font-bold">A New Level of Coordination</h2>
@@ -116,7 +116,7 @@ export default function LandingPage() {
             </section>
             
             {/* Pricing Section */}
-            <section id="pricing" className="py-20 sm:py-28 bg-muted/40">
+            <section id="pricing" className="py-24 sm:py-32 bg-muted/40">
                 <div className="container p-6">
                     <div className="text-center mb-16">
                         <h1 className="text-5xl font-bold tracking-tight">Choose Your Plan</h1>
@@ -245,7 +245,7 @@ export default function LandingPage() {
             </section>
 
              {/* Contact Section */}
-            <section id="contact" className="py-20 sm:py-28">
+            <section id="contact" className="py-24 sm:py-32">
                 <div className="container max-w-4xl mx-auto">
                     <div className="text-center">
                         <h2 className="text-4xl font-bold">Contact Us</h2>
