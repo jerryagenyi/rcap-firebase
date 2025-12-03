@@ -101,7 +101,7 @@ export default function LandingPage() {
                         <h2>A New Level of Coordination</h2>
                         <p className="mt-4 text-lg text-muted-foreground">From national strategy to community outreach, CCIP unifies every layer of your organisation.</p>
                     </div>
-                    <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
                         {features.map((feature) => (
                             <Card key={feature.name} className="p-2">
                                 <CardContent className="p-6">

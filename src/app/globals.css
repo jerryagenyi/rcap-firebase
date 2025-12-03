@@ -108,7 +108,6 @@
   }
   html {
     @apply scroll-smooth;
-    font-size: 95%;
   }
   body {
     background-color: hsl(var(--background));
