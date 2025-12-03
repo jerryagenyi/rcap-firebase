@@ -45,19 +45,19 @@
     --background: 222 47% 11%; /* Deep Blue */
     --foreground: 0 0% 98%; /* Almost white text */
 
-    --card: 240 5% 14%; /* Slightly lighter dark gray for cards */
+    --card: 217 33% 17%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 6% 10%;
+    --popover: 217 33% 17%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 255 48% 61%; /* Lighter purple for dark mode */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 4% 18%;
+    --secondary: 217 33% 22%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 4% 18%;
+    --muted: 217 33% 22%;
     --muted-foreground: 240 5% 64.9%;
 
     --accent: 207 88% 72%; /* Lighter blue for dark mode */
@@ -66,8 +66,8 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 4% 18%;
-    --input: 240 4% 18%;
+    --border: 217 33% 25%;
+    --input: 217 33% 25%;
     --ring: 255 48% 61%;
 
     --chart-1: 255 48% 61%;
@@ -77,16 +77,16 @@
     --chart-5: 340 75% 55%;
 
     /* Sidebar dark variables */
-    --sidebar-background: 240 5% 14%;
+    --sidebar-background: 217 33% 17%;
     --sidebar-foreground: 0 0% 98%;
 
     --sidebar-primary: 255 48% 61%;
     --sidebar-primary-foreground: 0 0% 98%;
 
-    --sidebar-accent: 240 4% 20%;
+    --sidebar-accent: 217 33% 22%;
     --sidebar-accent-foreground: 255 48% 61%;
 
-    --sidebar-border: 240 4% 18%;
+    --sidebar-border: 217 33% 25%;
     --sidebar-ring: 255 48% 71%;
   }
 }
