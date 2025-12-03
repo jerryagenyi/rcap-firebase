@@ -23,7 +23,7 @@ export function ThemeToggle() {
   const isDark = theme === 'dark'
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 group">
       <Sun className={cn("h-5 w-5", !isDark && "text-primary")} />
       <Switch
         checked={isDark}
@@ -34,4 +34,3 @@ export function ThemeToggle() {
     </div>
   )
 }
-
