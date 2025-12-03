@@ -42,7 +42,7 @@
   }
 
   .dark {
-    --background: 240 6% 10%; /* Very dark gray */
+    --background: 222 47% 11%; /* Deep Blue */
     --foreground: 0 0% 98%; /* Almost white text */
 
     --card: 240 5% 14%; /* Slightly lighter dark gray for cards */
