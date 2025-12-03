@@ -103,7 +103,7 @@ export default function LandingPage() {
                     </div>
                     <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
                         {features.map((feature) => (
-                            <Card key={feature.name} className="rounded-xl">
+                            <Card key={feature.name}>
                                 <CardContent className="p-6">
                                     <feature.icon className="h-8 w-8 text-primary mb-4" />
                                     <h3>{feature.name}</h3>
