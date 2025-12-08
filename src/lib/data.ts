@@ -1002,7 +1002,13 @@ export const mockSemioticPatterns: SemioticPattern[] = [
 // Data for Activity Form dropdowns
 export const activityTypes = [...new Set(mockActivities.map(a => a.type))];
 export const regions = ['Nigeria', 'UK', 'Germany'];
-export const languages = ['English', 'Hausa', 'Yoruba', 'Igbo', 'Pidgin'];
+export const languages = ['English', 'Hausa', 'Yoruba', 'Igbo', 'Pidgin', 'French', 'Portuguese', 'Arabic', 'Swahili'];
 export const cultures = ['General Audience', 'Collectivist', 'High Power Distance', 'Youth', 'Northern Nigeria, Muslim-majority'];
 export const messengers = ['Government Official', 'Community Leader', 'Religious Leader', 'Healthcare Worker', 'Celebrity', 'Community Volunteer'];
+export const userRoles = [
+    { name: 'National Super Admin', context: 'Primary Role' },
+    { name: 'State Coordinator (Lagos)', context: 'Secondary Role' },
+];
+    
+
     

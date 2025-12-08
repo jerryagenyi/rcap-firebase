@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
-import { navItems, mockActivities, mockNotifications, mockTeamMembers } from '@/lib/data';
+import { navItems, mockActivities, mockNotifications, mockTeamMembers, userRoles, languages } from '@/lib/data';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -28,15 +28,6 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { useState, useMemo } from 'react';
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { useRouter } from 'next/navigation';
-
-const userRoles = [
-    { name: 'National Super Admin', context: 'Primary Role' },
-    { name: 'State Coordinator (Lagos)', context: 'Secondary Role' },
-]
-
-const languages = [
-  'English', 'French', 'Portuguese', 'Arabic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo'
-];
 
 const RoleSwitcher = ({ activeRole, setActiveRole }: { activeRole: string; setActiveRole: (role: string) => void; }) => {
     const currentRole = userRoles.find(r => r.name === activeRole);
@@ -265,3 +256,5 @@ export default function Header() {
     </header>
   );
 }
+
+    
