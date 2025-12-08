@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight, Send, FileText, MapPin, Paperclip, CheckCircle, CalendarIcon, UploadCloud, File, X, Loader2, MessageCircle, AlertCircle } from 'lucide-react';
-import { mockActivities, mockSemioticPatterns } from '@/lib/data';
+import { mockActivities, mockSemioticPatterns, activityTypes, regions, languages, cultures, messengers } from '@/lib/data';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
@@ -58,14 +58,6 @@ type ActivityFormProps = {
   mode: 'create' | 'edit';
   activity?: Activity;
 };
-
-// Mock data
-const activityTypes = [...new Set(mockActivities.map(a => a.type))];
-const regions = ['Nigeria', 'UK', 'Germany'];
-const languages = ['English', 'Hausa', 'Yoruba', 'Igbo', 'Pidgin'];
-const cultures = ['General Audience', 'Collectivist', 'High Power Distance', 'Youth', 'Northern Nigeria, Muslim-majority'];
-const messengers = ['Government Official', 'Community Leader', 'Religious Leader', 'Healthcare Worker', 'Celebrity', 'Community Volunteer'];
-
 
 export function ActivityForm({ mode, activity }: ActivityFormProps) {
     const router = useRouter();
