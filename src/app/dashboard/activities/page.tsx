@@ -25,13 +25,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { ActivitySelectionProvider, useActivitySelection } from "@/contexts/activity-selection-context";
 
-
-export default function ActivitiesPage() {
+function ActivitiesPageContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+  
+  const { selectedActivities, setSelectedActivities, paginatedActivities: contextPaginatedActivities, setAllActivities } = useActivitySelection();
 
   const filteredActivities = useMemo(() => {
     if (!searchQuery) {
@@ -50,27 +51,10 @@ export default function ActivitiesPage() {
   const paginatedActivities = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return filteredActivities.slice(startIndex, endIndex);
-  }, [currentPage, itemsPerPage, filteredActivities]);
-
-  const handleSelectActivity = (activityId: string, isSelected: boolean) => {
-    if (isSelected) {
-      setSelectedActivities(prev => [...prev, activityId]);
-    } else {
-      setSelectedActivities(prev => prev.filter(id => id !== activityId));
-    }
-  };
-
-  const handleSelectAll = (isSelected: boolean) => {
-    if (isSelected) {
-      setSelectedActivities(paginatedActivities.map(a => a.id));
-    } else {
-      setSelectedActivities([]);
-    }
-  };
-
-  const allOnPageSelected = selectedActivities.length > 0 && paginatedActivities.every(a => selectedActivities.includes(a.id));
-
+    const activities = filteredActivities.slice(startIndex, endIndex);
+    setAllActivities(activities.map(a => a.id));
+    return activities;
+  }, [currentPage, itemsPerPage, filteredActivities, setAllActivities]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -146,13 +130,7 @@ export default function ActivitiesPage() {
       )}
       
       {paginatedActivities.length > 0 ? (
-        <ActivitiesList 
-          data={paginatedActivities}
-          selectedActivities={selectedActivities}
-          onSelectActivity={handleSelectActivity}
-          onSelectAll={handleSelectAll}
-          allOnPageSelected={allOnPageSelected}
-        />
+        <ActivitiesList data={paginatedActivities} />
       ) : (
         <Card className="flex items-center justify-center p-16 col-span-full border-dashed">
             <div className="text-center">
@@ -186,4 +164,10 @@ export default function ActivitiesPage() {
   );
 }
 
-    
+export default function ActivitiesPage() {
+    return (
+        <ActivitySelectionProvider>
+            <ActivitiesPageContent />
+        </ActivitySelectionProvider>
+    )
+}

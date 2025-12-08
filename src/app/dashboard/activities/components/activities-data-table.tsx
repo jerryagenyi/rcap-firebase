@@ -10,6 +10,7 @@ import { Building, MapPin, Tag, Calendar, Eye, Pencil, Trash2 } from "lucide-rea
 import { format } from "date-fns";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useActivitySelection } from "@/contexts/activity-selection-context";
 
 const statusStyles: Record<ActivityStatus, string> = {
   Approved: "bg-green-500 text-white",
@@ -19,7 +20,10 @@ const statusStyles: Record<ActivityStatus, string> = {
   Completed: "bg-primary text-white",
 };
 
-function ActivityCard({ activity, isSelected, onSelect }: { activity: Activity, isSelected: boolean, onSelect: (id: string, selected: boolean) => void }) {
+function ActivityCard({ activity }: { activity: Activity }) {
+  const { selectedActivities, toggleActivitySelection } = useActivitySelection();
+  const isSelected = selectedActivities.includes(activity.id);
+
   // Consistently format dates to avoid hydration errors
   const createdDate = format(new Date(activity.dateCreated), "PPP");
   const modifiedDate = format(new Date(activity.lastModified), "PPP");
@@ -32,7 +36,7 @@ function ActivityCard({ activity, isSelected, onSelect }: { activity: Activity, 
       <Checkbox 
         className="h-6 w-6 mt-1" 
         checked={isSelected}
-        onCheckedChange={(checked) => onSelect(activity.id, !!checked)}
+        onCheckedChange={() => toggleActivitySelection(activity.id)}
       />
       <div className="flex-1">
         <div className="flex items-start justify-between">
@@ -91,42 +95,30 @@ function ActivityCard({ activity, isSelected, onSelect }: { activity: Activity, 
 
 type ActivitiesListProps = {
   data: Activity[];
-  selectedActivities: string[];
-  onSelectActivity: (id: string, selected: boolean) => void;
-  onSelectAll: (selected: boolean) => void;
-  allOnPageSelected: boolean;
 };
 
 
-export default function ActivitiesList({ 
-    data, 
-    selectedActivities, 
-    onSelectActivity,
-    onSelectAll,
-    allOnPageSelected
-}: ActivitiesListProps) {
-  return (
-    <div className="space-y-4">
-        <div className="flex items-center px-6">
-            <Checkbox 
-                id="select-all-activities"
-                checked={allOnPageSelected}
-                onCheckedChange={(checked) => onSelectAll(!!checked)}
-            />
-            <label htmlFor="select-all-activities" className="ml-3 text-sm font-medium">Select all on this page</label>
-        </div>
-        <div className="grid gap-4">
-        {data.map((activity) => (
-            <ActivityCard 
-                key={activity.id} 
-                activity={activity} 
-                isSelected={selectedActivities.includes(activity.id)}
-                onSelect={onSelectActivity}
-            />
-        ))}
-        </div>
-    </div>
-  );
-}
+export default function ActivitiesList({ data }: ActivitiesListProps) {
+    const { toggleSelectAll, allOnPageSelected } = useActivitySelection();
 
-    
+    return (
+        <div className="space-y-4">
+            <div className="flex items-center px-6">
+                <Checkbox 
+                    id="select-all-activities"
+                    checked={allOnPageSelected}
+                    onCheckedChange={(checked) => toggleSelectAll(!!checked)}
+                />
+                <label htmlFor="select-all-activities" className="ml-3 text-sm font-medium">Select all on this page</label>
+            </div>
+            <div className="grid gap-4">
+            {data.map((activity) => (
+                <ActivityCard 
+                    key={activity.id} 
+                    activity={activity} 
+                />
+            ))}
+            </div>
+        </div>
+    );
+}
